@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e84a131da10459428a5b3520ea877ec, type: 3}
   m_Name: Lander_Basic
   m_EditorClassIdentifier: Assembly-CSharp::MissionComponent
-  displayName: 
-  category: 0
+  displayName: "L\u0105downik Podstawowy"
+  category: 2
   icon: {fileID: 0}
-  description: 
-  componentType: 0
-  mass: 0
-  cost: 0
-  power: 0
-  reliabilityBonus: 0
+  description: "G\u0142\xF3wna struktura misji. Obowi\u0105zkowy element ka\u017Cdej konfiguracji."
+  componentType: 1
+  mass: 45
+  cost: 20
+  power: -8
+  reliabilityBonus: 0.1
   scienceValue: 0
   growthBonus: 0

@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e84a131da10459428a5b3520ea877ec, type: 3}
   m_Name: Batteries
   m_EditorClassIdentifier: Assembly-CSharp::MissionComponent
-  displayName: 
-  category: 0
+  displayName: Baterie
+  category: 1
   icon: {fileID: 0}
-  description: 
-  componentType: 0
-  mass: 0
-  cost: 0
+  description: "Magazyn energii niezb\u0119dny do przetrwania nocy ksi\u0119\u017Cycowej."
+  componentType: 12
+  mass: 12
+  cost: 10
   power: 0
-  reliabilityBonus: 0
+  reliabilityBonus: 0.05
   scienceValue: 0
   growthBonus: 0

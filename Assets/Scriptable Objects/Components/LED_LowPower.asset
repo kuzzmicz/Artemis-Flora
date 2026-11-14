@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e84a131da10459428a5b3520ea877ec, type: 3}
   m_Name: LED_LowPower
   m_EditorClassIdentifier: Assembly-CSharp::MissionComponent
-  displayName: 
+  displayName: LED Niskiej Mocy
   category: 0
   icon: {fileID: 0}
-  description: 
-  componentType: 0
-  mass: 0
-  cost: 0
-  power: 0
+  description: "Oszcz\u0119dne o\u015Bwietlenie. Wystarcza do podstawowego wzrostu, ale ro\u015Bliny rozwijaj\u0105 si\u0119 wolno."
+  componentType: 7
+  mass: 4
+  cost: 5
+  power: -20
   reliabilityBonus: 0
-  scienceValue: 0
-  growthBonus: 0
+  scienceValue: 5
+  growthBonus: 0.15
