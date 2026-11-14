@@ -151,7 +151,8 @@ public class EventManager : MonoBehaviour
                 break;
         }
 
-        currentGrowth = Mathf.Clamp(currentGrowth, 0f, 1.5f);
-        currentReliability = Mathf.Clamp(currentReliability, 0f, 1f);
+        currentGrowth = Mathf.Clamp01(currentGrowth);
+        currentReliability = Mathf.Clamp01(currentReliability);
+        currentScience = Mathf.Max(0, currentScience);
     }
 }

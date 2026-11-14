@@ -4758,6 +4758,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1970004590}
+  - component: {fileID: 1970004591}
   m_Layer: 5
   m_Name: Statistics
   m_TagString: Untagged
@@ -4787,6 +4788,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 350, y: 400}
   m_Pivot: {x: 1, y: 0}
+--- !u!114 &1970004591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970004589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c61095766a337f41ac2f11f7f983b99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::updateStats
+  powerText: {fileID: 1882142290}
+  reliabilityText: {fileID: 1184589666}
+  scienceText: {fileID: 998323525}
+  growthText: {fileID: 2019604805}
+  powerProgressBar: {fileID: 1879725606}
+  reliabilityProgressBar: {fileID: 234619754}
+  scienceProgressBar: {fileID: 1701520346}
+  growthProgressBar: {fileID: 2037341486}
+  maxPower: 100
+  maxScience: 200
 --- !u!1 &2019604803
 GameObject:
   m_ObjectHideFlags: 0
