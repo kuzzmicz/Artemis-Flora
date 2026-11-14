@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: e3ae0fe822bfbea4f915310b6684385c
+guid: 80223724bc6f36d4abd7096dfbfb6037
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5737106439334954880
-    second: Change Config Button_0
+      213: -7102955304775145843
+    second: KOSZT_0
+  - first:
+      213: -5106928366296740844
+    second: KOSZT_1
+  - first:
+      213: 6364095668093763093
+    second: KOSZT_2
+  - first:
+      213: 9131745247123728201
+    second: KOSZT_3
+  - first:
+      213: 5477678873260339389
+    second: KOSZT_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,13 +114,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Change Config Button_0
+      name: KOSZT_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 698
-        height: 104
+        width: 19
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +129,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08875d40714b160b0800000000000000
-      internalID: -5737106439334954880
+      spriteID: d86a66b88cb3d6d90800000000000000
+      internalID: -7102955304775145843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KOSZT_1
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 0
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41c448165bb8029b0800000000000000
+      internalID: -5106928366296740844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KOSZT_2
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 0
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51eb45daa4fc15850800000000000000
+      internalID: 6364095668093763093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KOSZT_3
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 0
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 947eb229be97abe70800000000000000
+      internalID: 9131745247123728201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KOSZT_4
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 0
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db0385ac9ef940c40800000000000000
+      internalID: 5477678873260339389
       vertices: []
       indices: 
       edges: []
@@ -137,7 +237,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Change Config Button_0: -5737106439334954880
+      KOSZT_0: -7102955304775145843
+      KOSZT_1: -5106928366296740844
+      KOSZT_2: 6364095668093763093
+      KOSZT_3: 9131745247123728201
+      KOSZT_4: 5477678873260339389
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
