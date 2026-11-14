@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_RadiationSpike
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: Wzrost promieniowania
-  description: "Czujniki wykry\u0142y silny wzrost promieniowania. Ro\u015Bliny s\u0105 nara\u017Cone na uszkodzenia."
+  description: "System monitorowania promieniowania wykry\u0142 gwa\u0142towny wzrost strumienia wysokoenergetycznych cz\u0105stek zwi\u0105zany z aktywno\u015Bci\u0105 s\u0142oneczn\u0105. Powierzchnia Ksi\u0119\u017Cyca nie posiada g\u0119stej atmosfery ani globalnego pola magnetycznego, kt\xF3re chroni\u0142yby szklarni\u0119 przed takim zagro\u017Ceniem. Konieczne jest zabezpieczenie upraw i wra\u017Cliwej elektroniki."
   eventType: 5
   isPositive: 0
-  choiceA: "Aktywuj maksymaln\u0105 ochron\u0119"
-  choiceB: "Zbieraj dane o wp\u0142ywie promieniowania"
+  choiceA: Uruchom tryb ochronny
+  choiceB: Kontynuuj badania promieniowania
   choiceC: "Przenie\u015B ro\u015Bliny w bardziej chronion\u0105 stref\u0119"
-  growthChangeA: 0.05
-  reliabilityChangeA: 0.1
-  scienceChangeA: -5
-  powerChangeA: -15
-  growthChangeB: -0.2
-  reliabilityChangeB: -0.05
-  scienceChangeB: 25
-  powerChangeB: 0
-  growthChangeC: -0.1
-  reliabilityChangeC: 0.05
-  scienceChangeC: 5
-  powerChangeC: -5
-  baseWeight: 1.2
+  growthChangeA: -0.09
+  reliabilityChangeA: 0.02
+  scienceChangeA: -8
+  powerChangeA: 5
+  growthChangeB: -0.18
+  reliabilityChangeB: -0.09
+  scienceChangeB: 22
+  powerChangeB: -3
+  growthChangeC: -0.04
+  reliabilityChangeC: -0.03
+  scienceChangeC: 3
+  powerChangeC: -12
+  baseWeight: 0.7

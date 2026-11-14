@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_GoodGrowth
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: Niespodziewanie dobry wzrost
-  description: "Ro\u015Bliny rosn\u0105 wyra\u017Anie lepiej ni\u017C zak\u0142adano. System uprawy dzia\u0142a ponad oczekiwania."
+  description: "System monitorowania wykry\u0142 wyj\u0105tkowo korzystne tempo wzrostu ro\u015Blin. Parametry fotosyntezy i kondycji upraw przewy\u017Cszaj\u0105 prognozy"
   eventType: 10
   isPositive: 1
-  choiceA: Maksymalizuj plon
-  choiceB: "Skup si\u0119 na zbieraniu dodatkowych danych"
+  choiceA: "Zwi\u0119ksz intensywno\u015B\u0107 uprawy"
+  choiceB: "Przeprowad\u017A dodatkowe pomiary"
   choiceC: Utrzymaj stabilne warunki
-  growthChangeA: 0.2
-  reliabilityChangeA: -0.05
-  scienceChangeA: 5
-  powerChangeA: -10
+  growthChangeA: 0.18
+  reliabilityChangeA: -0.06
+  scienceChangeA: 2
+  powerChangeA: -12
   growthChangeB: 0.05
   reliabilityChangeB: 0
-  scienceChangeB: 20
+  scienceChangeB: 18
   powerChangeB: -5
-  growthChangeC: 0.1
-  reliabilityChangeC: 0.1
-  scienceChangeC: 5
+  growthChangeC: 0.09
+  reliabilityChangeC: 0.04
+  scienceChangeC: 4
   powerChangeC: 0
   baseWeight: 0.6

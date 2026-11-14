@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
   m_Name: Event_Mutation
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
-  eventName: "Wykryto mutacje ro\u015Blin"
-  description: "Cz\u0119\u015B\u0107 ro\u015Blin wykazuje nietypowe zmiany. Prawdopodobna przyczyna: promieniowanie."
+  eventName: "Nietypowe zmiany ro\u015Blin"
+  description: "System monitorowania wykry\u0142 nietypowe zmiany w budowie li\u015Bci i tempie wzrostu cz\u0119\u015Bci ro\u015Blin. Przyczyn\u0105 mo\u017Ce by\u0107 stres \u015Brodowiskowy lub uszkodzenia kom\xF3rkowe zwi\u0105zane z promieniowaniem kosmicznym. Konieczna jest decyzja dotycz\u0105ca dalszego post\u0119powania z podejrzanymi okazami."
   eventType: 9
   isPositive: 0
-  choiceA: "Zostaw i prowad\u017A obserwacj\u0119 naukow\u0105"
+  choiceA: "Pozostaw do bada\u0144"
   choiceB: "Usu\u0144 zmutowane osobniki"
-  choiceC: "Wzmocnij ochron\u0119 radiacyjn\u0105"
-  growthChangeA: -0.15
-  reliabilityChangeA: -0.05
-  scienceChangeA: 30
-  powerChangeA: 0
+  choiceC: "Przenie\u015B do os\u0142oni\u0119tej sekcji"
+  growthChangeA: -0.06
+  reliabilityChangeA: -0.03
+  scienceChangeA: 22
+  powerChangeA: -4
   growthChangeB: -0.1
-  reliabilityChangeB: 0.05
+  reliabilityChangeB: 0.03
   scienceChangeB: 5
   powerChangeB: 0
-  growthChangeC: 0.05
-  reliabilityChangeC: 0.1
-  scienceChangeC: 5
-  powerChangeC: -10
+  growthChangeC: -0.04
+  reliabilityChangeC: 0.05
+  scienceChangeC: 2
+  powerChangeC: -9
   baseWeight: 0.7

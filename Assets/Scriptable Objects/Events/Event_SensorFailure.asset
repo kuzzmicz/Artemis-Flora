@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_SensorFailure
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: "Awaria cz\u0119\u015Bci czujnik\xF3w"
-  description: "Cz\u0119\u015B\u0107 sensor\xF3w \u015Brodowiskowych przesta\u0142a przesy\u0142a\u0107 dane. Trudniej precyzyjnie kontrolowa\u0107 warunki."
+  description: "System kontroli \u015Brodowiska utraci\u0142 sygna\u0142 z cz\u0119\u015Bci czujnik\xF3w temperatury, wilgotno\u015Bci i st\u0119\u017Cenia CO\u2082. Automatyczne sterowanie szklarni\u0105 nie mo\u017Ce dok\u0142adnie okre\u015Bli\u0107 aktualnych warunk\xF3w. Dalsza praca bez wiarygodnych pomiar\xF3w mo\u017Ce doprowadzi\u0107 do nieprawid\u0142owego nawadniania, przegrzania lub zaburzenia wzrostu ro\u015Blin."
   eventType: 11
   isPositive: 0
   choiceA: "Prze\u0142\u0105cz na tryb awaryjny"
-  choiceB: "Zu\u017Cyj moc na diagnostyk\u0119 i reset"
+  choiceB: "Uruchom diagnostyk\u0119 i kalibracj\u0119"
   choiceC: "Kontynuuj na podstawie ostatnich odczyt\xF3w"
-  growthChangeA: -0.1
-  reliabilityChangeA: 0.05
+  growthChangeA: -0.09
+  reliabilityChangeA: 0.02
   scienceChangeA: -10
   powerChangeA: 5
-  growthChangeB: 0
+  growthChangeB: -0.02
   reliabilityChangeB: 0.1
-  scienceChangeB: 5
-  powerChangeB: -15
-  growthChangeC: -0.15
-  reliabilityChangeC: -0.1
-  scienceChangeC: 10
+  scienceChangeB: 4
+  powerChangeB: -12
+  growthChangeC: -0.04
+  reliabilityChangeC: -0.08
+  scienceChangeC: -3
   powerChangeC: 0
   baseWeight: 0.9

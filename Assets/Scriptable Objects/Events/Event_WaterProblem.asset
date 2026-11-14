@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_WaterProblem
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: Problem z nawadnianiem
-  description: "Wykryto spadek ci\u015Bnienia w systemie nawadniania. Ro\u015Bliny mog\u0105 zacz\u0105\u0107 odczuwa\u0107 stres."
+  description: "Czujniki wykry\u0142y spadek ci\u015Bnienia w jednym z przewod\xF3w hydroponicznych. G\u0142\xF3wna pompa nadal pracuje, ale cz\u0119\u015B\u0107 ro\u015Blin otrzymuje niewystarczaj\u0105c\u0105 ilo\u015B\u0107 roztworu od\u017Cywczego. Mo\u017Cliw\u0105 przyczyn\u0105 jest nieszczelno\u015B\u0107 przewodu lub nieprawid\u0142owa praca zaworu. Bez interwencji ro\u015Blinom grozi stres wodny."
   eventType: 6
   isPositive: 0
-  choiceA: Uruchom system zapasowy
-  choiceB: Ogranicz podlewanie
-  choiceC: Zignoruj na razie i monitoruj
-  growthChangeA: 0.05
-  reliabilityChangeA: 0.05
+  choiceA: "Prze\u0142\u0105cz na rezerwowy obieg wody"
+  choiceB: Ogranicz i rozdziel nawadnianie
+  choiceC: "Kontynuuj prac\u0119 i monitoruj ci\u015Bnienie"
+  growthChangeA: -0.03
+  reliabilityChangeA: -0.02
   scienceChangeA: 0
-  powerChangeA: -10
-  growthChangeB: -0.15
+  powerChangeA: -7
+  growthChangeB: -0.12
   reliabilityChangeB: 0
   scienceChangeB: 0
-  powerChangeB: 5
-  growthChangeC: -0.25
-  reliabilityChangeC: -0.15
-  scienceChangeC: 10
+  powerChangeB: 4
+  growthChangeC: -0.2
+  reliabilityChangeC: -0.11
+  scienceChangeC: 4
   powerChangeC: 0
   baseWeight: 1

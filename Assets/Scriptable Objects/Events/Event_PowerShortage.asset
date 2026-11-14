@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_PowerShortage
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: Krytyczny spadek mocy
-  description: "Noc ksi\u0119\u017Cycowa trwa d\u0142u\u017Cej ni\u017C spodziewano. Zapasy energii topniej\u0105 niebezpiecznie szybko."
+  description: "System energetyczny wykry\u0142 przeci\u0105\u017Cenie g\u0142\xF3wnej magistrali zasilaj\u0105cej. Jednoczesna praca o\u015Bwietlenia LED, pomp hydroponicznych i aparatury naukowej przekroczy\u0142a bezpieczny limit mocy. Automatyczne zabezpieczenia ograniczy\u0142y zasilanie cz\u0119\u015Bci urz\u0105dze\u0144. Konieczne jest natychmiastowe zarz\u0105dzanie poborem energii."
   eventType: 1
   isPositive: 0
   choiceA: "Ogranicz o\u015Bwietlenie ro\u015Blin"
   choiceB: "Wy\u0142\u0105cz instrumenty naukowe"
   choiceC: "Zu\u017Cyj rezerw\u0119 baterii na pe\u0142n\u0105 moc"
-  growthChangeA: -0.15
-  reliabilityChangeA: 0.05
+  growthChangeA: -0.12
+  reliabilityChangeA: 0.02
   scienceChangeA: 0
-  powerChangeA: 10
+  powerChangeA: 12
   growthChangeB: 0
   reliabilityChangeB: 0
   scienceChangeB: -15
   powerChangeB: 15
-  growthChangeC: 0.05
-  reliabilityChangeC: -0.1
+  growthChangeC: 0
+  reliabilityChangeC: -0.08
   scienceChangeC: 0
-  powerChangeC: -20
+  powerChangeC: 18
   baseWeight: 1.5

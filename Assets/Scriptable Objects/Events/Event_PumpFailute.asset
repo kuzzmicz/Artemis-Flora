@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_PumpFailute
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: Awaria pompy
-  description: "G\u0142\xF3wna pompa nawadniaj\u0105ca przesta\u0142a dzia\u0142a\u0107. Ro\u015Bliny szybko trac\u0105 dost\u0119p do wody."
+  description: "System monitorowania wykry\u0142 awari\u0119 g\u0142\xF3wnej pompy hydroponicznej. Przep\u0142yw roztworu od\u017Cywczego zosta\u0142 zatrzymany, a korzenie ro\u015Blin nie otrzymuj\u0105 odpowiedniej ilo\u015Bci wody i sk\u0142adnik\xF3w mineralnych. D\u0142ugotrwa\u0142e zak\u0142\xF3cenie obiegu mo\u017Ce doprowadzi\u0107 do uszkodzenia upraw."
   eventType: 2
   isPositive: 0
   choiceA: "Prze\u0142\u0105cz na pomp\u0119 zapasow\u0105"
-  choiceB: Uruchom tryb awaryjny (ograniczone podlewanie)
+  choiceB: Uruchom ograniczone nawadnianie awaryjne
   choiceC: "Spr\xF3buj naprawi\u0107 pomp\u0119 r\u0119cznie"
-  growthChangeA: 0.05
-  reliabilityChangeA: 0.05
+  growthChangeA: -0.04
+  reliabilityChangeA: -0.02
   scienceChangeA: 0
   powerChangeA: -8
-  growthChangeB: -0.12
-  reliabilityChangeB: 0
+  growthChangeB: -0.13
+  reliabilityChangeB: -0.04
   scienceChangeB: 0
-  powerChangeB: 3
-  growthChangeC: -0.05
-  reliabilityChangeC: -0.05
-  scienceChangeC: 5
-  powerChangeC: -5
+  powerChangeB: 4
+  growthChangeC: -0.02
+  reliabilityChangeC: 0
+  scienceChangeC: 4
+  powerChangeC: -2
   baseWeight: 1.2

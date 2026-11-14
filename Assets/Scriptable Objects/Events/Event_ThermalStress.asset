@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_ThermalStress
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: Stres termiczny
-  description: "Temperatura w komorze uprawy mocno si\u0119 waha. Ro\u015Bliny zaczynaj\u0105 odczuwa\u0107 stres."
+  description: "Czujniki wykry\u0142y niebezpieczny wzrost temperatury wewn\u0105trz szklarni. Intensywne o\u015Bwietlenie LED oraz obci\u0105\u017Cenie systemu ch\u0142odzenia powoduj\u0105 przegrzewanie komory uprawy. Ro\u015Bliny wykazuj\u0105 pierwsze oznaki stresu cieplnego. Konieczne jest ustabilizowanie warunk\xF3w, zanim dojdzie do uszkodzenia upraw."
   eventType: 7
   isPositive: 0
-  choiceA: "Zwi\u0119ksz zu\u017Cycie mocy na stabilizacj\u0119 temperatury"
-  choiceB: Zaakceptuj wahania i zbieraj dane
-  choiceC: "Ogranicz aktywno\u015B\u0107 system\xF3w uprawy"
-  growthChangeA: 0.08
-  reliabilityChangeA: 0.05
+  choiceA: "Zwi\u0119ksz moc ch\u0142odzenia"
+  choiceB: "Obserwuj reakcj\u0119 ro\u015Blin"
+  choiceC: "Ogranicz prac\u0119 o\u015Bwietlenia LED"
+  growthChangeA: -0.02
+  reliabilityChangeA: 0
   scienceChangeA: 0
   powerChangeA: -12
-  growthChangeB: -0.12
-  reliabilityChangeB: -0.05
-  scienceChangeB: 15
+  growthChangeB: -0.13
+  reliabilityChangeB: -0.06
+  scienceChangeB: 13
   powerChangeB: 0
-  growthChangeC: -0.08
-  reliabilityChangeC: 0.05
-  scienceChangeC: -5
+  growthChangeC: -0.07
+  reliabilityChangeC: 0.01
+  scienceChangeC: -4
   powerChangeC: 8
   baseWeight: 1.1

@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_CommunicationGlitch
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: "Problemy z \u0142\u0105czno\u015Bci\u0105"
-  description: "Sygna\u0142 z Ziemi jest niestabilny. Otrzymywanie instrukcji staje si\u0119 utrudnione."
+  description: "\u0141\u0105czno\u015B\u0107 z Ziemi\u0105 jest niestabilna. Zak\u0142\xF3cenia sygna\u0142u utrudniaj\u0105 przesy\u0142anie wynik\xF3w bada\u0144 i odbieranie instrukcji."
   eventType: 12
   isPositive: 0
   choiceA: "Przejd\u017A na pe\u0142n\u0105 autonomi\u0119"
-  choiceB: "Wzmocnij sygna\u0142 kosztem energii"
-  choiceC: "Wstrzymaj cz\u0119\u015B\u0107 eksperyment\xF3w"
+  choiceB: "Zwi\u0119ksz moc transmisji"
+  choiceC: "Ogranicz transmisj\u0119 danych naukowych"
   growthChangeA: 0
-  reliabilityChangeA: -0.05
-  scienceChangeA: 5
-  powerChangeA: 5
+  reliabilityChangeA: -0.02
+  scienceChangeA: 3
+  powerChangeA: 4
   growthChangeB: 0
-  reliabilityChangeB: 0.05
-  scienceChangeB: 10
-  powerChangeB: -15
-  growthChangeC: -0.05
-  reliabilityChangeC: 0.05
-  scienceChangeC: -10
-  powerChangeC: 10
+  reliabilityChangeB: 0.02
+  scienceChangeB: 6
+  powerChangeB: -12
+  growthChangeC: 0
+  reliabilityChangeC: 0.02
+  scienceChangeC: -8
+  powerChangeC: 9
   baseWeight: 0.8

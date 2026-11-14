@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Event_DataOverFlow
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: "Przeci\u0105\u017Cenie systemu danych"
-  description: "Instrumenty naukowe generuj\u0105 wi\u0119cej danych ni\u017C system mo\u017Ce przetworzy\u0107."
+  description: "Instrumenty naukowe wygenerowa\u0142y wi\u0119ksz\u0105 ilo\u015B\u0107 danych, ni\u017C przewidziano. Pami\u0119\u0107 pok\u0142adowa zbli\u017Ca si\u0119 do limitu, a przepustowo\u015B\u0107 transmisji jest ograniczona. System wymaga zmiany sposobu przetwarzania informacji."
   eventType: 14
   isPositive: 0
   choiceA: "Priorytetyzuj dane o ro\u015Blinach"
@@ -21,14 +21,14 @@ MonoBehaviour:
   choiceC: "Zwi\u0119ksz zu\u017Cycie mocy na przetwarzanie"
   growthChangeA: 0
   reliabilityChangeA: 0
-  scienceChangeA: 10
-  powerChangeA: -5
+  scienceChangeA: 8
+  powerChangeA: -4
   growthChangeB: 0
-  reliabilityChangeB: 0.05
-  scienceChangeB: -8
-  powerChangeB: 8
+  reliabilityChangeB: 0.02
+  scienceChangeB: -7
+  powerChangeB: 9
   growthChangeC: 0
-  reliabilityChangeC: -0.05
-  scienceChangeC: 18
-  powerChangeC: 12
+  reliabilityChangeC: -0.02
+  scienceChangeC: 14
+  powerChangeC: -12
   baseWeight: 0.8

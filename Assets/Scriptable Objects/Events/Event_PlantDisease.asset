@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_PlantDisease
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: "Choroba ro\u015Blin"
-  description: "Wykryto oznaki infekcji u cz\u0119\u015Bci ro\u015Blin. Istnieje ryzyko rozprzestrzenienia si\u0119."
+  description: "System biologiczny wykry\u0142 objawy chorobowe u cz\u0119\u015Bci upraw: przebarwienia li\u015Bci, zahamowanie wzrostu i oznaki infekcji grzybiczej. Istnieje ryzyko rozprzestrzenienia si\u0119 patogenu na pozosta\u0142e ro\u015Bliny. Musisz zdecydowa\u0107, jak ochroni\u0107 szklarni\u0119."
   eventType: 4
   isPositive: 0
   choiceA: "Odizoluj chore ro\u015Bliny"
-  choiceB: "Zastosuj \u015Brodki ochronne na ca\u0142\u0105 upraw\u0119"
+  choiceB: Zastosuj kontrolowane leczenie
   choiceC: Obserwuj i zbieraj dane
   growthChangeA: -0.08
-  reliabilityChangeA: 0.05
-  scienceChangeA: 8
-  powerChangeA: 0
-  growthChangeB: 0.05
-  reliabilityChangeB: 0
-  scienceChangeB: 0
+  reliabilityChangeA: 0.04
+  scienceChangeA: 5
+  powerChangeA: -2
+  growthChangeB: -0.03
+  reliabilityChangeB: -0.04
+  scienceChangeB: 2
   powerChangeB: -10
   growthChangeC: -0.18
   reliabilityChangeC: -0.1
   scienceChangeC: 20
-  powerChangeC: 0
+  powerChangeC: -3
   baseWeight: 1

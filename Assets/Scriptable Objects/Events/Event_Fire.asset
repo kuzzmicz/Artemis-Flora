@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: Event_Fire
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: "Po\u017Car w module"
-  description: "Wykryto ogie\u0144 w jednym z system\xF3w. Sytuacja jest krytyczna."
+  description: "Wykryto ogie\u0144 w jednym z system\xF3w. Sytuacja jest krytyczna.Zagro\u017Cone s\u0105 instalacje elektryczne, uk\u0142ad wentylacji i uprawy."
   eventType: 3
   isPositive: 0
-  choiceA: "Aktywuj system ga\u015Bniczy"
-  choiceB: "Od\u0142\u0105cz zasilanie zagro\u017Conej sekcji"
-  choiceC: Ewakuuj priorytetowe systemy
-  growthChangeA: -0.05
-  reliabilityChangeA: 0.1
+  choiceA: "Uga\u015B po\u017Car r\u0119cznie"
+  choiceB: "Odetnij zasilanie i wentylacj\u0119 sekcji"
+  choiceC: "Odizoluj zagro\u017Cony modu\u0142"
+  growthChangeA: -0.2
+  reliabilityChangeA: -0.15
   scienceChangeA: 0
-  powerChangeA: -15
+  powerChangeA: -8
   growthChangeB: -0.1
-  reliabilityChangeB: 0.05
-  scienceChangeB: -5
-  powerChangeB: 10
-  growthChangeC: -0.15
-  reliabilityChangeC: -0.05
-  scienceChangeC: 5
-  powerChangeC: 5
-  baseWeight: 1.4
+  reliabilityChangeB: -0.04
+  scienceChangeB: -2
+  powerChangeB: -15
+  growthChangeC: -0.16
+  reliabilityChangeC: -0.02
+  scienceChangeC: -5
+  powerChangeC: -22
+  baseWeight: 0.7

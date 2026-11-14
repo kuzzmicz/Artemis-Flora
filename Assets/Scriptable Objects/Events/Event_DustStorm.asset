@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
   m_Name: Event_DustStorm
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
-  eventName: "Py\u0142owa burza regolitowa"
+  eventName: "Osadzanie si\u0119 py\u0142u ksi\u0119\u017Cycowego"
   description: "Drobny py\u0142 ksi\u0119\u017Cycowy osadza si\u0119 na panelach s\u0142onecznych i radiatorach. Wydajno\u015B\u0107 system\xF3w spada."
   eventType: 8
   isPositive: 0
@@ -20,15 +20,15 @@ MonoBehaviour:
   choiceB: "Ogranicz zu\u017Cycie energii"
   choiceC: Zaakceptuj straty i zbieraj dane o pyle
   growthChangeA: 0
-  reliabilityChangeA: 0.05
-  scienceChangeA: 5
-  powerChangeA: -10
-  growthChangeB: -0.1
+  reliabilityChangeA: 0.03
+  scienceChangeA: 0
+  powerChangeA: -8
+  growthChangeB: -0.04
   reliabilityChangeB: 0
   scienceChangeB: 0
-  powerChangeB: 15
-  growthChangeC: -0.15
-  reliabilityChangeC: -0.1
-  scienceChangeC: 20
+  powerChangeB: 12
+  growthChangeC: -0.05
+  reliabilityChangeC: -0.04
+  scienceChangeC: 8
   powerChangeC: -5
   baseWeight: 0.8

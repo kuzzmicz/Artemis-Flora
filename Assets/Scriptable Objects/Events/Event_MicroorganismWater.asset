@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Event_MicroorganismWater
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
   eventName: Mikroorganizm w obiegu wody
-  description: "W ruroci\u0105gu hydroponiki wykryto obecno\u015B\u0107 gro\u017Anego mikroorganizmu. Zaka\u017Cenie mo\u017Ce rozprzestrzeni\u0107 si\u0119 po ca\u0142ym systemie uprawy."
+  description: "Analiza roztworu od\u017Cywczego wykaza\u0142a obecno\u015B\u0107 niepo\u017C\u0105danych mikroorganizm\xF3w w obiegu hydroponicznym. Istnieje ryzyko powstawania biofilmu, zatykania filtr\xF3w i pogorszenia kondycji korzeni. Ska\u017Cenie mo\u017Ce rozprzestrzeni\u0107 si\u0119 na pozosta\u0142e sekcje uprawy."
   eventType: 15
   isPositive: 0
   choiceA: Zignoruj
@@ -24,11 +24,11 @@ MonoBehaviour:
   scienceChangeA: 0
   powerChangeA: 0
   growthChangeB: -0.12
-  reliabilityChangeB: 0
-  scienceChangeB: 0
-  powerChangeB: 0
-  growthChangeC: 0
-  reliabilityChangeC: 0
-  scienceChangeC: 0
-  powerChangeC: 0
+  reliabilityChangeB: 0.01
+  scienceChangeB: -2
+  powerChangeB: 3
+  growthChangeC: -0.04
+  reliabilityChangeC: -0.02
+  scienceChangeC: 3
+  powerChangeC: -8
   baseWeight: 1
