@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e84a131da10459428a5b3520ea877ec, type: 3}
   m_Name: Antenna_Basic
   m_EditorClassIdentifier: Assembly-CSharp::MissionComponent
-  displayName: 
-  category: 0
+  displayName: Antena Podstawowa
+  category: 3
   icon: {fileID: 0}
-  description: 
-  componentType: 0
-  mass: 0
-  cost: 0
-  power: 0
-  reliabilityBonus: 0
-  scienceValue: 0
+  description: "Zapewnia podstawow\u0105 \u0142\u0105czno\u015B\u0107 z Ziemi\u0105 i przesy\u0142 danych."
+  componentType: 14
+  mass: 5
+  cost: 6
+  power: -10
+  reliabilityBonus: 0.05
+  scienceValue: 5
   growthBonus: 0

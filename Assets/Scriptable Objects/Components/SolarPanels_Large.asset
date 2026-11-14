@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e84a131da10459428a5b3520ea877ec, type: 3}
   m_Name: SolarPanels_Large
   m_EditorClassIdentifier: Assembly-CSharp::MissionComponent
-  displayName: 
-  category: 0
+  displayName: "Panele S\u0142oneczne Du\u017Ce"
+  category: 1
   icon: {fileID: 0}
   description: 
-  componentType: 0
-  mass: 0
-  cost: 0
-  power: 0
-  reliabilityBonus: 0
+  componentType: 11
+  mass: 15
+  cost: 15
+  power: 90
+  reliabilityBonus: 0.05
   scienceValue: 0
   growthBonus: 0
