@@ -1,24 +1,33 @@
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ComponentButton : MonoBehaviour
 {
+    [Header("Component Data")]
     public MissionComponent component;
-    public TextMeshProUGUI buttonText;
 
-    private Button button;
-    private Image buttonImage;
+    [Header("UI References")]
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI statsText;
+    public TextMeshProUGUI addButtonText;
 
-    private Color normalColor = new Color(1f, 1f, 1f);
-    private Color selectedColor = new Color(0.15f, 0.45f, 0.28f);
-    private Color blockedColor = new Color(0.12f, 0.12f, 0.12f, 0.55f);
+    public Image componentIcon;
+    public Image cardBackground;
+    public Button addButton;
+
+    [Header("Colors")]
+    public Color normalColor = new Color(0.13f, 0.22f, 0.30f);
+    public Color selectedColor = new Color(0.15f, 0.45f, 0.28f);
+    public Color blockedColor = new Color(0.12f, 0.12f, 0.12f);
 
     private void Awake()
     {
-        button = GetComponent<Button>();
-        buttonImage = GetComponent<Image>();
-        button.onClick.AddListener(OnClick);
+        if (addButton != null)
+            addButton.onClick.AddListener(OnClick);
+        else
+            Debug.LogError("ComponentButton: Brak AddButton!");
     }
 
     private void OnEnable()
@@ -38,74 +47,85 @@ public class ComponentButton : MonoBehaviour
     public void Setup(MissionComponent comp)
     {
         component = comp;
+
+        if (componentIcon != null)
+        {
+            componentIcon.sprite = comp.icon;
+            componentIcon.enabled = comp.icon != null;
+        }
+
         UpdateVisual();
     }
 
     private void OnClick()
     {
-        if (component == null || MissionManager.Instance == null) return;
+        if (component == null || MissionManager.Instance == null)
+            return;
 
-        var loadout = MissionManager.Instance.currentLoadout;
+        var manager = MissionManager.Instance;
+        var loadout = manager.currentLoadout;
 
         if (loadout.HasComponent(component))
-        {
-            MissionManager.Instance.RemoveComponent(component);
-        }
+            manager.RemoveComponent(component);
         else
-        {
-            MissionManager.Instance.AddComponent(component);
-        }
+            manager.AddComponent(component);
 
         UpdateVisual();
     }
 
     private void UpdateVisual()
     {
-        if (component == null || MissionManager.Instance == null || LocalizationManager.Instance == null) return;
+        if (component == null || MissionManager.Instance == null)
+            return;
 
-        var loc = LocalizationManager.Instance;
-        var loadout = MissionManager.Instance.currentLoadout;
+        var manager = MissionManager.Instance;
+        var loadout = manager.currentLoadout;
+
         bool isSelected = loadout.HasComponent(component);
 
-        bool overMass = false;
-        bool overCost = false;
+        bool overMass = !isSelected &&
+            loadout.TotalMass + component.mass > manager.maxMass;
 
-        if (!isSelected)
-        {
-            float newMass = loadout.TotalMass + component.mass;
-            int newCost = loadout.TotalCost + component.cost;
-            overMass = newMass > MissionManager.Instance.maxMass;
-            overCost = newCost > MissionManager.Instance.maxBudget;
-        }
+        bool overCost = !isSelected &&
+            loadout.TotalCost + component.cost > manager.maxBudget;
 
         bool canAfford = !overMass && !overCost;
 
-        if (isSelected)
-            buttonImage.color = selectedColor;
-        else if (!canAfford)
-            buttonImage.color = blockedColor;
-        else
-            buttonImage.color = normalColor;
-
-        string prefix = isSelected ? "[" + loc.Get("selected_short") + "] " : "";
-        string status = "";
-
-        if (!isSelected)
+        if (cardBackground != null)
         {
-            if (overMass && overCost)
-                status = "  [" + loc.Get("no_mass_and_budget") + "]";
+            cardBackground.color = isSelected
+                ? selectedColor
+                : canAfford ? normalColor : blockedColor;
+        }
+
+        if (nameText != null)
+            nameText.text = GetLocalizedComponentName(component);
+
+        if (statsText != null)
+        {
+            statsText.text =
+                $"{GetText("mass", "Masa")}: {component.mass:0.#} kg\n" +
+                $"{GetText("cost", "Koszt")}: {component.cost} CR\n" +
+                $"{GetText("power", "Energia")}: " +
+                $"{component.power:+0.#;-0.#;0}";
+        }
+
+        if (addButtonText != null)
+        {
+            if (isSelected)
+                addButtonText.text = GetText("selected_short", "USUŃ");
+            else if (overMass && overCost)
+                addButtonText.text = GetText("no_mass_and_budget", "BRAK LIMITU");
             else if (overMass)
-                status = "  [" + loc.Get("no_mass") + "]";
+                addButtonText.text = GetText("no_mass", "BRAK MASY");
             else if (overCost)
-                status = "  [" + loc.Get("no_budget") + "]";
+                addButtonText.text = GetText("no_budget", "BRAK BUDŻETU");
+            else
+                addButtonText.text = "+ DODAJ";
         }
 
-        string localizedName = GetLocalizedComponentName(component);
-
-        if (buttonText != null)
-        {
-            buttonText.text = $"{prefix}{localizedName}{status}\n<size=70%>{loc.Get("mass")}: {component.mass} kg  |  {loc.Get("cost")}: {component.cost}</size>";
-        }
+        if (addButton != null)
+            addButton.interactable = isSelected || canAfford;
     }
 
     public void RefreshText()
@@ -113,18 +133,26 @@ public class ComponentButton : MonoBehaviour
         UpdateVisual();
     }
 
+    private string GetText(string key, string fallback)
+    {
+        if (LocalizationManager.Instance == null)
+            return fallback;
+
+        string result = LocalizationManager.Instance.Get(key);
+
+        if (string.IsNullOrEmpty(result) || result.StartsWith("["))
+            return fallback;
+
+        return result;
+    }
+
     private string GetLocalizedComponentName(MissionComponent comp)
     {
-        if (LocalizationManager.Instance == null || comp == null)
-            return comp.displayName;
+        if (comp == null)
+            return "";
 
         string key = "comp_" + comp.componentType.ToString().ToLower();
-        string localized = LocalizationManager.Instance.Get(key);
 
-
-        if (localized.StartsWith("["))
-            return comp.displayName;
-
-        return localized;
+        return GetText(key, comp.displayName);
     }
 }
