@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
+  m_Name: Event_DataOverFlow
+  m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
+  eventName: "Przeci\u0105\u017Cenie systemu danych"
+  description: "Instrumenty naukowe generuj\u0105 wi\u0119cej danych ni\u017C system mo\u017Ce przetworzy\u0107."
+  eventType: 14
+  isPositive: 0
+  choiceA: "Priorytetyzuj dane o ro\u015Blinach"
+  choiceB: "Wy\u0142\u0105cz cz\u0119\u015B\u0107 instrument\xF3w"
+  choiceC: "Zwi\u0119ksz zu\u017Cycie mocy na przetwarzanie"
+  growthChangeA: 0
+  reliabilityChangeA: 0
+  scienceChangeA: 10
+  powerChangeA: -5
+  growthChangeB: 0
+  reliabilityChangeB: 0.05
+  scienceChangeB: -8
+  powerChangeB: 8
+  growthChangeC: 0
+  reliabilityChangeC: -0.05
+  scienceChangeC: 18
+  powerChangeC: 12
+  baseWeight: 0.8
