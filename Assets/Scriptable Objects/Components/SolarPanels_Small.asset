@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e84a131da10459428a5b3520ea877ec, type: 3}
+  m_Name: SolarPanels_Small
+  m_EditorClassIdentifier: Assembly-CSharp::MissionComponent
+  displayName: "Panele S\u0142oneczne Ma\u0142e"
+  category: 1
+  icon: {fileID: 0}
+  description: "Podstawowe panele. Daj\u0105 energi\u0119 tylko w dzie\u0144 ksi\u0119\u017Cycowy."
+  componentType: 10
+  mass: 6
+  cost: 7
+  power: 40
+  reliabilityBonus: 0.05
+  scienceValue: 0
+  growthBonus: 0
