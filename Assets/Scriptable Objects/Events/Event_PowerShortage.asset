@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
   m_Name: Event_PowerShortage
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
-  eventName: 
-  description: 
-  eventType: 0
+  eventName: Krytyczny spadek mocy
+  description: "Noc ksi\u0119\u017Cycowa trwa d\u0142u\u017Cej ni\u017C spodziewano. Zapasy energii topniej\u0105 niebezpiecznie szybko."
+  eventType: 1
   isPositive: 0
-  choiceA: 
-  choiceB: 
-  choiceC: 
-  growthChangeA: 0
-  reliabilityChangeA: 0
+  choiceA: "Ogranicz o\u015Bwietlenie ro\u015Blin"
+  choiceB: "Wy\u0142\u0105cz instrumenty naukowe"
+  choiceC: "Zu\u017Cyj rezerw\u0119 baterii na pe\u0142n\u0105 moc"
+  growthChangeA: -0.15
+  reliabilityChangeA: 0.05
   scienceChangeA: 0
-  powerChangeA: 0
+  powerChangeA: 10
   growthChangeB: 0
   reliabilityChangeB: 0
-  scienceChangeB: 0
-  powerChangeB: 0
-  growthChangeC: 0
-  reliabilityChangeC: 0
+  scienceChangeB: -15
+  powerChangeB: 15
+  growthChangeC: 0.05
+  reliabilityChangeC: -0.1
   scienceChangeC: 0
-  powerChangeC: 0
-  baseWeight: 1
+  powerChangeC: -20
+  baseWeight: 1.5

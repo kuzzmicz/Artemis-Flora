@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
   m_Name: Event_RadiationSpike
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
-  eventName: 
-  description: 
-  eventType: 0
+  eventName: Wzrost promieniowania
+  description: "Czujniki wykry\u0142y silny wzrost promieniowania. Ro\u015Bliny s\u0105 nara\u017Cone na uszkodzenia."
+  eventType: 5
   isPositive: 0
-  choiceA: 
-  choiceB: 
-  choiceC: 
-  growthChangeA: 0
-  reliabilityChangeA: 0
-  scienceChangeA: 0
-  powerChangeA: 0
-  growthChangeB: 0
-  reliabilityChangeB: 0
-  scienceChangeB: 0
+  choiceA: "Aktywuj maksymaln\u0105 ochron\u0119"
+  choiceB: "Zbieraj dane o wp\u0142ywie promieniowania"
+  choiceC: "Przenie\u015B ro\u015Bliny w bardziej chronion\u0105 stref\u0119"
+  growthChangeA: 0.05
+  reliabilityChangeA: 0.1
+  scienceChangeA: -5
+  powerChangeA: -15
+  growthChangeB: -0.2
+  reliabilityChangeB: -0.05
+  scienceChangeB: 25
   powerChangeB: 0
-  growthChangeC: 0
-  reliabilityChangeC: 0
-  scienceChangeC: 0
-  powerChangeC: 0
-  baseWeight: 1
+  growthChangeC: -0.1
+  reliabilityChangeC: 0.05
+  scienceChangeC: 5
+  powerChangeC: -5
+  baseWeight: 1.2

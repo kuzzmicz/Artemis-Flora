@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
   m_Name: Event_WaterProblem
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
-  eventName: 
-  description: 
-  eventType: 0
+  eventName: Problem z nawadnianiem
+  description: "Wykryto spadek ci\u015Bnienia w systemie nawadniania. Ro\u015Bliny mog\u0105 zacz\u0105\u0107 odczuwa\u0107 stres."
+  eventType: 6
   isPositive: 0
-  choiceA: 
-  choiceB: 
-  choiceC: 
-  growthChangeA: 0
-  reliabilityChangeA: 0
+  choiceA: Uruchom system zapasowy
+  choiceB: Ogranicz podlewanie
+  choiceC: Zignoruj na razie i monitoruj
+  growthChangeA: 0.05
+  reliabilityChangeA: 0.05
   scienceChangeA: 0
-  powerChangeA: 0
-  growthChangeB: 0
+  powerChangeA: -10
+  growthChangeB: -0.15
   reliabilityChangeB: 0
   scienceChangeB: 0
-  powerChangeB: 0
-  growthChangeC: 0
-  reliabilityChangeC: 0
-  scienceChangeC: 0
+  powerChangeB: 5
+  growthChangeC: -0.25
+  reliabilityChangeC: -0.15
+  scienceChangeC: 10
   powerChangeC: 0
   baseWeight: 1

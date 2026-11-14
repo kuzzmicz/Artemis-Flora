@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
   m_Name: Event_Mutation
   m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
-  eventName: 
-  description: 
-  eventType: 0
+  eventName: "Wykryto mutacje ro\u015Blin"
+  description: "Cz\u0119\u015B\u0107 ro\u015Blin wykazuje nietypowe zmiany. Prawdopodobna przyczyna: promieniowanie."
+  eventType: 9
   isPositive: 0
-  choiceA: 
-  choiceB: 
-  choiceC: 
-  growthChangeA: 0
-  reliabilityChangeA: 0
-  scienceChangeA: 0
+  choiceA: "Zostaw i prowad\u017A obserwacj\u0119 naukow\u0105"
+  choiceB: "Usu\u0144 zmutowane osobniki"
+  choiceC: "Wzmocnij ochron\u0119 radiacyjn\u0105"
+  growthChangeA: -0.15
+  reliabilityChangeA: -0.05
+  scienceChangeA: 30
   powerChangeA: 0
-  growthChangeB: 0
-  reliabilityChangeB: 0
-  scienceChangeB: 0
+  growthChangeB: -0.1
+  reliabilityChangeB: 0.05
+  scienceChangeB: 5
   powerChangeB: 0
-  growthChangeC: 0
-  reliabilityChangeC: 0
-  scienceChangeC: 0
-  powerChangeC: 0
-  baseWeight: 1
+  growthChangeC: 0.05
+  reliabilityChangeC: 0.1
+  scienceChangeC: 5
+  powerChangeC: -10
+  baseWeight: 0.7
