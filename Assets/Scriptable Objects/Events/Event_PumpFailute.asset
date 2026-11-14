@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
+  m_Name: Event_PumpFailute
+  m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
+  eventName: Awaria pompy
+  description: "G\u0142\xF3wna pompa nawadniaj\u0105ca przesta\u0142a dzia\u0142a\u0107. Ro\u015Bliny szybko trac\u0105 dost\u0119p do wody."
+  eventType: 2
+  isPositive: 0
+  choiceA: "Prze\u0142\u0105cz na pomp\u0119 zapasow\u0105"
+  choiceB: Uruchom tryb awaryjny (ograniczone podlewanie)
+  choiceC: "Spr\xF3buj naprawi\u0107 pomp\u0119 r\u0119cznie"
+  growthChangeA: 0.05
+  reliabilityChangeA: 0.05
+  scienceChangeA: 0
+  powerChangeA: -8
+  growthChangeB: -0.12
+  reliabilityChangeB: 0
+  scienceChangeB: 0
+  powerChangeB: 3
+  growthChangeC: -0.05
+  reliabilityChangeC: -0.05
+  scienceChangeC: 5
+  powerChangeC: -5
+  baseWeight: 1.2

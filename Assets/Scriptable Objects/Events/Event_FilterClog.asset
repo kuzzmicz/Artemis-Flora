@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514be9cab0c3f73469baf32d62798c00, type: 3}
+  m_Name: Event_FilterClog
+  m_EditorClassIdentifier: Assembly-CSharp::MissionEvent
+  eventName: "Zatkanie filtr\xF3w wody"
+  description: 
+  eventType: 13
+  isPositive: 0
+  choiceA: Uruchom czyszczenie awaryjne
+  choiceB: Ogranicz podlewanie
+  choiceC: Kontynuuj normalnie
+  growthChangeA: 0.05
+  reliabilityChangeA: 0.05
+  scienceChangeA: 0
+  powerChangeA: -8
+  growthChangeB: -0.1
+  reliabilityChangeB: 0
+  scienceChangeB: 0
+  powerChangeB: 5
+  growthChangeC: -0.18
+  reliabilityChangeC: -0.1
+  scienceChangeC: 5
+  powerChangeC: 0
+  baseWeight: 1.3
