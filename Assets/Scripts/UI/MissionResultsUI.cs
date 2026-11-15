@@ -1,3 +1,8 @@
+/*
+/ The mechanics implemented in this file were entirely our own idea.
+/ However, the code in this file was written with the support of Google Antygravity AI tool.
+*/
+
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
