@@ -47,6 +47,39 @@ public class LocalizationManager : MonoBehaviour
         return $"[{key}]";
     }
 
+    private void AddEventTexts(
+        EventType type,
+        string name,
+        string description,
+        string choiceA,
+        string choiceB,
+        string choiceC)
+    {
+        string key = "event_" + type.ToString().ToLowerInvariant();
+
+        texts[key + "_name"] = name;
+        texts[key + "_description"] = description;
+        texts[key + "_a"] = choiceA;
+        texts[key + "_b"] = choiceB;
+        texts[key + "_c"] = choiceC;
+    }
+
+    public string GetEventText(
+        EventType type,
+        string field,
+        string fallback = "")
+    {
+        string key = "event_" +
+            type.ToString().ToLowerInvariant() +
+            "_" + field;
+
+        return texts.TryGetValue(key, out string value)
+            ? value
+            : fallback;
+    }
+
+
+
     private void LoadLanguage()
     {
         texts.Clear();
