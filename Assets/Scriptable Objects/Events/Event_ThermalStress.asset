@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: -4
   powerChangeC: 8
   baseWeight: 1.1
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Na o\u015Bwietlonej powierzchni Ksi\u0119\u017Cyca temperatura w rejonach r\xF3wnikowych mo\u017Ce przekracza\u0107 120\xB0C. Brak g\u0119stej atmosfery utrudnia naturalne wyr\xF3wnywanie temperatury mi\u0119dzy obszarami nas\u0142onecznionymi a zacienionymi. Dlatego przysz\u0142e szklarnie ksi\u0119\u017Cycowe b\u0119d\u0105 wymaga\u0142y skutecznej izolacji i kontroli temperatury. NASA wykorzystuje ju\u017C takie rozwi\u0105zania w systemie Advanced Plant Habitat na ISS, gdzie automatycznie kontrolowane s\u0105 mi\u0119dzy innymi temperatura, wilgotno\u015B\u0107 i o\u015Bwietlenie ro\u015Blin."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: "Surface temperatures near the lunar equator can exceed 120\xB0C in sunlight. Without a thick atmosphere, heat is not naturally redistributed between sunlit and shaded regions. Future lunar greenhouses will therefore require effective insulation and temperature control. NASA already uses environmental control systems aboard the ISS in its Advanced Plant Habitat, which automatically regulates temperature, humidity, and plant lighting."
+  nasaImportanceEN: 
+  nasaSourceURL: https://science.nasa.gov/science-research/science-enabling-technology/technology-highlights/unearthly-plumbing-required-for-plant-watering-in-space/

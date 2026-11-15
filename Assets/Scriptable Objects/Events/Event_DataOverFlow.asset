@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 14
   powerChangeC: -12
   baseWeight: 0.8
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "NASA rozwija systemy autonomicznej analizy danych, kt\xF3re pomagaj\u0105 wybiera\u0107 najbardziej warto\u015Bciowe obserwacje, gdy mo\u017Cliwo\u015Bci transmisji na Ziemi\u0119 s\u0105 ograniczone."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: 
+  nasaImportanceEN: 
+  nasaSourceURL: https://www.jpl.nasa.gov/go/owls/onboard-science-autonomy/?utm_source=chatgpt.com

@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 0
   powerChangeC: 18
   baseWeight: 1.5
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Systemy energetyczne misji ksi\u0119\u017Cycowych musz\u0105 nie tylko wytwarza\u0107 i magazynowa\u0107 energi\u0119, ale r\xF3wnie\u017C zarz\u0105dza\u0107 jej dystrybucj\u0105. NASA rozwija technologie zarz\u0105dzania zasilaniem, aby r\xF3\u017Cne urz\u0105dzenia mog\u0142y bezpiecznie korzysta\u0107 ze wsp\xF3lnych zasob\xF3w energetycznych. Nawet przy dost\u0119pie do \u015Bwiat\u0142a s\u0142onecznego ograniczona moc instalacji wymaga ustalania priorytet\xF3w mi\u0119dzy systemami."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: Lunar power systems must not only generate and store electricity but also manage its distribution. NASA is developing power management technologies to ensure that different devices can safely share available energy resources. Even with sunlight available, limited system capacity requires prioritizing power between essential subsystems.
+  nasaImportanceEN: 
+  nasaSourceURL: 

@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 3
   powerChangeC: -8
   baseWeight: 1
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Mikroorganizmy mog\u0105 tworzy\u0107 biofilm na wewn\u0119trznych powierzchniach instalacji wodnych w kosmosie. Takie skupiska bywaj\u0105 odporne na standardowe \u015Brodki czyszcz\u0105ce, mog\u0105 zatyka\u0107 filtry i uszkadza\u0107 elementy system\xF3w podtrzymywania \u017Cycia. NASA prowadzi eksperymenty nad biofilmami bakteryjnymi na ISS, aby opracowa\u0107 skuteczniejsze metody ich kontroli."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: Microorganisms can form biofilms on the inner surfaces of spacecraft water systems. These communities may resist conventional cleaning methods, clog filters, and damage life-support equipment. NASA studies bacterial biofilms aboard the ISS to develop more effective ways to control microbial contamination.
+  nasaImportanceEN: 
+  nasaSourceURL: https://science.nasa.gov/biological-physical/investigations/bacterial-adhesion/?utm_source=chatgpt.com

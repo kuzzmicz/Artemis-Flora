@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 0
   powerChangeC: -12
   baseWeight: 1
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Na Mi\u0119dzynarodowej Stacji Kosmicznej NASA zaobserwowa\u0142a, \u017Ce biofilm, czyli warstwa mikroorganizm\xF3w, mo\u017Ce zatyka\u0107 elementy systemu odzyskiwania wody.\r\nNASA rozwija r\xF3wnie\u017C specjalne systemy nawadniania ro\u015Blin, poniewa\u017C odpowiednia ilo\u015B\u0107 wody i tlenu przy korzeniach jest kluczowa dla ich prawid\u0142owego wzrostu. \r\n"
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: 
+  nasaImportanceEN: 
+  nasaSourceURL: https://ntrs.nasa.gov/citations/20170012409?utm_source=chatgpt.com

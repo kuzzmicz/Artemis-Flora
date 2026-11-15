@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: -8
   powerChangeC: 9
   baseWeight: 0.8
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Ukszta\u0142towanie terenu Ksi\u0119\u017Cyca mo\u017Ce utrudnia\u0107 komunikacj\u0119 radiow\u0105. W niekt\xF3rych lokalizacjach przeszkod\u0105 s\u0105 wzniesienia i ograniczona widoczno\u015B\u0107 Ziemi."
+  nasaImportancePL: "Ukszta\u0142towanie terenu Ksi\u0119\u017Cyca mo\u017Ce utrudnia\u0107 komunikacj\u0119 radiow\u0105. W niekt\xF3rych lokalizacjach przeszkod\u0105 s\u0105 wzniesienia i ograniczona widoczno\u015B\u0107 Ziemi."
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: 
+  nasaImportanceEN: 
+  nasaSourceURL: https://www.nasa.gov/glenn/glenn-expertise-space-exploration/scan/lunar-surface-propagation/?utm_source=chatgpt.com

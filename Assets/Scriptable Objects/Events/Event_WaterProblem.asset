@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 4
   powerChangeC: 0
   baseWeight: 1
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Dostarczanie wody i sk\u0142adnik\xF3w od\u017Cywczych do korzeni ro\u015Blin jest szczeg\xF3lnym wyzwaniem w warunkach zmniejszonej grawitacji. NASA prowadzi eksperymenty Plant Water Management na ISS, wykorzystuj\u0105c pompy, zawory i specjalne kana\u0142y hydroponiczne do badania przep\u0142ywu cieczy. Naukowcy sprawdzaj\u0105 r\xF3wnie\u017C, jak napi\u0119cie powierzchniowe i si\u0142y kapilarne mog\u0105 pomaga\u0107 w kontrolowaniu przep\u0142ywu wody bez konieczno\u015Bci polegania wy\u0142\u0105cznie na grawitacji."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: Delivering water and nutrients to plant roots is a particular challenge in reduced gravity. NASA's Plant Water Management experiments aboard the ISS use pumps, valves, and specially designed hydroponic channels to study fluid flow. Researchers also investigate how surface tension and capillary forces can help control water delivery without relying solely on gravity.
+  nasaImportanceEN: 
+  nasaSourceURL: https://science.nasa.gov/science-research/science-enabling-technology/technology-highlights/unearthly-plumbing-required-for-plant-watering-in-space/

@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 4
   powerChangeC: 0
   baseWeight: 0.6
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "NASA bada, jak widmo \u015Bwiat\u0142a, nawo\u017Cenie i kontrolowane warunki \u015Brodowiskowe wp\u0142ywaj\u0105 na wzrost ro\u015Blin w kosmosie. Eksperymenty Veg-04A i Veg-04B na ISS wykaza\u0142y r\xF3\u017Cnice w plonach i zawarto\u015Bci sk\u0142adnik\xF3w od\u017Cywczych zale\u017Cnie od sposobu uprawy. Odpowiedni dob\xF3r warunk\xF3w mo\u017Ce wi\u0119c zwi\u0119kszy\u0107 wydajno\u015B\u0107 przysz\u0142ych kosmicznych szklarni."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: NASA studies how light spectrum, fertilization, and controlled environmental conditions affect plant growth in space. The Veg-04A and Veg-04B experiments aboard the ISS found differences in crop yield and nutritional content depending on growing conditions. Optimizing these conditions could improve the productivity of future space greenhouses.
+  nasaImportanceEN: 
+  nasaSourceURL: https://www.nasa.gov/missions/station/iss-research/space-gardens/?utm_source=chatgpt.com

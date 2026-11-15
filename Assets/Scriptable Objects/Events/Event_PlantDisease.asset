@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 20
   powerChangeC: -3
   baseWeight: 1
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Podczas eksperyment\xF3w Veggie na Mi\u0119dzynarodowej Stacji Kosmicznej cz\u0119\u015B\u0107 uprawianych cynii zosta\u0142a zaatakowana przez grzyb. Problem pojawi\u0142 si\u0119 po nadmiernym podlewaniu i przy niewystarczaj\u0105cym przep\u0142ywie powietrza. Astronauta Scott Kelly usuwa\u0142 grzyb i piel\u0119gnowa\u0142 pozosta\u0142e ro\u015Bliny, kt\xF3rym ostatecznie uda\u0142o si\u0119 zakwitn\u0105\u0107. Pokaza\u0142o to, jak wa\u017Cne s\u0105 kontrola wilgotno\u015Bci i wentylacja w kosmicznych uprawach."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: During the Veggie experiments aboard the International Space Station, some zinnia plants developed a fungal infection after overwatering and insufficient airflow. Astronaut Scott Kelly carefully removed the fungus and cared for the surviving plants, which eventually flowered. The incident highlighted the importance of moisture control and ventilation in space agriculture.
+  nasaImportanceEN: 
+  nasaSourceURL: https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/?utm_source=chatgpt.com

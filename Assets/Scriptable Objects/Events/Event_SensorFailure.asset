@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: -3
   powerChangeC: 0
   baseWeight: 0.9
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "System Advanced Plant Habitat na Mi\u0119dzynarodowej Stacji Kosmicznej wykorzystuje ponad 180 czujnik\xF3w i urz\u0105dze\u0144 pomiarowych do monitorowania warunk\xF3w uprawy. Mierz\u0105 one mi\u0119dzy innymi temperatur\u0119, wilgotno\u015B\u0107, st\u0119\u017Cenie CO\u2082 oraz warunki w pobli\u017Cu korzeni. Dzi\u0119ki tym informacjom naukowcy mog\u0105 zdalnie kontrolowa\u0107 \u015Brodowisko ro\u015Blin. Niezawodne czujniki s\u0105 wi\u0119c kluczowe dla automatyzacji przysz\u0142ych kosmicznych szklarni."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: "NASA's Advanced Plant Habitat aboard the International Space Station uses more than 180 sensors and monitoring devices to track plant-growing conditions. They measure parameters such as temperature, humidity, CO\u2082 concentration, and conditions near the roots. These measurements allow researchers to control the plant environment remotely. Reliable sensors are therefore essential for automating future space greenhouses."
+  nasaImportanceEN: 
+  nasaSourceURL: https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/

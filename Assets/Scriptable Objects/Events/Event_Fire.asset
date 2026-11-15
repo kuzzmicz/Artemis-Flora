@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: -5
   powerChangeC: -22
   baseWeight: 0.7
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "W zamkni\u0119tym module kosmicznym po\u017Car mo\u017Ce zagrozi\u0107 zar\xF3wno za\u0142odze, jak i systemom podtrzymywania \u017Cycia. Na Mi\u0119dzynarodowej Stacji Kosmicznej ochrona przeciwpo\u017Carowa obejmuje wykrywanie dymu, odcinanie zasilania, ograniczanie wentylacji oraz gaszenie ognia. Izolowanie uszkodzonej sekcji pomaga r\xF3wnie\u017C ograniczy\u0107 rozprzestrzenianie si\u0119 zanieczyszcze\u0144."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: A fire inside a pressurized space module can threaten both the crew and life-support systems. On the International Space Station, fire protection includes smoke detection, electrical shutdown, ventilation control, and fire suppression. Isolating an affected compartment also helps prevent contaminants from spreading.
+  nasaImportanceEN: 
+  nasaSourceURL: https://robotics.nasa.gov/spaceflight-qa/

@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 2
   powerChangeC: -9
   baseWeight: 0.7
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Promieniowanie kosmiczne mo\u017Ce uszkadza\u0107 DNA organizm\xF3w \u017Cywych, w tym ro\u015Blin. NASA bada jego wp\u0142yw na nasiona i przysz\u0142e uprawy kosmiczne. W jednym z eksperyment\xF3w naukowcy hodowali pomidory z nasion wcze\u015Bniej poddanych symulowanemu promieniowaniu s\u0142onecznemu, aby por\xF3wna\u0107 ich wzrost, warto\u015B\u0107 od\u017Cywcz\u0105 i plony z ro\u015Blinami kontrolnymi."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: Space radiation can damage the DNA of living organisms, including plants. NASA studies its effects on seeds and future space crops. In one experiment, researchers grew tomato plants from seeds exposed to simulated solar particle radiation to compare their growth, nutritional value, and yield with untreated control plants.
+  nasaImportanceEN: 
+  nasaSourceURL: https://www.nasa.gov/image-article/nasa-prepares-deep-space-exploration-by-growing-tomato-plants-from-irradiated-seeds/?utm_source=chatgpt.com

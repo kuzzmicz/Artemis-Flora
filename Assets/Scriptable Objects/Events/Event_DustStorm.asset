@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 8
   powerChangeC: -5
   baseWeight: 0.8
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Py\u0142 ksi\u0119\u017Cycowy jest wyj\u0105tkowo drobny, ostry i \u0142atwo przywiera do powierzchni. Mo\u017Ce ogranicza\u0107 produkcj\u0119 energii przez panele s\u0142oneczne i utrudnia\u0107 ch\u0142odzenie urz\u0105dze\u0144.\r\nW 2025 roku NASA z powodzeniem przetestowa\u0142a na Ksi\u0119\u017Cycu technologi\u0119 EDS, kt\xF3ra usuwa py\u0142 za pomoc\u0105 p\xF3l elektrycznych! \r\n"
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: 
+  nasaImportanceEN: 
+  nasaSourceURL: https://www.nasa.gov/image-article/nasas-dust-shield-successfully-repels-lunar-regolith-on-moon/?utm_source=chatgpt.com

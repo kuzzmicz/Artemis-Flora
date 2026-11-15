@@ -32,3 +32,10 @@ MonoBehaviour:
   scienceChangeC: 3
   powerChangeC: -12
   baseWeight: 0.7
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "Ksi\u0119\u017Cyc nie posiada g\u0119stej atmosfery ani globalnego pola magnetycznego chroni\u0105cego jego powierzchni\u0119 przed promieniowaniem kosmicznym. Podczas silnej aktywno\u015Bci s\u0142onecznej wysokoenergetyczne cz\u0105stki mog\u0105 dociera\u0107 do powierzchni Ksi\u0119\u017Cyca i stanowi\u0107 zagro\u017Cenie dla organizm\xF3w oraz elektroniki. Dlatego projektowanie przysz\u0142ych baz ksi\u0119\u017Cycowych wymaga odpowiednich os\u0142on radiacyjnych i monitorowania pogody kosmicznej."
+  nasaImportancePL: 
+  nasaFactTitleEN: NASA Science Fact
+  nasaFactEN: The Moon lacks a thick atmosphere and a global magnetic field to protect its surface from space radiation. During intense solar activity, high-energy particles can reach the lunar surface and pose risks to living organisms and electronics. Future lunar habitats therefore require radiation shielding and space weather monitoring.
+  nasaImportanceEN: 
+  nasaSourceURL: https://science.nasa.gov/moon/weather-on-the-moon/
