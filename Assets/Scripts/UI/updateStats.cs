@@ -24,7 +24,7 @@ public class updateStats : MonoBehaviour
             EventManager.Instance.currentGrowth = 0.50f;
             EventManager.Instance.currentReliability = 0.50f;
             EventManager.Instance.currentScience = 110;
-            EventManager.Instance.currentPower = 0.50f;
+            EventManager.Instance.currentPower = 50f;
         }
 
         RefreshUI();
@@ -42,12 +42,13 @@ public class updateStats : MonoBehaviour
         float growth = Mathf.Clamp01(EventManager.Instance.currentGrowth);
         float reliability = Mathf.Clamp01(EventManager.Instance.currentReliability);
         int science = Mathf.Max(0, EventManager.Instance.currentScience);
-        float power = EventManager.Instance.currentPower;
+        float power = Mathf.Max(0f, EventManager.Instance.currentPower);
+        float powerFill = maxPower > 0f ? power / maxPower : 0f;
 
         UpdateStat(growthProgressBar, growthText, growth, $"{Mathf.RoundToInt(growth * 100f)}%");
         UpdateStat(reliabilityProgressBar, reliabilityText, reliability, $"{Mathf.RoundToInt(reliability * 100f)}%");
         UpdateStat(scienceProgressBar, scienceText, science / maxScience, science.ToString());
-        UpdateStat(powerProgressBar, powerText, power / maxPower, $"{Mathf.RoundToInt(Mathf.Clamp01(power / maxPower) * 100f)}%");
+        UpdateStat(powerProgressBar, powerText, powerFill, $"{power:0.#} W");
     }
 
     void UpdateStat(Image bar, TextMeshProUGUI label, float fill, string text)

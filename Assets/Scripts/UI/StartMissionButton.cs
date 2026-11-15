@@ -44,16 +44,7 @@ public class StartMissionButton : MonoBehaviour
     {
         if (MissionManager.Instance == null) return;
 
-        var loadout = MissionManager.Instance.currentLoadout;
-
-        bool hasGrowingSystem = loadout.selectedComponents
-            .Exists(c => c.category == ComponentCategory.GrowingSystem);
-
-
-        bool hasLander = loadout.selectedComponents
-      .Exists(c => c.componentType == ComponentType.Lander_Basic);
-
-        button.interactable = hasGrowingSystem && hasLander;
+        button.interactable = MissionManager.Instance.CanStartMission();
     }
 
     private void UpdateButtonText()
@@ -66,7 +57,9 @@ public class StartMissionButton : MonoBehaviour
 
     private void OnClick()
     {
-        if (MissionManager.Instance == null) return;
+        if (MissionManager.Instance == null || !MissionManager.Instance.CanStartMission())
+            return;
+
         SceneManager.LoadScene("MissionStage");
     }
 }

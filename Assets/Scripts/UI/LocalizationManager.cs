@@ -91,7 +91,7 @@ public class LocalizationManager : MonoBehaviour
             texts["science"] = "Dane naukowe";
             texts["growth"] = "Wzrost roślin";
             texts["no_components"] = "Brak wybranych komponentów";
-            texts["info_growing_system"] = "Aby wystartować, wybierz system uprawy i lądownik.";
+            texts["info_growing_system"] = "Aby wystartować, wybierz system uprawy, lądownik oraz zapewnij dodatnią moc.";
             texts["negative_power"] = "Ujemna moc: stacja nie będzie samowystarczalna.";
 
             // Kategorie
@@ -204,7 +204,7 @@ public class LocalizationManager : MonoBehaviour
             texts["science"] = "Science Data";
             texts["growth"] = "Plant Growth";
             texts["no_components"] = "No components selected";
-            texts["info_growing_system"] = "To start, select a growing system and a lander.";
+            texts["info_growing_system"] = "To start, select a growing system, a lander, and ensure positive power.";
             texts["negative_power"] = "Negative power: the station will not be self-sustainable.";
 
             // Categories
