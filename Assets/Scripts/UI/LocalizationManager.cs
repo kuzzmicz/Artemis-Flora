@@ -187,6 +187,16 @@ public class LocalizationManager : MonoBehaviour
             texts["fb_duststorm_2"] = "Kontynuowano obserwację paneli. Warstwa pyłu nadal ogranicza ich wydajność.";
             texts["fb_default"] = "Podjęto decyzję operacyjną.";
 
+            // Mission Results
+            texts["result_reason_success"] = "Misja zakończona sukcesem (14/14 dni).";
+            texts["result_reason_power"] = "Porażka: wyczerpano energię (0 W).";
+            texts["result_reason_growth"] = "Porażka: obumarcie uprawy (0% wzrostu).";
+            texts["result_reason_unknown"] = "Misja zakończona.";
+            texts["result_score"] = "WYNIK MISJI";
+            texts["result_growth"] = "WZROST ROŚLIN";
+            texts["result_science"] = "DANE NAUKOWE";
+            texts["result_days"] = "dni";
+
             LoadPolishEvents();
         }
         else
@@ -299,6 +309,16 @@ public class LocalizationManager : MonoBehaviour
             texts["fb_duststorm_1"] = "Power consumption reduced to compensate for lower panel output.";
             texts["fb_duststorm_2"] = "Solar panels kept under observation. Dust continued to reduce efficiency.";
             texts["fb_default"] = "Operational decision made.";
+
+            // Mission Results
+            texts["result_reason_success"] = "Mission completed successfully (14/14 days).";
+            texts["result_reason_power"] = "Failure: power depleted (0 W).";
+            texts["result_reason_growth"] = "Failure: crop died (0% growth).";
+            texts["result_reason_unknown"] = "Mission ended.";
+            texts["result_score"] = "MISSION SCORE";
+            texts["result_growth"] = "PLANT GROWTH";
+            texts["result_science"] = "SCIENCE DATA";
+            texts["result_days"] = "days";
 
             LoadEnglishEvents();
         }

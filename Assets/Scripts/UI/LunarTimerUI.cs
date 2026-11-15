@@ -12,10 +12,12 @@ public class LunarTimerUI : MonoBehaviour
     public int totalLunarDays = 14;
 
     private float elapsedTime;
+    private bool missionCompleted = false;
 
     void Start()
     {
         elapsedTime = 0f;
+        missionCompleted = false;
 
         if (totalDaysText != null)
             totalDaysText.text = $"/ {totalLunarDays} Days";
@@ -25,11 +27,27 @@ public class LunarTimerUI : MonoBehaviour
 
     void Update()
     {
+        if (missionCompleted) return;
+
         elapsedTime = Mathf.Min(elapsedTime + Time.deltaTime, missionDurationSeconds);
-        RefreshUI();
+        int currentDay = RefreshUI();
+
+        if (EventManager.Instance != null)
+        {
+            EventManager.Instance.UpdateMissionProgress(elapsedTime, currentDay, totalLunarDays);
+        }
+
+        if (elapsedTime >= missionDurationSeconds)
+        {
+            missionCompleted = true;
+            if (EventManager.Instance != null)
+            {
+                EventManager.Instance.CompleteMission();
+            }
+        }
     }
 
-    void RefreshUI()
+    int RefreshUI()
     {
         float progress = missionDurationSeconds > 0f
             ? Mathf.Clamp01(elapsedTime / missionDurationSeconds)
@@ -42,5 +60,7 @@ public class LunarTimerUI : MonoBehaviour
 
         if (progressBar != null)
             progressBar.fillAmount = progress;
+
+        return currentDay;
     }
 }

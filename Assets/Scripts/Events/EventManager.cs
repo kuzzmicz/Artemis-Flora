@@ -22,6 +22,10 @@ public class EventManager : MonoBehaviour
 
     public bool isMissionOver { get; private set; }
     public bool missionFailed { get; private set; }
+    public string missionEndReasonKey { get; private set; } = string.Empty;
+    public float missionElapsedSeconds { get; private set; }
+    public int missionDaysReached { get; private set; } = 1;
+    public int missionTotalDays { get; private set; } = 14;
 
     private bool eventsRunning = false;
     private Coroutine eventCoroutine;
@@ -35,21 +39,71 @@ public class EventManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Time.timeScale = 1f;
+
+        if (scene.name == "MissionStage")
+        {
+            StartMission();
+        }
+        else
+        {
+            StopEvents();
+        }
     }
 
     private void Start()
     {
-       
-        if (MissionManager.Instance != null)
+        if (!eventsRunning && !isMissionOver && SceneManager.GetActiveScene().name == "MissionStage")
+        {
+            StartMission();
+        }
+    }
+
+    public void StartMission()
+    {
+        ResetMissionState();
+
+        if (MissionManager.Instance != null && MissionManager.Instance.currentLoadout != null)
         {
             var loadout = MissionManager.Instance.currentLoadout;
             currentGrowth = loadout.TotalGrowth;
             currentReliability = loadout.TotalReliability;
             currentScience = loadout.TotalScience;
-            currentPower = loadout.TotalPower;
+            currentPower = Mathf.Max(0f, loadout.TotalPower);
         }
 
         StartEvents();
+    }
+
+    public void ResetMissionState()
+    {
+        StopEvents();
+        isMissionOver = false;
+        missionFailed = false;
+        missionEndReasonKey = string.Empty;
+        missionElapsedSeconds = 0f;
+        missionDaysReached = 1;
+        missionTotalDays = 14;
+    }
+
+    public void UpdateMissionProgress(float elapsedSeconds, int currentDay, int totalDays)
+    {
+        missionElapsedSeconds = elapsedSeconds;
+        missionDaysReached = currentDay;
+        missionTotalDays = totalDays;
     }
 
     public void StartEvents()
@@ -162,18 +216,33 @@ public class EventManager : MonoBehaviour
 
         if (currentPower <= 0f)
         {
-            FailMission();
+            FailMission("result_reason_power");
+        }
+        else if (currentGrowth <= 0f)
+        {
+            FailMission("result_reason_growth");
         }
     }
 
-    public void FailMission()
+    public void CompleteMission(string reasonKey = "result_reason_success")
+    {
+        EndMission(failed: false, reasonKey: reasonKey);
+    }
+
+    public void FailMission(string reasonKey = "result_reason_power")
+    {
+        EndMission(failed: true, reasonKey: reasonKey);
+    }
+
+    private void EndMission(bool failed, string reasonKey)
     {
         if (isMissionOver) return;
 
         isMissionOver = true;
-        missionFailed = true;
+        missionFailed = failed;
+        missionEndReasonKey = reasonKey;
         StopEvents();
         Time.timeScale = 1f;
-        SceneManager.LoadScene("ResultsStage");
+        SceneManager.LoadScene("MissionResults");
     }
 }
