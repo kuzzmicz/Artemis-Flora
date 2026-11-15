@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,44 +13,92 @@ public class CategoryButton : MonoBehaviour
     private Button button;
     private Image image;
 
-    private Color normalColor = new Color(1f, 1f, 1);
-    private Color activeColor = new Color(0.2f, 0.45f, 0.7f);
+    private LocalizationManager localization;
+
+    private Color normalColor =
+        new Color(0.15f, 0.28f, 0.36f);
+
+    private Color activeColor =
+        new Color(0f, 0.87f, 0.65f);
 
     private void Awake()
     {
         button = GetComponent<Button>();
         image = GetComponent<Image>();
-        button.onClick.AddListener(OnClick);
+
+        if (button != null)
+            button.onClick.AddListener(OnClick);
     }
 
     private void Start()
     {
+        localization = LocalizationManager.Instance;
+
+        if (localization != null)
+        {
+            // Reagujemy na zmianę języka!
+            localization.OnLanguageChanged += UpdateText;
+        }
+
         UpdateText();
+        UpdateVisual();
     }
 
     private void OnEnable()
     {
         UpdateText();
+        UpdateVisual();
+    }
+
+    private void OnDestroy()
+    {
+        if (localization != null)
+            localization.OnLanguageChanged -= UpdateText;
+
+        if (button != null)
+            button.onClick.RemoveListener(OnClick);
+    }
+
+    public void Setup(
+        ComponentCategory newCategory,
+        ComponentListUI targetList,
+        bool all = false)
+    {
+        category = newCategory;
+        listUI = targetList;
+        showAll = all;
+
+        UpdateText();
+        UpdateVisual();
     }
 
     private void UpdateText()
     {
-        if (buttonText == null || LocalizationManager.Instance == null) return;
+        if (buttonText == null ||
+            LocalizationManager.Instance == null)
+            return;
+
+        var loc = LocalizationManager.Instance;
+
+        string key;
 
         if (showAll)
         {
-            buttonText.text = LocalizationManager.Instance.Get("cat_all");
+            key = "cat_all";
         }
         else
         {
-            string key = "cat_" + category.ToString().ToLower();
-            buttonText.text = LocalizationManager.Instance.Get(key);
+            key = "cat_" +
+                category.ToString().ToLowerInvariant();
         }
+
+        buttonText.text = loc.Get(key);
     }
 
     private void OnClick()
     {
-        if (listUI == null) return;
+        if (listUI == null)
+            return;
 
         if (showAll)
             listUI.ShowAll();
@@ -64,17 +113,16 @@ public class CategoryButton : MonoBehaviour
 
     public void UpdateVisual()
     {
-        bool isActive = false;
+        if (listUI == null)
+            return;
 
-        if (listUI != null)
-        {
-            if (showAll)
-                isActive = listUI.IsShowingAll();
-            else
-                isActive = listUI.IsShowingCategory(category);
-        }
+        bool isActive = showAll
+            ? listUI.IsShowingAll()
+            : listUI.IsShowingCategory(category);
 
         if (image != null)
-            image.color = isActive ? activeColor : normalColor;
+            image.color = isActive
+                ? activeColor
+                : normalColor;
     }
 }

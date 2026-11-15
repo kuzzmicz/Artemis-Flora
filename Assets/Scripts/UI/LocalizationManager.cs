@@ -32,6 +32,7 @@ public class LocalizationManager : MonoBehaviour
     {
         currentLanguage = lang;
         LoadLanguage();
+
         OnLanguageChanged?.Invoke();
     }
 

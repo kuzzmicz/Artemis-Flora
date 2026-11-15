@@ -40,6 +40,8 @@ public class ComponentButton : MonoBehaviour
 
     private void OnDisable()
     {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshText;
         if (MissionManager.Instance != null)
             MissionManager.Instance.OnLoadoutChanged -= UpdateVisual;
     }
@@ -130,6 +132,8 @@ public class ComponentButton : MonoBehaviour
 
     public void RefreshText()
     {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged += RefreshText;
         UpdateVisual();
     }
 
