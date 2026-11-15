@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EventManager : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class EventManager : MonoBehaviour
     public float currentReliability = 0.8f;
     public int currentScience = 0;
     public float currentPower = 0f;
+
+    public bool isMissionOver { get; private set; }
+    public bool missionFailed { get; private set; }
 
     private bool eventsRunning = false;
     private Coroutine eventCoroutine;
@@ -154,5 +158,22 @@ public class EventManager : MonoBehaviour
         currentGrowth = Mathf.Clamp01(currentGrowth);
         currentReliability = Mathf.Clamp01(currentReliability);
         currentScience = Mathf.Max(0, currentScience);
+        currentPower = Mathf.Max(0f, currentPower);
+
+        if (currentPower <= 0f)
+        {
+            FailMission();
+        }
+    }
+
+    public void FailMission()
+    {
+        if (isMissionOver) return;
+
+        isMissionOver = true;
+        missionFailed = true;
+        StopEvents();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("ResultsStage");
     }
 }
