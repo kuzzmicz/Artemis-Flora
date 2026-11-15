@@ -31,4 +31,4 @@ MonoBehaviour:
   reliabilityChangeC: 0
   scienceChangeC: 4
   powerChangeC: -2
-  baseWeight: 100
+  baseWeight: 1.2
