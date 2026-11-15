@@ -72,6 +72,14 @@ public class AppFunFact : MonoBehaviour
             return;
         }
 
+        Transform upgradePanel = FindMonitorPanel()?.Find("UpgradePanel");
+        if (upgradePanel != null)
+        {
+            upgradePanel.gameObject.SetActive(false);
+        }
+
+        outputText.gameObject.SetActive(true);
+
         if (LocalizationManager.Instance == null)
         {
             var existingManager = FindObjectOfType<LocalizationManager>();
