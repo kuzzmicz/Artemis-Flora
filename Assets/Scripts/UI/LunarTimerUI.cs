@@ -16,6 +16,7 @@ public class LunarTimerUI : MonoBehaviour
 
     private float elapsedTime = 0f;
     private bool isPaused = false;
+    private bool missionCompleted = false;
 
     public bool IsPaused => isPaused;
 
@@ -23,6 +24,7 @@ public class LunarTimerUI : MonoBehaviour
     {
         elapsedTime = 0f;
         isPaused = false;
+        missionCompleted = false;
 
         if (totalDaysText != null)
             totalDaysText.text = $"/ {totalLunarDays} Days";
@@ -32,7 +34,7 @@ public class LunarTimerUI : MonoBehaviour
 
     private void Update()
     {
-        if (isPaused)
+        if (isPaused || missionCompleted)
             return;
 
         elapsedTime = Mathf.Min(
@@ -40,7 +42,21 @@ public class LunarTimerUI : MonoBehaviour
             missionDurationSeconds
         );
 
-        RefreshUI();
+        int currentDay = RefreshUI();
+
+        if (EventManager.Instance != null)
+        {
+            EventManager.Instance.UpdateMissionProgress(elapsedTime, currentDay, totalLunarDays);
+        }
+
+        if (elapsedTime >= missionDurationSeconds)
+        {
+            missionCompleted = true;
+            if (EventManager.Instance != null)
+            {
+                EventManager.Instance.CompleteMission();
+            }
+        }
     }
 
     public void PauseTimer()
@@ -55,7 +71,7 @@ public class LunarTimerUI : MonoBehaviour
         Debug.Log("LunarTimerUI: Timer wznowiony");
     }
 
-    private void RefreshUI()
+    private int RefreshUI()
     {
         float progress = missionDurationSeconds > 0f
             ? Mathf.Clamp01(
@@ -73,5 +89,7 @@ public class LunarTimerUI : MonoBehaviour
 
         if (progressBar != null)
             progressBar.fillAmount = progress;
+
+        return currentDay;
     }
 }
