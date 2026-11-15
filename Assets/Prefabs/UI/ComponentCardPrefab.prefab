@@ -97,12 +97,17 @@ MonoBehaviour:
   nameText: {fileID: 464178842521899298}
   statsText: {fileID: 1470974161790828961}
   addButtonText: {fileID: 1248698056190016177}
-  componentIcon: {fileID: 0}
-  cardBackground: {fileID: 0}
+  componentIcon: {fileID: 3490543034940250218}
+  cardBackground: {fileID: 1435491891529269412}
   addButton: {fileID: 2294310256199760240}
-  normalColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
-  selectedColor: {r: 0.15, g: 0.45, b: 0.28, a: 1}
-  blockedColor: {r: 0.12, g: 0.12, b: 0.12, a: 0.55}
+  growingSystemsIcon: {fileID: -7587188608886689913, guid: ebf5c2b6007662f44847f4e64d3ff473, type: 3}
+  structureIcon: {fileID: -9004384180585277275, guid: c7ddba28572532848baad62dbdb920f2, type: 3}
+  powerIcon: {fileID: 7917552171308851352, guid: a3db8280fa002cc4396665d7e967885a, type: 3}
+  communicationIcon: {fileID: -5676723661487931848, guid: 843b6c6d83e94cd4cb8995786acbf482, type: 3}
+  scienceIcon: {fileID: 4761335489206457331, guid: db5a33bc4f0f8de49b11eaaeddeacf96, type: 3}
+  normalColor: {r: 0.2578616, g: 0.2578616, b: 0.2578616, a: 1}
+  selectedColor: {r: 0.68238986, g: 1, b: 0.7389594, a: 1}
+  blockedColor: {r: 0.20754719, g: 0, b: 0, a: 0.55}
 --- !u!1 &1064716486262406775
 GameObject:
   m_ObjectHideFlags: 0

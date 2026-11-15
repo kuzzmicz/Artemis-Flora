@@ -17,6 +17,13 @@ public class ComponentButton : MonoBehaviour
     public Image cardBackground;
     public Button addButton;
 
+    [Header("Category Icons")]
+    public Sprite growingSystemsIcon;
+    public Sprite structureIcon;
+    public Sprite powerIcon;
+    public Sprite communicationIcon;
+    public Sprite scienceIcon;
+
     [Header("Colors")]
     public Color normalColor = new Color(0.13f, 0.22f, 0.30f);
     public Color selectedColor = new Color(0.15f, 0.45f, 0.28f);
@@ -35,6 +42,9 @@ public class ComponentButton : MonoBehaviour
         if (MissionManager.Instance != null)
             MissionManager.Instance.OnLoadoutChanged += UpdateVisual;
 
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged += RefreshText;
+
         UpdateVisual();
     }
 
@@ -42,21 +52,78 @@ public class ComponentButton : MonoBehaviour
     {
         if (LocalizationManager.Instance != null)
             LocalizationManager.Instance.OnLanguageChanged -= RefreshText;
+
         if (MissionManager.Instance != null)
             MissionManager.Instance.OnLoadoutChanged -= UpdateVisual;
+    }
+
+    private void OnDestroy()
+    {
+        if (addButton != null)
+            addButton.onClick.RemoveListener(OnClick);
     }
 
     public void Setup(MissionComponent comp)
     {
         component = comp;
 
-        if (componentIcon != null)
+        UpdateComponentIcon();
+        UpdateVisual();
+    }
+
+    private void UpdateComponentIcon()
+    {
+        if (componentIcon == null)
+            return;
+
+        if (component == null)
         {
-            componentIcon.sprite = comp.icon;
-            componentIcon.enabled = comp.icon != null;
+            componentIcon.sprite = null;
+            componentIcon.enabled = false;
+            return;
         }
 
-        UpdateVisual();
+        Sprite selectedIcon = null;
+
+        string category = component.category
+            .ToString()
+            .Replace(" ", "")
+            .Replace("_", "")
+            .ToLowerInvariant();
+
+        switch (category)
+        {
+            case "growingsystems":
+            case "growingsystem":
+            case "growing":
+            case "growthsystems":
+            case "cultivation":
+                selectedIcon = growingSystemsIcon;
+                break;
+
+            case "structure":
+                selectedIcon = structureIcon;
+                break;
+
+            case "power":
+                selectedIcon = powerIcon;
+                break;
+
+            case "communication":
+                selectedIcon = communicationIcon;
+                break;
+
+            case "science":
+                selectedIcon = scienceIcon;
+                break;
+        }
+
+        if (selectedIcon == null)
+            selectedIcon = component.icon;
+
+        componentIcon.sprite = selectedIcon;
+        componentIcon.enabled = selectedIcon != null;
+        componentIcon.preserveAspect = true;
     }
 
     private void OnClick()
@@ -66,6 +133,9 @@ public class ComponentButton : MonoBehaviour
 
         var manager = MissionManager.Instance;
         var loadout = manager.currentLoadout;
+
+        if (loadout == null)
+            return;
 
         if (loadout.HasComponent(component))
             manager.RemoveComponent(component);
@@ -82,6 +152,9 @@ public class ComponentButton : MonoBehaviour
 
         var manager = MissionManager.Instance;
         var loadout = manager.currentLoadout;
+
+        if (loadout == null)
+            return;
 
         bool isSelected = loadout.HasComponent(component);
 
@@ -112,7 +185,6 @@ public class ComponentButton : MonoBehaviour
                 $"{component.power:+0.#;-0.#;0}";
         }
 
-
         if (addButtonText != null)
         {
             if (isSelected)
@@ -142,15 +214,12 @@ public class ComponentButton : MonoBehaviour
             }
         }
 
-
         if (addButton != null)
             addButton.interactable = isSelected || canAfford;
     }
 
     public void RefreshText()
     {
-        if (LocalizationManager.Instance != null)
-            LocalizationManager.Instance.OnLanguageChanged += RefreshText;
         UpdateVisual();
     }
 
@@ -161,7 +230,8 @@ public class ComponentButton : MonoBehaviour
 
         string result = LocalizationManager.Instance.Get(key);
 
-        if (string.IsNullOrEmpty(result) || result.StartsWith("["))
+        if (string.IsNullOrEmpty(result) ||
+            result.StartsWith("["))
             return fallback;
 
         return result;
@@ -172,7 +242,8 @@ public class ComponentButton : MonoBehaviour
         if (comp == null)
             return "";
 
-        string key = "comp_" + comp.componentType.ToString().ToLower();
+        string key = "comp_" +
+            comp.componentType.ToString().ToLower();
 
         return GetText(key, comp.displayName);
     }
