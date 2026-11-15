@@ -4143,12 +4143,12 @@ RectTransform:
   - {fileID: 707312277}
   - {fileID: 1010164409}
   - {fileID: 1617796275}
+  - {fileID: 1118795658}
   - {fileID: 1970004590}
   - {fileID: 942029814}
   - {fileID: 345014326}
   - {fileID: 1764402675}
   - {fileID: 2116522134}
-  - {fileID: 1118795658}
   - {fileID: 2055135150}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4897,7 +4897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AppUpgrade
   availablePoints: 8
-  upgradeCosts: 010000000200000003000000
+  upgradeCosts: 010000000200000003000000i
   growthPerUpgrade: 0.08
   powerPerUpgrade: 10
   reliabilityPerUpgrade: 0.08
