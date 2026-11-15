@@ -198,6 +198,18 @@ public class LocalizationManager : MonoBehaviour
             texts["fb_default"] = "Podjęto decyzję operacyjną.";
             texts["fb_pump_success"] = "Sukces! Pompa została naprawiona.";
             texts["fb_pump_fail"] = "Naprawa nieudana. Rośliny ucierpiały.";
+
+            // Mission Results
+            texts["result_reason_success"] = "Misja zakończona sukcesem (14/14 dni).";
+            texts["result_reason_power"] = "Porażka: wyczerpano energię (0 W).";
+            texts["result_reason_growth"] = "Porażka: obumarcie uprawy (0% wzrostu).";
+            texts["result_reason_unknown"] = "Misja zakończona.";
+            texts["result_score"] = "WYNIK MISJI";
+            texts["result_growth"] = "WZROST ROŚLIN";
+            texts["result_science"] = "DANE NAUKOWE";
+            texts["result_days"] = "dni";
+            texts["result_telemetry"] = "TELEMETRIA KOŃCOWA";
+
             LoadPolishEvents();
         }
         else
@@ -321,6 +333,18 @@ public class LocalizationManager : MonoBehaviour
             texts["fb_default"] = "Operational decision made.";
             texts["fb_pump_success"] = "Repair successful! The pump is working.";
             texts["fb_pump_fail"] = "Repair failed. Plants suffered.";
+
+            // Mission Results
+            texts["result_reason_success"] = "Mission completed successfully (14/14 days).";
+            texts["result_reason_power"] = "Failure: power depleted (0 W).";
+            texts["result_reason_growth"] = "Failure: crop died (0% growth).";
+            texts["result_reason_unknown"] = "Mission ended.";
+            texts["result_score"] = "MISSION SCORE";
+            texts["result_growth"] = "PLANT GROWTH";
+            texts["result_science"] = "SCIENCE DATA";
+            texts["result_days"] = "days";
+            texts["result_telemetry"] = "FINAL TELEMETRY";
+
             LoadEnglishEvents();
         }
     }

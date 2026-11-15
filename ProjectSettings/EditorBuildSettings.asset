@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MissionStage.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/ResultsStage.unity
-    guid: da6e2bd73c80d294cab26899377cb1f4
+    path: Assets/Scenes/MissionResults.unity
+    guid: 3bc7053ed5045354c81274c59f3ec79f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
