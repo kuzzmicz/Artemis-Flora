@@ -22,6 +22,15 @@ public class EventUI : MonoBehaviour
     public TextMeshProUGUI choiceBText;
     public TextMeshProUGUI choiceCText;
 
+    [Header("NASA Science Fact")]
+    public GameObject nasaFactPanel;
+    public Button nasaFactButton;
+    public Button nasaFactCloseButton;
+    public Button nasaSourceButton;
+    public TextMeshProUGUI nasaFactTitleText;
+    public TextMeshProUGUI nasaFactDescriptionText;
+    public TextMeshProUGUI nasaFactImportanceText;
+
     [Header("Feedback")]
     public TextMeshProUGUI feedbackText;
 
@@ -32,6 +41,14 @@ public class EventUI : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        if (nasaFactButton != null)
+            nasaFactButton.onClick.AddListener(OpenNasaFact);
+        if (nasaFactCloseButton != null)
+            nasaFactCloseButton.onClick.AddListener(CloseNasaFact);
+        if (nasaSourceButton != null)
+            nasaSourceButton.onClick.AddListener(OpenNasaSource);
+        if (nasaFactPanel != null)
+            nasaFactPanel.SetActive(false);
 
         if (eventPanel != null)
             eventPanel.SetActive(false);
@@ -43,6 +60,8 @@ public class EventUI : MonoBehaviour
             return;
 
         currentEvent = ev;
+        CloseNasaFact();
+        RefreshNasaFact();
 
         string baseKey =
             "event_" + ev.eventType.ToString().ToLowerInvariant();
@@ -76,6 +95,84 @@ public class EventUI : MonoBehaviour
             eventPanel.SetActive(true);
 
         Time.timeScale = 0f;
+    }
+
+    private void RefreshNasaFact()
+    {
+        if (currentEvent == null) return;
+
+        bool english = LocalizationManager.Instance != null &&
+            LocalizationManager.Instance.currentLanguage == LocalizationManager.Language.English;
+
+        string title = english ? currentEvent.nasaFactTitleEN : currentEvent.nasaFactTitlePL;
+        string fact = english ? currentEvent.nasaFactEN : currentEvent.nasaFactPL;
+        string importance = english ? currentEvent.nasaImportanceEN : currentEvent.nasaImportancePL;
+
+        if (string.IsNullOrWhiteSpace(title)) title = currentEvent.nasaFactTitlePL;
+        if (string.IsNullOrWhiteSpace(fact)) fact = currentEvent.nasaFactPL;
+        if (string.IsNullOrWhiteSpace(importance)) importance = currentEvent.nasaImportancePL;
+
+        if (nasaFactTitleText != null) nasaFactTitleText.text = title;
+        if (nasaFactDescriptionText != null) nasaFactDescriptionText.text = fact;
+        if (nasaFactImportanceText != null) nasaFactImportanceText.text = importance;
+
+        if (nasaSourceButton != null)
+            nasaSourceButton.gameObject.SetActive(!string.IsNullOrWhiteSpace(currentEvent.nasaSourceURL));
+
+        if (nasaFactButton != null)
+            nasaFactButton.gameObject.SetActive(!string.IsNullOrWhiteSpace(fact));
+    }
+
+    private void OnEnable()
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged += RefreshLanguage;
+    }
+
+    private void OnDisable()
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshLanguage;
+    }
+
+    private void RefreshLanguage()
+    {
+        if (currentEvent == null) return;
+        string key = "event_" + currentEvent.eventType.ToString().ToLowerInvariant();
+
+        if (titleText != null)
+            titleText.text = GetTranslatedText(key + "_name", currentEvent.eventName);
+        if (descriptionText != null)
+            descriptionText.text = GetTranslatedText(key + "_desc", currentEvent.description);
+        if (choiceAText != null)
+            choiceAText.text = GetTranslatedText(key + "_a", currentEvent.choiceA);
+        if (choiceBText != null)
+            choiceBText.text = GetTranslatedText(key + "_b", currentEvent.choiceB);
+        if (choiceCText != null && choiceCButton != null && choiceCButton.gameObject.activeSelf)
+            choiceCText.text = GetTranslatedText(key + "_c", currentEvent.choiceC);
+
+        RefreshNasaFact();
+    }
+
+    public void OpenNasaFact()
+    {
+        if (currentEvent == null || miniGameInProgress || nasaFactPanel == null) return;
+        RefreshNasaFact();
+        nasaFactPanel.SetActive(true);
+        nasaFactPanel.transform.SetAsLastSibling();
+    }
+
+    public void CloseNasaFact()
+    {
+        if (nasaFactPanel != null) nasaFactPanel.SetActive(false);
+    }
+
+    public void OpenNasaSource()
+    {
+        if (currentEvent != null &&
+            System.Uri.TryCreate(currentEvent.nasaSourceURL, System.UriKind.Absolute, out var uri) &&
+            (uri.Scheme == System.Uri.UriSchemeHttps || uri.Scheme == System.Uri.UriSchemeHttp))
+            Application.OpenURL(uri.AbsoluteUri);
     }
 
     private string GetTranslatedText(
@@ -384,6 +481,7 @@ public class EventUI : MonoBehaviour
 
     private void CloseEvent()
     {
+        CloseNasaFact();
         if (eventPanel != null)
             eventPanel.SetActive(false);
 
@@ -394,6 +492,9 @@ public class EventUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (nasaFactButton != null) nasaFactButton.onClick.RemoveListener(OpenNasaFact);
+        if (nasaFactCloseButton != null) nasaFactCloseButton.onClick.RemoveListener(CloseNasaFact);
+        if (nasaSourceButton != null) nasaSourceButton.onClick.RemoveListener(OpenNasaSource);
         if (Instance == this)
             Instance = null;
     }

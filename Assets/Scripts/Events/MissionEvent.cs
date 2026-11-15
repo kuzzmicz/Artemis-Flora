@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Event", menuName = "Mission/Event")]
@@ -5,7 +6,8 @@ public class MissionEvent : ScriptableObject
 {
     public string eventName;
 
-    [TextArea(3, 5)] public string description;
+    [TextArea(3, 5)]
+    public string description;
 
     [Header("Identification")]
     public EventType eventType;
@@ -16,7 +18,7 @@ public class MissionEvent : ScriptableObject
     [Header("Choices")]
     public string choiceA;
     public string choiceB;
-    public string choiceC;          
+    public string choiceC;
 
     [Header("Effects of Choice A")]
     public float growthChangeA;
@@ -37,6 +39,27 @@ public class MissionEvent : ScriptableObject
     public float powerChangeC;
 
     [Header("Weighting")]
-    [Tooltip("Bazowa szansa pojawienia się eventu. Im wyższa, tym częstszy.")]
+    [Tooltip("Im wyzsza wartosc, tym czestszy event.")]
     public float baseWeight = 1f;
+
+    [Header("NASA Science Fact - Polish")]
+    public string nasaFactTitlePL;
+
+    [TextArea(4, 8)]
+    public string nasaFactPL;
+
+    [TextArea(3, 6)]
+    public string nasaImportancePL;
+
+    [Header("NASA Science Fact - English")]
+    public string nasaFactTitleEN;
+
+    [TextArea(4, 8)]
+    public string nasaFactEN;
+
+    [TextArea(3, 6)]
+    public string nasaImportanceEN;
+
+    [Header("NASA Source")]
+    public string nasaSourceURL;
 }

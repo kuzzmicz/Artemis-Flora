@@ -31,4 +31,11 @@ MonoBehaviour:
   reliabilityChangeC: 0
   scienceChangeC: 4
   powerChangeC: -2
-  baseWeight: 1.2
+  baseWeight: 100
+  nasaFactTitlePL: Ciekawostka od NASA
+  nasaFactPL: "NASA bada, jak skutecznie dostarcza\u0107 wod\u0119 i sk\u0142adniki od\u017Cywcze do korzeni ro\u015Blin w kosmosie. W eksperymentach Plant Water Management na ISS testowano systemy hydroponiczne wykorzystuj\u0105ce pompy, zawory i specjalnie zaprojektowane kana\u0142y przep\u0142ywu. Badania sprawdzaj\u0105 r\xF3wnie\u017C, jak wykorzysta\u0107 si\u0142y kapilarne do transportu cieczy, ograniczaj\u0105c zale\u017Cno\u015B\u0107 od urz\u0105dze\u0144 mechanicznych."
+  nasaImportancePL: 
+  nasaFactTitleEN: Nasa Science Fact
+  nasaFactEN: NASA studies how to deliver water and nutrients reliably to plant roots in space. Plant Water Management experiments aboard the ISS have tested hydroponic systems using pumps, valves, and specially designed flow channels. Researchers also investigate how capillary forces can transport liquids, potentially reducing dependence on mechanical equipment.
+  nasaImportanceEN: 
+  nasaSourceURL: https://science.nasa.gov/science-research/science-enabling-technology/technology-highlights/how-do-you-water-plants-in-space/?utm_source=chatgpt.com
