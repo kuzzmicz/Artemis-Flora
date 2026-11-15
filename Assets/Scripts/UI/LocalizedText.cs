@@ -18,11 +18,12 @@ public class LocalizedText : MonoBehaviour
 
     private void Start()
     {
-        localization = LocalizationManager.Instance;
+        localization = LocalizationManager.EnsureInstance();
 
         if (localization == null)
             return;
 
+        localization.OnLanguageChanged -= RefreshText;
         localization.OnLanguageChanged += RefreshText;
 
         RefreshText();

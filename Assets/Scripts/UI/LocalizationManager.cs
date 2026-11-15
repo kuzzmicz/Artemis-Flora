@@ -43,6 +43,34 @@ public class LocalizationManager : MonoBehaviour
             : Language.Polish);
     }
 
+    public static LocalizationManager EnsureInstance()
+    {
+        if (Instance == null)
+        {
+            LocalizationManager existing = FindAnyObjectByType<LocalizationManager>();
+            if (existing != null)
+            {
+                Instance = existing;
+            }
+            else
+            {
+                new GameObject("LocalizationManager").AddComponent<LocalizationManager>();
+            }
+        }
+
+        return Instance;
+    }
+
+    public static string GetText(string key, string fallback = "")
+    {
+        if (Instance == null)
+            return string.IsNullOrEmpty(fallback) ? $"[{key}]" : fallback;
+
+        return Instance.texts.TryGetValue(key, out string value)
+            ? value
+            : (string.IsNullOrEmpty(fallback) ? $"[{key}]" : fallback);
+    }
+
     public string Get(string key)
     {
         return texts.TryGetValue(key, out string value)
@@ -210,6 +238,31 @@ public class LocalizationManager : MonoBehaviour
             texts["result_days"] = "dni";
             texts["result_telemetry"] = "TELEMETRIA KOŃCOWA";
 
+            // Mission Stage
+            texts["stage_stats"] = "Statystyki";
+            texts["stage_power"] = "Moc:";
+            texts["stage_reliability"] = "Niezawodność:";
+            texts["stage_growth"] = "Wzrost roślin:";
+            texts["stage_science"] = "Punkty nauki:";
+            texts["stage_lunar_daylight"] = "DZIEŃ KSIĘŻYCOWY";
+            texts["stage_until_moon_night"] = "DO NOCY KSIĘŻYCOWEJ";
+            texts["stage_days"] = "Dni";
+            texts["stage_nasa_fact_btn"] = "CIEKAWOSTKA NASA";
+            texts["stage_nasa_source"] = "źródło";
+            texts["stage_back"] = "WRÓĆ";
+            texts["minigame_fire_status"] = "Ogniska: {0} | Czas: {1}s";
+            texts["minigame_fire_success"] = "Pożar ugaszony!";
+            texts["minigame_fire_fail"] = "Nie udało się ugasić pożaru!";
+            texts["minigame_timing_start"] = "Naciśnij SPACJĘ w zielonej strefie!";
+            texts["minigame_timing_prompt"] = "Naciśnij SPACJĘ! ({0}s)";
+            texts["minigame_timing_success"] = "Sukces!";
+            texts["minigame_timing_fail"] = "Nie udało się...";
+            texts["upgrade_points"] = "PKT: {0}";
+            texts["upgrade_fertilizer"] = "Nawóz (Wzrost roślin)";
+            texts["upgrade_reactor"] = "Awaryjny reaktor (Moc)";
+            texts["upgrade_repair_kit"] = "Zestaw naprawczy (Niezawodność)";
+            texts["upgrade_tier"] = "Poz. {0}\n({1} pkt)";
+
             LoadPolishEvents();
         }
         else
@@ -344,6 +397,31 @@ public class LocalizationManager : MonoBehaviour
             texts["result_science"] = "SCIENCE DATA";
             texts["result_days"] = "days";
             texts["result_telemetry"] = "FINAL TELEMETRY";
+
+            // Mission Stage
+            texts["stage_stats"] = "Stats";
+            texts["stage_power"] = "Power:";
+            texts["stage_reliability"] = "Reliability:";
+            texts["stage_growth"] = "Plant Growth:";
+            texts["stage_science"] = "Science Points:";
+            texts["stage_lunar_daylight"] = "LUNAR DAYLIGHT";
+            texts["stage_until_moon_night"] = "UNTIL MOON NIGHT";
+            texts["stage_days"] = "Days";
+            texts["stage_nasa_fact_btn"] = "NASA SCIENCE FACT";
+            texts["stage_nasa_source"] = "source";
+            texts["stage_back"] = "BACK";
+            texts["minigame_fire_status"] = "Fires: {0} | Time: {1}s";
+            texts["minigame_fire_success"] = "Fire extinguished!";
+            texts["minigame_fire_fail"] = "Failed to extinguish the fire!";
+            texts["minigame_timing_start"] = "Press SPACE in the green zone!";
+            texts["minigame_timing_prompt"] = "Press SPACE! ({0}s)";
+            texts["minigame_timing_success"] = "Success!";
+            texts["minigame_timing_fail"] = "Failed...";
+            texts["upgrade_points"] = "PTS: {0}";
+            texts["upgrade_fertilizer"] = "Fertilizer (Plant Growth)";
+            texts["upgrade_reactor"] = "Emergency Reactor (Power)";
+            texts["upgrade_repair_kit"] = "Repair Kit (Reliability)";
+            texts["upgrade_tier"] = "Lvl. {0}\n({1} pts)";
 
             LoadEnglishEvents();
         }

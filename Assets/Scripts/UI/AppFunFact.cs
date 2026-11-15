@@ -27,6 +27,23 @@ public class AppFunFact : MonoBehaviour
         EnsureOutputText();
     }
 
+    private void OnEnable()
+    {
+        if (LocalizationManager.Instance != null)
+        {
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshCurrentFact;
+            LocalizationManager.Instance.OnLanguageChanged += RefreshCurrentFact;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (LocalizationManager.Instance != null)
+        {
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshCurrentFact;
+        }
+    }
+
     private void EnsureOutputText()
     {
         Transform panel = FindMonitorPanel();
@@ -80,19 +97,25 @@ public class AppFunFact : MonoBehaviour
 
         outputText.gameObject.SetActive(true);
 
-        if (LocalizationManager.Instance == null)
+        LocalizationManager loc = LocalizationManager.EnsureInstance();
+        if (loc != null)
         {
-            var existingManager = FindObjectOfType<LocalizationManager>();
-            if (existingManager == null)
-            {
-                new GameObject("LocalizationManager").AddComponent<LocalizationManager>();
-            }
+            loc.OnLanguageChanged -= RefreshCurrentFact;
+            loc.OnLanguageChanged += RefreshCurrentFact;
         }
 
         currentIndex = (currentIndex + 1) % fun_fact_list.Length;
+        RefreshCurrentFact();
+    }
+
+    private void RefreshCurrentFact()
+    {
+        if (currentIndex < 0 || outputText == null || !outputText.gameObject.activeSelf)
+        {
+            return;
+        }
+
         string key = fun_fact_list[currentIndex];
-        outputText.text = LocalizationManager.Instance != null
-            ? LocalizationManager.Instance.Get(key)
-            : key;
+        outputText.text = LocalizationManager.GetText(key, key);
     }
 }

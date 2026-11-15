@@ -42,6 +42,7 @@ public class MiniGameFire : MonoBehaviour
     private bool isPlaying = false;
     private bool isClosing = false;
     private bool resumeTimerAfterGame = false;
+    private bool lastSuccess = false;
 
     private System.Action<bool> onComplete;
     private Coroutine spawnCoroutine;
@@ -61,6 +62,21 @@ public class MiniGameFire : MonoBehaviour
 
         if (panel != null)
             panel.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        if (LocalizationManager.Instance != null)
+        {
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshLanguage;
+            LocalizationManager.Instance.OnLanguageChanged += RefreshLanguage;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshLanguage;
     }
 
     public void StartFireGame(System.Action<bool> callback)
@@ -127,6 +143,13 @@ public class MiniGameFire : MonoBehaviour
                 IconFireExtinguisher.rectTransform.localRotation;
 
             extinguisherAnimating = true;
+        }
+
+        LocalizationManager loc = LocalizationManager.EnsureInstance();
+        if (loc != null)
+        {
+            loc.OnLanguageChanged -= RefreshLanguage;
+            loc.OnLanguageChanged += RefreshLanguage;
         }
 
         RefreshInfoText();
@@ -364,8 +387,33 @@ public class MiniGameFire : MonoBehaviour
         if (infoText == null)
             return;
 
-        infoText.text =
-            $"Ogniska: {firesLeft} | Czas: {timeLeft:F1}s";
+        string format = LocalizationManager.GetText(
+            "minigame_fire_status",
+            "Ogniska: {0} | Czas: {1}s"
+        );
+        infoText.text = string.Format(
+            format,
+            firesLeft,
+            timeLeft.ToString("F1")
+        );
+    }
+
+    private void RefreshResultText(bool success)
+    {
+        if (infoText == null)
+            return;
+
+        infoText.text = success
+            ? LocalizationManager.GetText("minigame_fire_success", "Pożar ugaszony!")
+            : LocalizationManager.GetText("minigame_fire_fail", "Nie udało się ugasić pożaru!");
+    }
+
+    private void RefreshLanguage()
+    {
+        if (isPlaying)
+            RefreshInfoText();
+        else if (isClosing)
+            RefreshResultText(lastSuccess);
     }
 
     private void EndGame(bool success)
@@ -375,6 +423,7 @@ public class MiniGameFire : MonoBehaviour
 
         isPlaying = false;
         isClosing = true;
+        lastSuccess = success;
         extinguisherAnimating = false;
 
         if (spawnCoroutine != null)
@@ -385,12 +434,7 @@ public class MiniGameFire : MonoBehaviour
 
         ClearFires();
 
-        if (infoText != null)
-        {
-            infoText.text = success
-                ? "Pożar ugaszony!"
-                : "Nie udało się ugasić pożaru!";
-        }
+        RefreshResultText(success);
 
         StartCoroutine(CloseAfterDelay(success));
     }
