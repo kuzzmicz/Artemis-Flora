@@ -68,4 +68,20 @@ public class MissionManager : MonoBehaviour
         currentLoadout.Clear();
         OnLoadoutChanged?.Invoke();
     }
+
+    public bool CanStartMission()
+    {
+        if (currentLoadout == null)
+            return false;
+
+        bool hasGrowingSystem = currentLoadout.selectedComponents
+            .Exists(c => c != null && c.category == ComponentCategory.GrowingSystem);
+
+        bool hasLander = currentLoadout.selectedComponents
+            .Exists(c => c != null && c.componentType == ComponentType.Lander_Basic);
+
+        bool hasPositivePower = currentLoadout.TotalPower > 0f;
+
+        return hasGrowingSystem && hasLander && hasPositivePower;
+    }
 }
