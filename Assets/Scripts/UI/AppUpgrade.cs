@@ -18,9 +18,13 @@ public class AppUpgrade : MonoBehaviour
 
     private class UpgradeBar
     {
+        public string localizationKey;
+        public string fallbackTitle;
+        public TMP_Text titleText;
         public int level;
         public Action applyUpgrade;
         public Button[] buttons;
+        public TMP_Text[] buttonLabels;
     }
 
     private UpgradeBar[] bars;
@@ -51,6 +55,23 @@ public class AppUpgrade : MonoBehaviour
 
         CreateUpgradePanel(monitorPanel);
         RefreshUI();
+    }
+
+    private void OnEnable()
+    {
+        if (LocalizationManager.Instance != null)
+        {
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshUI;
+            LocalizationManager.Instance.OnLanguageChanged += RefreshUI;
+        }
+
+        RefreshUI();
+    }
+
+    private void OnDisable()
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshUI;
     }
 
     private RectTransform CreateUIObject(string objectName, Transform parent, Vector2 pos, Vector2 size, params Type[] components)
@@ -85,17 +106,17 @@ public class AppUpgrade : MonoBehaviour
 
         bars = new[]
         {
-            CreateBarRow("Nawóz (Plant Growth)", 130f, () =>
+            CreateBarRow("Upgrade_Fertilizer", "upgrade_fertilizer", "Nawóz (Wzrost roślin)", 130f, () =>
             {
                 if (EventManager.Instance != null)
                     EventManager.Instance.currentGrowth = Mathf.Clamp01(EventManager.Instance.currentGrowth + growthPerUpgrade);
             }),
-            CreateBarRow("Awaryjny reaktor (Power)", 0f, () =>
+            CreateBarRow("Upgrade_Reactor", "upgrade_reactor", "Awaryjny reaktor (Moc)", 0f, () =>
             {
                 if (EventManager.Instance != null)
                     EventManager.Instance.currentPower += powerPerUpgrade;
             }),
-            CreateBarRow("Zestaw naprawczy (Reliability)", -130f, () =>
+            CreateBarRow("Upgrade_RepairKit", "upgrade_repair_kit", "Zestaw naprawczy (Niezawodność)", -130f, () =>
             {
                 if (EventManager.Instance != null)
                     EventManager.Instance.currentReliability = Mathf.Clamp01(EventManager.Instance.currentReliability + reliabilityPerUpgrade);
@@ -105,15 +126,19 @@ public class AppUpgrade : MonoBehaviour
         upgradePanel.SetActive(false);
     }
 
-    private UpgradeBar CreateBarRow(string title, float yPos, Action applyAction)
+    private UpgradeBar CreateBarRow(string rowName, string localizationKey, string fallbackTitle, float yPos, Action applyAction)
     {
-        Transform row = CreateUIObject(title, upgradePanel.transform, new Vector2(0f, yPos), new Vector2(940f, 100f), typeof(RectTransform));
-        CreateLabel(row, "Label", title, new Vector2(-290f, 0f), new Vector2(340f, 80f), 26f, TextAlignmentOptions.MidlineLeft);
+        Transform row = CreateUIObject(rowName, upgradePanel.transform, new Vector2(0f, yPos), new Vector2(940f, 100f), typeof(RectTransform));
+        TMP_Text rowLabel = CreateLabel(row, "Label", fallbackTitle, new Vector2(-290f, 0f), new Vector2(340f, 80f), 26f, TextAlignmentOptions.MidlineLeft);
 
         UpgradeBar bar = new UpgradeBar
         {
+            localizationKey = localizationKey,
+            fallbackTitle = fallbackTitle,
+            titleText = rowLabel,
             applyUpgrade = applyAction,
-            buttons = new Button[upgradeCosts.Length]
+            buttons = new Button[upgradeCosts.Length],
+            buttonLabels = new TMP_Text[upgradeCosts.Length]
         };
 
         for (int i = 0; i < upgradeCosts.Length; i++)
@@ -123,7 +148,7 @@ public class AppUpgrade : MonoBehaviour
             Button btn = btnRt.GetComponent<Button>();
             btn.targetGraphic = btnRt.GetComponent<Image>();
             btn.onClick.AddListener(() => BuyUpgrade(bar, tierIndex));
-            CreateLabel(btnRt, "Label", $"Poz. {i + 1}\n({upgradeCosts[i]} pkt)", Vector2.zero, new Vector2(170f, 64f), 22f, TextAlignmentOptions.Center);
+            bar.buttonLabels[i] = CreateLabel(btnRt, "Label", $"Poz. {i + 1}\n({upgradeCosts[i]} pkt)", Vector2.zero, new Vector2(170f, 64f), 22f, TextAlignmentOptions.Center);
             bar.buttons[i] = btn;
         }
 
@@ -143,14 +168,25 @@ public class AppUpgrade : MonoBehaviour
     private void RefreshUI()
     {
         if (pointsText != null)
-            pointsText.text = $"PKT: {availablePoints}";
+        {
+            string pointsFormat = LocalizationManager.GetText("upgrade_points", "PKT: {0}");
+            pointsText.text = string.Format(pointsFormat, availablePoints);
+        }
 
         if (bars == null) return;
 
+        string tierFormat = LocalizationManager.GetText("upgrade_tier", "Poz. {0}\n({1} pkt)");
+
         foreach (UpgradeBar bar in bars)
         {
+            if (bar.titleText != null)
+                bar.titleText.text = LocalizationManager.GetText(bar.localizationKey, bar.fallbackTitle);
+
             for (int i = 0; i < bar.buttons.Length; i++)
             {
+                if (bar.buttonLabels != null && bar.buttonLabels[i] != null)
+                    bar.buttonLabels[i].text = string.Format(tierFormat, i + 1, upgradeCosts[i]);
+
                 bool bought = i < bar.level;
                 bool canAfford = i == bar.level && availablePoints >= upgradeCosts[i];
 
@@ -166,6 +202,13 @@ public class AppUpgrade : MonoBehaviour
 
     public void OnClick()
     {
+        LocalizationManager loc = LocalizationManager.EnsureInstance();
+        if (loc != null)
+        {
+            loc.OnLanguageChanged -= RefreshUI;
+            loc.OnLanguageChanged += RefreshUI;
+        }
+
         if (funFactObject != null) funFactObject.SetActive(false);
         if (upgradePanel != null) upgradePanel.SetActive(true);
         RefreshUI();

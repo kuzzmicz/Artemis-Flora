@@ -34,6 +34,8 @@ public class MiniGameTiming : MonoBehaviour
     public float timeLimit = 8f;
 
     private bool isPlaying = false;
+    private bool isShowingResult = false;
+    private bool lastSuccess = false;
     private bool goingRight = true;
     private bool resumeTimerAfterGame = false;
 
@@ -48,6 +50,21 @@ public class MiniGameTiming : MonoBehaviour
 
         if (miniGamePanel != null)
             miniGamePanel.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        if (LocalizationManager.Instance != null)
+        {
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshLanguage;
+            LocalizationManager.Instance.OnLanguageChanged += RefreshLanguage;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshLanguage;
     }
 
     public void StartMiniGame(System.Action<bool> callback)
@@ -84,9 +101,17 @@ public class MiniGameTiming : MonoBehaviour
 
         onComplete = callback;
 
+        LocalizationManager loc = LocalizationManager.EnsureInstance();
+        if (loc != null)
+        {
+            loc.OnLanguageChanged -= RefreshLanguage;
+            loc.OnLanguageChanged += RefreshLanguage;
+        }
+
         timeLeft = timeLimit;
         currentValue = 0f;
         goingRight = true;
+        isShowingResult = false;
         isPlaying = true;
 
         toolAnimTime = 0f;
@@ -99,8 +124,10 @@ public class MiniGameTiming : MonoBehaviour
         miniGamePanel.SetActive(true);
 
         if (resultText != null)
-            resultText.text =
-                "Naciśnij SPACJĘ w zielonej strefie!";
+            resultText.text = LocalizationManager.GetText(
+                "minigame_timing_start",
+                "Naciśnij SPACJĘ w zielonej strefie!"
+            );
 
         if (pumpIcon != null)
         {
@@ -152,9 +179,7 @@ public class MiniGameTiming : MonoBehaviour
 
         timingSlider.value = currentValue;
 
-        if (resultText != null)
-            resultText.text =
-                $"Naciśnij SPACJĘ! ({timeLeft:F1}s)";
+        RefreshPromptText();
 
         if (toolAnimating && toolIcon != null)
         {
@@ -221,6 +246,36 @@ public class MiniGameTiming : MonoBehaviour
 #endif
     }
 
+    private void RefreshPromptText()
+    {
+        if (resultText == null)
+            return;
+
+        string format = LocalizationManager.GetText(
+            "minigame_timing_prompt",
+            "Naciśnij SPACJĘ! ({0}s)"
+        );
+        resultText.text = string.Format(format, timeLeft.ToString("F1"));
+    }
+
+    private void RefreshResultText()
+    {
+        if (resultText == null)
+            return;
+
+        resultText.text = lastSuccess
+            ? LocalizationManager.GetText("minigame_timing_success", "Sukces!")
+            : LocalizationManager.GetText("minigame_timing_fail", "Nie udało się...");
+    }
+
+    private void RefreshLanguage()
+    {
+        if (isPlaying)
+            RefreshPromptText();
+        else if (isShowingResult)
+            RefreshResultText();
+    }
+
     private void FinishMiniGame(bool timedOut)
     {
         if (!isPlaying)
@@ -234,9 +289,10 @@ public class MiniGameTiming : MonoBehaviour
             currentValue >= targetMin &&
             currentValue <= targetMax;
 
-        if (resultText != null)
-            resultText.text =
-                success ? "Sukces!" : "Nie udało się...";
+        lastSuccess = success;
+        isShowingResult = true;
+
+        RefreshResultText();
 
         if (success && pumpIcon != null &&
             fixedPumpSprite != null)
@@ -250,6 +306,8 @@ public class MiniGameTiming : MonoBehaviour
     private IEnumerator CloseAfterDelay(bool success)
     {
         yield return new WaitForSecondsRealtime(1.2f);
+
+        isShowingResult = false;
 
         if (toolIcon != null)
         {

@@ -563,6 +563,7 @@ GameObject:
   - component: {fileID: 228140440}
   - component: {fileID: 228140442}
   - component: {fileID: 228140441}
+  - component: {fileID: 2147000008}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2395,6 +2396,7 @@ GameObject:
   - component: {fileID: 736889722}
   - component: {fileID: 736889724}
   - component: {fileID: 736889723}
+  - component: {fileID: 2147000002}
   m_Layer: 5
   m_Name: PowerLabel
   m_TagString: Untagged
@@ -2607,6 +2609,7 @@ GameObject:
   - component: {fileID: 825127170}
   - component: {fileID: 825127172}
   - component: {fileID: 825127171}
+  - component: {fileID: 2147000006}
   m_Layer: 5
   m_Name: TimerLabel
   m_TagString: Untagged
@@ -3047,6 +3050,7 @@ GameObject:
   - component: {fileID: 955741721}
   - component: {fileID: 955741723}
   - component: {fileID: 955741722}
+  - component: {fileID: 2147000003}
   m_Layer: 5
   m_Name: ReliabilityLabel
   m_TagString: Untagged
@@ -4316,6 +4320,7 @@ GameObject:
   - component: {fileID: 1221225461}
   - component: {fileID: 1221225463}
   - component: {fileID: 1221225462}
+  - component: {fileID: 2147000004}
   m_Layer: 5
   m_Name: GrowthLabel
   m_TagString: Untagged
@@ -4453,6 +4458,7 @@ GameObject:
   - component: {fileID: 1242900814}
   - component: {fileID: 1242900816}
   - component: {fileID: 1242900815}
+  - component: {fileID: 2147000007}
   m_Layer: 5
   m_Name: TimerNightLabel
   m_TagString: Untagged
@@ -4677,6 +4683,7 @@ GameObject:
   - component: {fileID: 1278194277}
   - component: {fileID: 1278194279}
   - component: {fileID: 1278194278}
+  - component: {fileID: 2147000001}
   m_Layer: 5
   m_Name: StatsTitle
   m_TagString: Untagged
@@ -5822,6 +5829,7 @@ GameObject:
   - component: {fileID: 1467662832}
   - component: {fileID: 1467662834}
   - component: {fileID: 1467662833}
+  - component: {fileID: 2147000009}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6553,6 +6561,7 @@ GameObject:
   - component: {fileID: 1619505682}
   - component: {fileID: 1619505684}
   - component: {fileID: 1619505683}
+  - component: {fileID: 2147000005}
   m_Layer: 5
   m_Name: ScienceLabel
   m_TagString: Untagged
@@ -8645,6 +8654,7 @@ GameObject:
   - component: {fileID: 2019002949}
   - component: {fileID: 2019002951}
   - component: {fileID: 2019002950}
+  - component: {fileID: 2147000010}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -9594,6 +9604,136 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2147000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278194276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_stats
+--- !u!114 &2147000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736889721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_power
+--- !u!114 &2147000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955741720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_reliability
+--- !u!114 &2147000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221225460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_growth
+--- !u!114 &2147000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619505681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_science
+--- !u!114 &2147000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825127169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_lunar_daylight
+--- !u!114 &2147000007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242900813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_until_moon_night
+--- !u!114 &2147000008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228140439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_nasa_fact_btn
+--- !u!114 &2147000009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467662831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_nasa_source
+--- !u!114 &2147000010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019002948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: stage_back
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

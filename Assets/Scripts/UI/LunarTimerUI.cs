@@ -20,16 +20,45 @@ public class LunarTimerUI : MonoBehaviour
 
     public bool IsPaused => isPaused;
 
+    private void OnEnable()
+    {
+        if (LocalizationManager.Instance != null)
+        {
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshTotalDaysText;
+            LocalizationManager.Instance.OnLanguageChanged += RefreshTotalDaysText;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshTotalDaysText;
+    }
+
     private void Start()
     {
         elapsedTime = 0f;
         isPaused = false;
         missionCompleted = false;
 
-        if (totalDaysText != null)
-            totalDaysText.text = $"/ {totalLunarDays} Days";
+        LocalizationManager loc = LocalizationManager.EnsureInstance();
+        if (loc != null)
+        {
+            loc.OnLanguageChanged -= RefreshTotalDaysText;
+            loc.OnLanguageChanged += RefreshTotalDaysText;
+        }
 
+        RefreshTotalDaysText();
         RefreshUI();
+    }
+
+    private void RefreshTotalDaysText()
+    {
+        if (totalDaysText != null)
+        {
+            string daysLabel = LocalizationManager.GetText("stage_days", "Dni");
+            totalDaysText.text = $"/ {totalLunarDays} {daysLabel}";
+        }
     }
 
     private void Update()
