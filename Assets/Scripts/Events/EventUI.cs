@@ -44,30 +44,24 @@ public class EventUI : MonoBehaviour
 
         currentEvent = ev;
 
-        if (LocalizationManager.Instance != null)
-        {
-            string baseKey =
-                "event_" + ev.eventType.ToString().ToLowerInvariant();
+        string baseKey =
+            "event_" + ev.eventType.ToString().ToLowerInvariant();
 
-            titleText.text =
-                GetTranslatedText(baseKey + "_name", ev.eventName);
+        if (titleText != null)
+            titleText.text = GetTranslatedText(
+                baseKey + "_name", ev.eventName);
 
-            descriptionText.text =
-                GetTranslatedText(baseKey + "_desc", ev.description);
+        if (descriptionText != null)
+            descriptionText.text = GetTranslatedText(
+                baseKey + "_desc", ev.description);
 
-            choiceAText.text =
-                GetTranslatedText(baseKey + "_a", ev.choiceA);
+        if (choiceAText != null)
+            choiceAText.text = GetTranslatedText(
+                baseKey + "_a", ev.choiceA);
 
-            choiceBText.text =
-                GetTranslatedText(baseKey + "_b", ev.choiceB);
-        }
-        else
-        {
-            titleText.text = ev.eventName;
-            descriptionText.text = ev.description;
-            choiceAText.text = ev.choiceA;
-            choiceBText.text = ev.choiceB;
-        }
+        if (choiceBText != null)
+            choiceBText.text = GetTranslatedText(
+                baseKey + "_b", ev.choiceB);
 
         bool hasChoiceC = !string.IsNullOrEmpty(ev.choiceC);
 
@@ -75,14 +69,8 @@ public class EventUI : MonoBehaviour
             choiceCButton.gameObject.SetActive(hasChoiceC);
 
         if (hasChoiceC && choiceCText != null)
-        {
-            string key =
-                "event_" + ev.eventType.ToString().ToLowerInvariant()
-                + "_c";
-
-            choiceCText.text =
-                GetTranslatedText(key, ev.choiceC);
-        }
+            choiceCText.text = GetTranslatedText(
+                baseKey + "_c", ev.choiceC);
 
         if (eventPanel != null)
             eventPanel.SetActive(true);
@@ -90,19 +78,23 @@ public class EventUI : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    private string GetTranslatedText(string key, string fallback)
+    private string GetTranslatedText(
+        string key, string fallback)
     {
-        var loc = LocalizationManager.Instance;
+        LocalizationManager loc = LocalizationManager.Instance;
 
         if (loc == null)
             return fallback;
 
-        string text = loc.Get(key);
+        string translated = loc.Get(key);
 
-        if (string.IsNullOrEmpty(text) || text.StartsWith("["))
+        if (string.IsNullOrEmpty(translated) ||
+            translated.StartsWith("["))
+        {
             return fallback;
+        }
 
-        return text;
+        return translated;
     }
 
     public void OnChoiceA() => ResolveChoice(0);
@@ -114,10 +106,12 @@ public class EventUI : MonoBehaviour
         if (miniGameInProgress)
             return;
 
-        if (currentEvent == null || EventManager.Instance == null)
+        EventManager manager = EventManager.Instance;
+
+        if (currentEvent == null || manager == null)
         {
             Debug.LogWarning(
-                "EventUI: Brak aktualnego eventu lub EventManager!"
+                "EventUI: Brak wydarzenia lub EventManager!"
             );
 
             CloseEvent();
@@ -131,9 +125,17 @@ public class EventUI : MonoBehaviour
             return;
         }
 
-        EventManager.Instance.ApplyChoice(currentEvent, index);
+        if (currentEvent.eventType == EventType.Fire &&
+            index == 0)
+        {
+            StartFireMiniGame();
+            return;
+        }
+        manager.ApplyChoice(currentEvent, index);
 
-        ShowFeedback(GetFeedbackMessage(currentEvent, index));
+        ShowFeedback(
+            GetFeedbackMessage(currentEvent, index)
+        );
 
         CloseEvent();
     }
@@ -149,7 +151,7 @@ public class EventUI : MonoBehaviour
         if (manager == null)
         {
             Debug.LogError(
-                "EventUI: Nie znaleziono EventManager!"
+                "EventUI: Brak EventManager!"
             );
             return;
         }
@@ -159,7 +161,7 @@ public class EventUI : MonoBehaviour
             miniGame.timingSlider == null)
         {
             Debug.LogError(
-                "EventUI: MiniGameTiming nie jest poprawnie skonfigurowany!"
+                "EventUI: MiniGameTiming nie jest skonfigurowany!"
             );
             return;
         }
@@ -179,8 +181,8 @@ public class EventUI : MonoBehaviour
             if (manager == null)
             {
                 Debug.LogError(
-                    "EventUI: EventManager nie istnieje po minigierce! " +
-                    "Sprawdź, czy scena nie została zmieniona."
+                    "EventUI: EventManager został zniszczony " +
+                    "podczas minigierki pompy!"
                 );
 
                 CloseEvent();
@@ -207,27 +209,116 @@ public class EventUI : MonoBehaviour
                     "Naprawa nieudana. Rośliny ucierpiały."
                 ));
             }
+
             CloseEvent();
         });
     }
 
-    private string GetFeedbackMessage(MissionEvent ev, int choice)
+    private void StartFireMiniGame()
     {
-        if (LocalizationManager.Instance == null)
-            return "Podjęto decyzję operacyjną.";
+        if (miniGameInProgress)
+            return;
 
+        EventManager manager = EventManager.Instance;
+        MiniGameFire miniGame = MiniGameFire.Instance;
+
+        if (manager == null)
+        {
+            Debug.LogError(
+                "EventUI: Nie znaleziono EventManager!"
+            );
+            return;
+        }
+
+        if (miniGame == null)
+        {
+            Debug.LogError(
+                "EventUI: Nie znaleziono MiniGameFire!"
+            );
+            return;
+        }
+
+        if (miniGame.panel == null ||
+            miniGame.fireIconPrefab == null ||
+            miniGame.fireParent == null)
+        {
+            Debug.LogError(
+                "EventUI: MiniGameFire ma nieprzypisane pola!"
+            );
+            return;
+        }
+
+        miniGameInProgress = true;
+
+        if (eventPanel != null)
+            eventPanel.SetActive(false);
+
+
+        miniGame.StartFireGame(success =>
+        {
+            if (this == null)
+                return;
+
+            miniGameInProgress = false;
+
+            if (manager == null)
+            {
+                Debug.LogError(
+                    "EventUI: EventManager został zniszczony " +
+                    "podczas minigierki pożaru!"
+                );
+
+                CloseEvent();
+                return;
+            }
+
+            if (success)
+            {
+                manager.currentGrowth -= 0.03f;
+                manager.currentReliability += 0.08f;
+
+                ShowFeedback(GetTranslatedText(
+                    "fb_fire_success",
+                    "Pożar został ugaszony!"
+                ));
+
+                Debug.Log(
+                    "MiniGameFire: Sukces! Statystyki zaktualizowane."
+                );
+            }
+            else
+            {
+                manager.currentGrowth -= 0.12f;
+                manager.currentReliability -= 0.06f;
+
+                ShowFeedback(GetTranslatedText(
+                    "fb_fire_fail",
+                    "Nie udało się ugasić pożaru!"
+                ));
+
+                Debug.Log(
+                    "MiniGameFire: Porażka! Statystyki zaktualizowane."
+                );
+            }
+
+            CloseEvent();
+        });
+    }
+
+
+    private string GetFeedbackMessage(
+        MissionEvent ev, int choice)
+    {
         string key =
             $"fb_{ev.eventType.ToString().ToLowerInvariant()}_{choice}";
 
-        string result = LocalizationManager.Instance.Get(key);
-
-        if (result.StartsWith("["))
-            return GetTranslatedText(
+        return GetTranslatedText(
+            key,
+            GetTranslatedText(
                 "fb_default",
                 "Podjęto decyzję operacyjną."
-            );
-
-        return result;
+            )
+        );
     }
 
     public void ShowFeedback(string message)
@@ -237,7 +328,10 @@ public class EventUI : MonoBehaviour
             return;
 
         if (feedbackCoroutine != null)
+        {
             StopCoroutine(feedbackCoroutine);
+            feedbackCoroutine = null;
+        }
 
         feedbackText.text = message;
         feedbackText.gameObject.SetActive(true);
@@ -268,10 +362,14 @@ public class EventUI : MonoBehaviour
                 yield break;
 
             elapsed += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(elapsed / fadeDuration);
+
+            float t = Mathf.Clamp01(
+                elapsed / fadeDuration
+            );
 
             Color c = startColor;
             c.a = Mathf.Lerp(1f, 0f, t);
+
             feedbackText.color = c;
 
             yield return null;
@@ -283,13 +381,20 @@ public class EventUI : MonoBehaviour
         feedbackCoroutine = null;
     }
 
+
     private void CloseEvent()
     {
         if (eventPanel != null)
             eventPanel.SetActive(false);
 
         currentEvent = null;
-
+        miniGameInProgress = false;
         Time.timeScale = 1f;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 }
