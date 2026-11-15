@@ -124,6 +124,10 @@ public class LocalizationManager : MonoBehaviour
             texts["comp_sensors_environment"] = "Czujniki Środowiskowe";
             texts["comp_samplesystem"] = "System Pobierania Próbek";
 
+            texts["telemetry"] = "TELEMETRIA";
+            texts["science_value"] = "Wartość naukowa";
+            texts["growth_bonus"] = "Bonus wzrostu";
+
             // Ciekawostki
             texts["fact_rocket_equation"] = "Ponad 85% masy startowej rakiety to samo paliwo! Dodanie zaledwie 1 kg ładunku naukowego wymaga wykładniczego zwiększenia ilości paliwa, aby uciec ze studni grawitacyjnej Ziemi.";
             texts["fact_light_speed_delay"] = "Fale radiowe pędzą z prędkością światła, lecz sygnał na Marsa leci od 4 do 24 minut w jedną stronę. Niemożliwe jest sterowanie w czasie rzeczywistym, dlatego sondy muszą podejmować decyzje autonomicznie.";
@@ -237,6 +241,9 @@ public class LocalizationManager : MonoBehaviour
             texts["comp_sensors_environment"] = "Environmental Sensors";
             texts["comp_samplesystem"] = "Sample Collection System";
 
+            texts["telemetry"] = "TELEMETRY";
+            texts["science_value"] = "Science Value";
+            texts["growth_bonus"] = "Growth Bonus";
             // Fun facts
             texts["fact_rocket_equation"] = "Over 85% of a rocket's launch mass is propellant! Adding just 1 kg of scientific payload requires an exponential amount of extra fuel to escape Earth's gravity well.";
             texts["fact_light_speed_delay"] = "Radio waves travel at light speed, but signals to Mars take 4 to 24 minutes one-way. Because real-time piloting is impossible, deep space probes must be engineered for autonomous fault protection.";
