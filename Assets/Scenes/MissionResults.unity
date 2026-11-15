@@ -812,8 +812,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367645695}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
-  m_LocalScale: {x: 2.812665, y: 2.5669804, z: 3.3887532}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1294911187}
@@ -2177,7 +2177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &711903029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4721,39 +4721,45 @@ MonoBehaviour:
   statusBannerImage: {fileID: 1975136795}
   successBannerPL: {fileID: 21300000, guid: bf7b0cedfa228db4598851e0d190a05e, type: 3}
   successBannerENG: {fileID: 21300000, guid: 74ac50946c35cda44b970ed7298f4206, type: 3}
-  failureBannerPL: {fileID: 21300000, guid: bf9fbc31295ae094590b6dd1e6adff32, type: 3}
+  failureBannerPL: {fileID: 21300000, guid: fe7e9d11dbb9a1b48a87668101c2ae7d, type: 3}
   failureBannerENG: {fileID: 21300000, guid: 7a33ac0ef3a86d94c8a25e05e58bced4, type: 3}
   localizedSprites:
   - target: {fileID: 2088557359}
     polishSprite: {fileID: 21300000, guid: 55925750d2893294e82e997f9ab44803, type: 3}
-    englishSprite: {fileID: 21300000, guid: 34a15e11ed5e64d4e87f91a81c6920ec, type: 3}
+    englishSprite: {fileID: 21300000, guid: 34a15e11ed5e64d4e97f91a81c6920ec, type: 3}
+    fixedHeight: 35
   - target: {fileID: 336371510}
     polishSprite: {fileID: 21300000, guid: 44648f4a29c94a94b91ebb19ab20dbab, type: 3}
     englishSprite: {fileID: 21300000, guid: 257f39dc9eedf2347a233a8de54c04ce, type: 3}
+    fixedHeight: 0
   - target: {fileID: 367645698}
     polishSprite: {fileID: 21300000, guid: 3275c7ff02c364a4ca6bade0643e21aa, type: 3}
     englishSprite: {fileID: 21300000, guid: 3ea9a69907fca9243bdca497b0515211, type: 3}
+    fixedHeight: 11
   - target: {fileID: 1494788948}
     polishSprite: {fileID: 21300000, guid: 80223724bc6f36d4abd7096dfbfb6037, type: 3}
     englishSprite: {fileID: 21300000, guid: ffb898c090d69e04aa32f6372a9522da, type: 3}
+    fixedHeight: 11
   - target: {fileID: 768446966}
     polishSprite: {fileID: 21300000, guid: 21ea710051695914f8f09d4607a9d051, type: 3}
-    englishSprite: {fileID: 21300000, guid: bffcbe6173b729e48865d82e4201484a, type: 3}
+    englishSprite: {fileID: -7599553097789113794, guid: bffcbe6173b729e48865d82e4201484a, type: 3}
+    fixedHeight: 0
   - target: {fileID: 1502912086}
     polishSprite: {fileID: 21300000, guid: 1cb391ea040a80548973f466a8f81357, type: 3}
-    englishSprite: {fileID: 21300000, guid: 5885495d75911524eab3ed342fb4775f, type: 3}
-  - target: {fileID: 1832920552}
-    polishSprite: {fileID: 21300000, guid: 3f7dac5fab638de4a80f6324ac08534d, type: 3}
-    englishSprite: {fileID: 21300000, guid: 2677d116001a6c44f865b0e5d32cfb88, type: 3}
-  - target: {fileID: 1328799105}
-    polishSprite: {fileID: 21300000, guid: 0a5cbe673dbac494094632788b585289, type: 3}
-    englishSprite: {fileID: 21300000, guid: bea3f8c80cddaaf47811591c85079190, type: 3}
-  - target: {fileID: 415228682}
-    polishSprite: {fileID: 21300000, guid: eecb5d34d3ae1e04e8d58f270b92cb28, type: 3}
-    englishSprite: {fileID: 21300000, guid: b9912e79df392b2409d9736d08bcfb66, type: 3}
+    englishSprite: {fileID: -8296233956095194986, guid: 5885495d75911524eab3ed342fb4775f, type: 3}
+    fixedHeight: 0
   - target: {fileID: 604229511}
     polishSprite: {fileID: -6128092061299983629, guid: 7c44a369cb771084180cbe8969deeab1, type: 3}
-    englishSprite: {fileID: 21300000, guid: 21e6779937e813d4d9fa603a150cb8d8, type: 3}
+    englishSprite: {fileID: 9156392619238537072, guid: 21e6779937e813d4d9fa603a150cb8d8, type: 3}
+    fixedHeight: 0
+  - target: {fileID: 476882861}
+    polishSprite: {fileID: 21300000, guid: 2aaa8b7a2113fc44586a629fb1ad7540, type: 3}
+    englishSprite: {fileID: -1846288453589806985, guid: 2e18b5d646d441b428731ec5f950b9f8, type: 3}
+    fixedHeight: 0
+  - target: {fileID: 1471959839}
+    polishSprite: {fileID: -8189566906112360875, guid: 919e8c86550a2a94bae9b4aac6877c37, type: 3}
+    englishSprite: {fileID: 6157135197863020104, guid: c04771b52875e014bba77588ec4bddc6, type: 3}
+    fixedHeight: 0
   newMissionButton: {fileID: 0}
   changeConfigButton: {fileID: 0}
   polishLanguageButton: {fileID: 0}
@@ -5546,8 +5552,8 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 660
-  m_PreferredHeight: 40
+  m_PreferredWidth: 1100
+  m_PreferredHeight: 35
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1

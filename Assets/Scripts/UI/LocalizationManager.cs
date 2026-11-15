@@ -196,6 +196,7 @@ public class LocalizationManager : MonoBehaviour
             texts["result_growth"] = "WZROST ROŚLIN";
             texts["result_science"] = "DANE NAUKOWE";
             texts["result_days"] = "dni";
+            texts["result_telemetry"] = "TELEMETRIA KOŃCOWA";
 
             LoadPolishEvents();
         }
@@ -319,6 +320,7 @@ public class LocalizationManager : MonoBehaviour
             texts["result_growth"] = "PLANT GROWTH";
             texts["result_science"] = "SCIENCE DATA";
             texts["result_days"] = "days";
+            texts["result_telemetry"] = "FINAL TELEMETRY";
 
             LoadEnglishEvents();
         }

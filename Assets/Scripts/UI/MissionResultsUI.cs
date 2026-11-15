@@ -1,11 +1,7 @@
-/*
-/ The mechanics implemented in this file were entirely our own idea.
-/ However, the code in this file was written with the support of Google Antygravity AI tool.
-*/
-
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -17,14 +13,27 @@ public class MissionResultsUI : MonoBehaviour
         public Image target;
         public Sprite polishSprite;
         public Sprite englishSprite;
+        public float fixedHeight;
 
         public void Apply(LocalizationManager.Language lang)
         {
             if (target == null) return;
             Sprite chosen = lang == LocalizationManager.Language.English ? englishSprite : polishSprite;
-            if (chosen != null)
+            if (chosen == null) return;
+
+            target.sprite = chosen;
+
+            if (fixedHeight > 0f && chosen.rect.height > 0f)
             {
-                target.sprite = chosen;
+                float width = fixedHeight * (chosen.rect.width / chosen.rect.height);
+                target.rectTransform.sizeDelta = new Vector2(width, fixedHeight);
+
+                LayoutElement le = target.GetComponent<LayoutElement>();
+                if (le != null && !le.ignoreLayout)
+                {
+                    le.preferredWidth = width;
+                    le.preferredHeight = fixedHeight;
+                }
             }
         }
     }
@@ -59,12 +68,14 @@ public class MissionResultsUI : MonoBehaviour
     public Button polishLanguageButton;
     public Button englishLanguageButton;
 
-    // Color palette preserved from MissionResults scene
     private static readonly Color PanelCardColor = new Color(0.055f, 0.082f, 0.122f, 1f);
     private static readonly Color AccentMintColor = new Color(0f, 0.98823535f, 0.63529414f, 1f);
     private static readonly Color SubtleLabelColor = new Color(0.72f, 0.80f, 0.88f, 1f);
 
+    private readonly Dictionary<string, Transform> nodes = new Dictionary<string, Transform>();
+
     private TMP_FontAsset baseFont;
+    private TMP_Text leftHeaderText;
     private TMP_Text scoreLabelText;
     private TMP_Text scoreValueText;
     private TMP_Text growthLabelText;
@@ -72,13 +83,28 @@ public class MissionResultsUI : MonoBehaviour
     private TMP_Text scienceLabelText;
     private TMP_Text scienceValueText;
     private TMP_Text equipmentListText;
+    private LocalizationManager.Language fallbackLanguage = LocalizationManager.Language.Polish;
 
     private void Awake()
     {
-        AutoBindMissingReferences();
+        CacheHierarchyNodes();
+        BindSceneReferences();
         CleanupUnusedSceneElements();
+        ConfigureLeftColumn();
         BuildCustomSections();
         BindButtons();
+    }
+
+    private void OnEnable()
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged += RefreshAll;
+    }
+
+    private void OnDisable()
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.OnLanguageChanged -= RefreshAll;
     }
 
     private void Start()
@@ -86,72 +112,168 @@ public class MissionResultsUI : MonoBehaviour
         RefreshAll();
     }
 
-    private void AutoBindMissingReferences()
+    private void CacheHierarchyNodes()
     {
-        powerText ??= FindComponentByName<TMP_Text>("placeholder_power");
-        reliabilityText ??= FindComponentByName<TMP_Text>("placeholder_rel");
-        missionTimeText ??= FindComponentByName<TMP_Text>("placeholder_missiontime");
-        failureReasonText ??= FindComponentByName<TMP_Text>("placeholder_failure");
-        massText ??= FindComponentByName<TMP_Text>("placeholder_mass");
-        costText ??= FindComponentByName<TMP_Text>("placeholder_cost");
-        componentsPrimaryText ??= FindComponentByName<TMP_Text>("placeholder_component");
-        componentsSecondaryText ??= FindComponentByName<TMP_Text>("placeholder_comp2");
+        nodes.Clear();
+        foreach (Transform t in transform.root.GetComponentsInChildren<Transform>(true))
+        {
+            if (!nodes.ContainsKey(t.name))
+                nodes[t.name] = t;
+        }
+    }
 
-        progressBar1 ??= FindComponentByName<Image>("MassFilled") ?? FindComponentByName<Image>("progress_in_bar_1");
-        progressBar2 ??= FindComponentByName<Image>("CostFilled") ?? FindComponentByName<Image>("progress_in_bar_2");
-        statusBannerImage ??= FindComponentByName<Image>("status_baner");
+    private T FindNode<T>(string objectName) where T : Component
+    {
+        return nodes.TryGetValue(objectName, out Transform t) ? t.GetComponent<T>() : null;
+    }
 
-        newMissionButton ??= FindComponentByName<Button>("new_mission");
-        changeConfigButton ??= FindComponentByName<Button>("change_config");
-        polishLanguageButton ??= FindComponentByName<Button>("iconPL");
-        englishLanguageButton ??= FindComponentByName<Button>("iconENG");
+    private Transform FindTransform(string objectName)
+    {
+        return nodes.TryGetValue(objectName, out Transform t) ? t : null;
+    }
 
-        if (powerText != null)
-            baseFont = powerText.font;
+    private void BindSceneReferences()
+    {
+        powerText ??= FindNode<TMP_Text>("placeholder_power");
+        reliabilityText ??= FindNode<TMP_Text>("placeholder_rel");
+        missionTimeText ??= FindNode<TMP_Text>("placeholder_missiontime");
+        failureReasonText ??= FindNode<TMP_Text>("placeholder_failure");
+        massText ??= FindNode<TMP_Text>("placeholder_mass");
+        costText ??= FindNode<TMP_Text>("placeholder_cost");
+        componentsPrimaryText ??= FindNode<TMP_Text>("placeholder_component");
+        componentsSecondaryText ??= FindNode<TMP_Text>("placeholder_comp2");
+
+        progressBar1 ??= FindNode<Image>("MassFilled") ?? FindNode<Image>("progress_in_bar_1");
+        progressBar2 ??= FindNode<Image>("CostFilled") ?? FindNode<Image>("progress_in_bar_2");
+        statusBannerImage ??= FindNode<Image>("status_baner");
+
+        newMissionButton ??= FindNode<Button>("new_mission");
+        changeConfigButton ??= FindNode<Button>("change_config");
+        polishLanguageButton ??= FindNode<Button>("iconPL");
+        englishLanguageButton ??= FindNode<Button>("iconENG");
+
+        baseFont = (powerText != null ? powerText.font : failureReasonText?.font) ?? TMP_Settings.defaultFontAsset;
     }
 
     private void CleanupUnusedSceneElements()
     {
-        Transform middle = GameObject.Find("middle")?.transform;
-        if (failureReasonText != null && middle != null)
+        if (failureReasonText != null)
+            failureReasonText.gameObject.SetActive(false);
+
+        string[] unused = { "graph?", "preview_button", "failure", "placeholder_failure", "StatsRow", "component", "component_2" };
+        foreach (string name in unused)
         {
-            if (failureReasonText.transform.parent != middle)
-                failureReasonText.transform.SetParent(middle, false);
-
-            int bannerIdx = statusBannerImage != null ? statusBannerImage.transform.GetSiblingIndex() : 0;
-            failureReasonText.transform.SetSiblingIndex(bannerIdx + 1);
-            failureReasonText.gameObject.SetActive(true);
-
-            RectTransform rt = failureReasonText.rectTransform;
-            rt.anchorMin = Vector2.zero;
-            rt.anchorMax = Vector2.one;
-            rt.anchoredPosition = Vector2.zero;
-            rt.sizeDelta = Vector2.zero;
-            rt.localScale = Vector3.one;
-
-            LayoutElement le = failureReasonText.GetComponent<LayoutElement>() ?? failureReasonText.gameObject.AddComponent<LayoutElement>();
-            le.preferredHeight = 44f;
-            le.flexibleWidth = 1f;
-
-            failureReasonText.alignment = TextAlignmentOptions.Center;
-            failureReasonText.fontSize = 24f;
-            failureReasonText.color = Color.white;
-            equipmentListText.textWrappingMode = TextWrappingModes.Normal;
+            Transform t = FindTransform(name);
+            if (t != null)
+                t.gameObject.SetActive(false);
         }
-
-        DisableByName("graph?");
-        DisableByName("preview_button");
-        DisableByName("failure");
-        DisableByName("StatsRow");
-        DisableByName("component");
-        DisableByName("component_2");
     }
 
-    private void DisableByName(string objectName)
+    private void ConfigureLeftColumn()
     {
-        GameObject obj = GameObject.Find(objectName);
-        if (obj != null)
-            obj.SetActive(false);
+        Transform leftHeader = FindTransform("Left_header");
+        if (leftHeader != null && leftHeaderText == null)
+        {
+            Image headerImg = leftHeader.GetComponent<Image>();
+            if (headerImg != null)
+                headerImg.enabled = false;
+
+            SetLayout(leftHeader, -1f, 26f, 1f);
+
+            Transform existingChild = leftHeader.Find("LeftHeaderText");
+            leftHeaderText = existingChild != null
+                ? existingChild.GetComponent<TMP_Text>()
+                : CreateText("LeftHeaderText", leftHeader, 18f, AccentMintColor, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
+
+            SetAnchors(leftHeaderText.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+        }
+
+        ConfigureInlineLabel("text_mass", 11f);
+        ConfigureInlineLabel("text_cost", 11f);
+        ConfigureInlineValue(massText);
+        ConfigureInlineValue(costText);
+        ConfigureProgressBar(progressBar1);
+        ConfigureProgressBar(progressBar2);
+
+        ConfigureStatCard("power_bilans", powerText, 84f, false);
+        ConfigureStatCard("reliabillity", reliabilityText, 78f, false);
+        ConfigureStatCard("mission time", missionTimeText, 124f, true);
+    }
+
+    private void ConfigureInlineLabel(string objectName, float height)
+    {
+        Image img = FindNode<Image>(objectName);
+        if (img == null) return;
+
+        img.preserveAspect = true;
+        LayoutElement le = img.GetComponent<LayoutElement>();
+        if (le != null)
+            le.ignoreLayout = true;
+
+        RectTransform rt = img.rectTransform;
+        rt.localScale = Vector3.one;
+        rt.anchorMin = new Vector2(0f, 0.5f);
+        rt.anchorMax = new Vector2(0f, 0.5f);
+        rt.pivot = new Vector2(0f, 0.5f);
+        rt.anchoredPosition = new Vector2(10f, 0f);
+
+        float width = img.sprite != null && img.sprite.rect.height > 0f
+            ? height * (img.sprite.rect.width / img.sprite.rect.height)
+            : rt.sizeDelta.x;
+        rt.sizeDelta = new Vector2(width, height);
+    }
+
+    private void ConfigureInlineValue(TMP_Text label)
+    {
+        if (label == null) return;
+
+        ApplyTextStyle(label, 14f, Color.white, TextAlignmentOptions.MidlineRight, FontStyles.Bold, TextWrappingModes.NoWrap);
+
+        RectTransform rt = label.rectTransform;
+        rt.localScale = Vector3.one;
+        rt.anchorMin = new Vector2(1f, 0.5f);
+        rt.anchorMax = new Vector2(1f, 0.5f);
+        rt.pivot = new Vector2(1f, 0.5f);
+        rt.anchoredPosition = new Vector2(-10f, 0f);
+        rt.sizeDelta = new Vector2(120f, 24f);
+    }
+
+    private void ConfigureProgressBar(Image bar)
+    {
+        if (bar == null) return;
+
+        bar.type = Image.Type.Filled;
+        bar.fillMethod = Image.FillMethod.Horizontal;
+        bar.fillOrigin = 0;
+
+        SetAnchors(bar.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+    }
+
+    private void ConfigureStatCard(string cardName, TMP_Text valueText, float preferredHeight, bool valueInBottomRow)
+    {
+        Image cardImg = FindNode<Image>(cardName);
+        if (cardImg != null)
+        {
+            cardImg.preserveAspect = false;
+            SetLayout(cardImg, -1f, preferredHeight, 1f);
+        }
+
+        if (valueText == null) return;
+
+        ApplyTextStyle(
+            valueText,
+            22f,
+            Color.white,
+            valueInBottomRow ? TextAlignmentOptions.MidlineLeft : TextAlignmentOptions.MidlineRight,
+            FontStyles.Bold,
+            TextWrappingModes.NoWrap);
+
+        RectTransform rt = valueText.rectTransform;
+        rt.localScale = Vector3.one;
+        if (valueInBottomRow)
+            SetAnchors(rt, Vector2.zero, new Vector2(1f, 0.56f), new Vector2(24f, 10f), new Vector2(-18f, -2f));
+        else
+            SetAnchors(rt, new Vector2(0.48f, 0f), Vector2.one, Vector2.zero, new Vector2(-20f, 0f));
     }
 
     private void BuildCustomSections()
@@ -162,29 +284,17 @@ public class MissionResultsUI : MonoBehaviour
 
     private void BuildMiddleSummarySection()
     {
-        Transform middle = GameObject.Find("middle")?.transform;
+        Transform middle = FindTransform("middle");
         if (middle == null || middle.Find("ScoreCard") != null) return;
 
-        // Score card
         GameObject scoreCard = CreatePanel("ScoreCard", middle, PanelCardColor, 140f);
-        VerticalLayoutGroup scoreLayout = scoreCard.AddComponent<VerticalLayoutGroup>();
-        scoreLayout.padding = new RectOffset(24, 24, 16, 16);
-        scoreLayout.spacing = 6f;
-        scoreLayout.childAlignment = TextAnchor.MiddleCenter;
-        scoreLayout.childControlWidth = true;
-        scoreLayout.childControlHeight = true;
-        scoreLayout.childForceExpandWidth = true;
-        scoreLayout.childForceExpandHeight = false;
-
+        ConfigureVerticalLayout(scoreCard, new RectOffset(24, 24, 16, 16), 6f, TextAnchor.MiddleCenter);
         scoreLabelText = CreateText("ScoreLabel", scoreCard.transform, 20f, SubtleLabelColor, TextAlignmentOptions.Center, FontStyles.Bold);
         scoreValueText = CreateText("ScoreValue", scoreCard.transform, 52f, AccentMintColor, TextAlignmentOptions.Center, FontStyles.Bold);
 
-        // Two-column row for Plant Growth & Science Data
         GameObject row = new GameObject("KeyStatsRow", typeof(RectTransform), typeof(HorizontalLayoutGroup), typeof(LayoutElement));
         row.transform.SetParent(middle, false);
-        LayoutElement rowLe = row.GetComponent<LayoutElement>();
-        rowLe.preferredHeight = 120f;
-        rowLe.flexibleWidth = 1f;
+        SetLayout(row, -1f, 120f, 1f);
 
         HorizontalLayoutGroup hlg = row.GetComponent<HorizontalLayoutGroup>();
         hlg.spacing = 16f;
@@ -194,44 +304,26 @@ public class MissionResultsUI : MonoBehaviour
         hlg.childForceExpandHeight = true;
 
         GameObject growthCard = CreatePanel("GrowthCard", row.transform, PanelCardColor, 120f);
-        SetupStatCardLayout(growthCard);
+        ConfigureVerticalLayout(growthCard, new RectOffset(16, 16, 14, 14), 6f, TextAnchor.MiddleCenter);
         growthLabelText = CreateText("GrowthLabel", growthCard.transform, 18f, SubtleLabelColor, TextAlignmentOptions.Center, FontStyles.Bold);
         growthValueText = CreateText("GrowthValue", growthCard.transform, 36f, Color.white, TextAlignmentOptions.Center, FontStyles.Bold);
 
         GameObject scienceCard = CreatePanel("ScienceCard", row.transform, PanelCardColor, 120f);
-        SetupStatCardLayout(scienceCard);
+        ConfigureVerticalLayout(scienceCard, new RectOffset(16, 16, 14, 14), 6f, TextAnchor.MiddleCenter);
         scienceLabelText = CreateText("ScienceLabel", scienceCard.transform, 18f, SubtleLabelColor, TextAlignmentOptions.Center, FontStyles.Bold);
         scienceValueText = CreateText("ScienceValue", scienceCard.transform, 36f, Color.white, TextAlignmentOptions.Center, FontStyles.Bold);
 
-        // Place right after failureReasonText (or statusBanner)
-        int insertIndex = failureReasonText != null && failureReasonText.transform.parent == middle
-            ? failureReasonText.transform.GetSiblingIndex() + 1
-            : 1;
+        int insertIndex = statusBannerImage != null ? statusBannerImage.transform.GetSiblingIndex() + 1 : 1;
         scoreCard.transform.SetSiblingIndex(insertIndex);
         row.transform.SetSiblingIndex(insertIndex + 1);
     }
 
-    private void SetupStatCardLayout(GameObject card)
-    {
-        VerticalLayoutGroup vlg = card.AddComponent<VerticalLayoutGroup>();
-        vlg.padding = new RectOffset(16, 16, 14, 14);
-        vlg.spacing = 6f;
-        vlg.childAlignment = TextAnchor.MiddleCenter;
-        vlg.childControlWidth = true;
-        vlg.childControlHeight = true;
-        vlg.childForceExpandWidth = true;
-        vlg.childForceExpandHeight = false;
-    }
-
     private void BuildRightEquipmentSection()
     {
-        Transform right = GameObject.Find("right")?.transform;
+        Transform right = FindTransform("right");
         if (right == null || right.Find("EquipmentListCard") != null) return;
 
-        GameObject listCard = CreatePanel("EquipmentListCard", right, PanelCardColor, 420f);
-        LayoutElement le = listCard.GetComponent<LayoutElement>();
-        le.flexibleHeight = 1f;
-
+        GameObject listCard = CreatePanel("EquipmentListCard", right, PanelCardColor, 420f, 1f);
         VerticalLayoutGroup vlg = listCard.AddComponent<VerticalLayoutGroup>();
         vlg.padding = new RectOffset(20, 20, 18, 18);
         vlg.childControlWidth = true;
@@ -243,19 +335,28 @@ public class MissionResultsUI : MonoBehaviour
         equipmentListText.textWrappingMode = TextWrappingModes.Normal;
 
         Transform raport = right.Find("Raport");
-        int insertIndex = raport != null ? raport.GetSiblingIndex() + 1 : 1;
-        listCard.transform.SetSiblingIndex(insertIndex);
+        listCard.transform.SetSiblingIndex(raport != null ? raport.GetSiblingIndex() + 1 : 1);
     }
 
-    private GameObject CreatePanel(string name, Transform parent, Color bgColor, float preferredHeight)
+    private GameObject CreatePanel(string name, Transform parent, Color bgColor, float preferredHeight, float flexibleHeight = -1f)
     {
         GameObject panel = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(LayoutElement));
         panel.transform.SetParent(parent, false);
         panel.GetComponent<Image>().color = bgColor;
-        LayoutElement le = panel.GetComponent<LayoutElement>();
-        le.preferredHeight = preferredHeight;
-        le.flexibleWidth = 1f;
+        SetLayout(panel, -1f, preferredHeight, 1f, flexibleHeight);
         return panel;
+    }
+
+    private void ConfigureVerticalLayout(GameObject target, RectOffset padding, float spacing, TextAnchor alignment)
+    {
+        VerticalLayoutGroup vlg = target.AddComponent<VerticalLayoutGroup>();
+        vlg.padding = padding;
+        vlg.spacing = spacing;
+        vlg.childAlignment = alignment;
+        vlg.childControlWidth = true;
+        vlg.childControlHeight = true;
+        vlg.childForceExpandWidth = true;
+        vlg.childForceExpandHeight = false;
     }
 
     private TMP_Text CreateText(string name, Transform parent, float fontSize, Color color, TextAlignmentOptions alignment, FontStyles style)
@@ -263,45 +364,57 @@ public class MissionResultsUI : MonoBehaviour
         GameObject obj = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
         obj.transform.SetParent(parent, false);
         TextMeshProUGUI tmp = obj.GetComponent<TextMeshProUGUI>();
+        ApplyTextStyle(tmp, fontSize, color, alignment, style, tmp.textWrappingMode);
+        return tmp;
+    }
+
+    private void ApplyTextStyle(TMP_Text tmp, float fontSize, Color color, TextAlignmentOptions alignment, FontStyles style, TextWrappingModes wrapping)
+    {
         if (baseFont != null) tmp.font = baseFont;
         tmp.fontSize = fontSize;
         tmp.color = color;
         tmp.alignment = alignment;
         tmp.fontStyle = style;
-        return tmp;
+        tmp.textWrappingMode = wrapping;
     }
 
-    private T FindComponentByName<T>(string objectName) where T : Component
+    private static void SetAnchors(RectTransform rt, Vector2 min, Vector2 max, Vector2 offsetMin, Vector2 offsetMax)
     {
-        GameObject obj = GameObject.Find(objectName);
-        return obj != null ? obj.GetComponent<T>() : null;
+        rt.anchorMin = min;
+        rt.anchorMax = max;
+        rt.offsetMin = offsetMin;
+        rt.offsetMax = offsetMax;
+        rt.anchoredPosition = (rt.offsetMin + rt.offsetMax) * 0.5f;
+    }
+
+    private static void SetLayout(Component target, float preferredWidth, float preferredHeight, float flexibleWidth = -1f, float flexibleHeight = -1f)
+    {
+        SetLayout(target.gameObject, preferredWidth, preferredHeight, flexibleWidth, flexibleHeight);
+    }
+
+    private static void SetLayout(GameObject target, float preferredWidth, float preferredHeight, float flexibleWidth = -1f, float flexibleHeight = -1f)
+    {
+        LayoutElement le = target.GetComponent<LayoutElement>() ?? target.AddComponent<LayoutElement>();
+        le.preferredWidth = preferredWidth;
+        le.preferredHeight = preferredHeight;
+        le.flexibleWidth = flexibleWidth;
+        if (flexibleHeight >= 0f)
+            le.flexibleHeight = flexibleHeight;
     }
 
     private void BindButtons()
     {
-        if (newMissionButton != null)
-        {
-            newMissionButton.onClick.RemoveListener(OnNewMissionClicked);
-            newMissionButton.onClick.AddListener(OnNewMissionClicked);
-        }
+        BindButton(newMissionButton, OnNewMissionClicked);
+        BindButton(changeConfigButton, OnChangeConfigClicked);
+        BindButton(polishLanguageButton, () => SetLanguage(LocalizationManager.Language.Polish));
+        BindButton(englishLanguageButton, () => SetLanguage(LocalizationManager.Language.English));
+    }
 
-        if (changeConfigButton != null)
-        {
-            changeConfigButton.onClick.RemoveListener(OnChangeConfigClicked);
-            changeConfigButton.onClick.AddListener(OnChangeConfigClicked);
-        }
-
-        if (polishLanguageButton != null)
-        {
-            polishLanguageButton.onClick.RemoveListener(OnSelectPolish);
-            polishLanguageButton.onClick.AddListener(OnSelectPolish);
-        }
-
-        if (englishLanguageButton != null)
-        {
-            englishLanguageButton.onClick.RemoveListener(OnSelectEnglish);
-            englishLanguageButton.onClick.AddListener(OnSelectEnglish);
-        }
+    private static void BindButton(Button button, UnityAction action)
+    {
+        if (button == null) return;
+        button.onClick.RemoveListener(action);
+        button.onClick.AddListener(action);
     }
 
     public void RefreshAll()
@@ -320,7 +433,6 @@ public class MissionResultsUI : MonoBehaviour
         float power = ev != null ? Mathf.Max(0f, ev.currentPower) : 0f;
         int days = ev != null ? ev.missionDaysReached : 1;
         int totalDays = ev != null ? ev.missionTotalDays : 14;
-        float elapsed = ev != null ? ev.missionElapsedSeconds : 0f;
         bool failed = ev != null && ev.missionFailed;
 
         if (powerText != null)
@@ -331,13 +443,12 @@ public class MissionResultsUI : MonoBehaviour
 
         if (missionTimeText != null)
         {
-            string daysLabel = GetLocalized("result_days", "dni");
+            string daysLabel = GetLocalized("result_days", GetCurrentLanguage() == LocalizationManager.Language.English ? "days" : "dni");
             missionTimeText.text = $"{days}/{totalDays} {daysLabel}";
         }
 
-        int score = CalculateScore(science, growth, reliability, days, !failed);
         if (scoreValueText != null)
-            scoreValueText.text = score.ToString("N0");
+            scoreValueText.text = CalculateScore(science, growth, reliability, days, !failed).ToString("N0");
 
         if (growthValueText != null)
             growthValueText.text = $"{Mathf.RoundToInt(growth * 100f)}%";
@@ -348,46 +459,30 @@ public class MissionResultsUI : MonoBehaviour
 
     public int CalculateScore(int science, float growth, float reliability, int daysReached, bool survived)
     {
-        int scienceScore = science * 10;
-        int growthScore = Mathf.RoundToInt(growth * 100f) * 5;
-        int reliabilityScore = Mathf.RoundToInt(reliability * 100f) * 3;
-        int daysScore = daysReached * 50;
-        int survivalBonus = survived ? 500 : 0;
-        return scienceScore + growthScore + reliabilityScore + daysScore + survivalBonus;
+        return science * 10
+            + Mathf.RoundToInt(growth * 100f) * 5
+            + Mathf.RoundToInt(reliability * 100f) * 3
+            + daysReached * 50
+            + (survived ? 500 : 0);
     }
 
     private void RefreshLoadout()
     {
         var mission = MissionManager.Instance;
         var loadout = mission != null ? mission.currentLoadout : null;
+        bool hasData = mission != null && loadout != null;
 
         if (massText != null)
-        {
-            massText.text = mission != null && loadout != null
-                ? $"{loadout.TotalMass:0.#} / {mission.maxMass:0.#} kg"
-                : "0 / 0 kg";
-        }
+            massText.text = hasData ? $"{loadout.TotalMass:0.#} / {mission.maxMass:0.#} kg" : "0 / 0 kg";
 
         if (costText != null)
-        {
-            costText.text = mission != null && loadout != null
-                ? $"{loadout.TotalCost} / {mission.maxBudget} CR"
-                : "0 / 0 CR";
-        }
+            costText.text = hasData ? $"{loadout.TotalCost} / {mission.maxBudget} CR" : "0 / 0 CR";
 
         if (progressBar1 != null)
-        {
-            progressBar1.fillAmount = mission != null && loadout != null && mission.maxMass > 0f
-                ? Mathf.Clamp01(loadout.TotalMass / mission.maxMass)
-                : 0f;
-        }
+            progressBar1.fillAmount = hasData && mission.maxMass > 0f ? Mathf.Clamp01(loadout.TotalMass / mission.maxMass) : 0f;
 
         if (progressBar2 != null)
-        {
-            progressBar2.fillAmount = mission != null && loadout != null && mission.maxBudget > 0
-                ? Mathf.Clamp01((float)loadout.TotalCost / mission.maxBudget)
-                : 0f;
-        }
+            progressBar2.fillAmount = hasData && mission.maxBudget > 0 ? Mathf.Clamp01((float)loadout.TotalCost / mission.maxBudget) : 0f;
 
         RefreshComponentLists(loadout);
     }
@@ -396,7 +491,10 @@ public class MissionResultsUI : MonoBehaviour
     {
         if (loadout == null || loadout.selectedComponents == null || loadout.selectedComponents.Count == 0)
         {
-            string emptyText = GetLocalized("no_components", "Brak wybranych komponentów");
+            string fallbackEmpty = GetCurrentLanguage() == LocalizationManager.Language.English
+                ? "No components selected"
+                : "Brak wybranych komponentów";
+            string emptyText = GetLocalized("no_components", fallbackEmpty);
             if (equipmentListText != null) equipmentListText.text = emptyText;
             if (componentsPrimaryText != null) componentsPrimaryText.text = emptyText;
             if (componentsSecondaryText != null) componentsSecondaryText.text = string.Empty;
@@ -408,8 +506,7 @@ public class MissionResultsUI : MonoBehaviour
         {
             if (comp == null) continue;
             string key = "comp_" + comp.componentType.ToString().ToLower();
-            string name = GetLocalized(key, comp.displayName);
-            lines.Add($"• {name}");
+            lines.Add($"• {GetLocalized(key, comp.displayName)}");
         }
 
         if (equipmentListText != null)
@@ -418,54 +515,46 @@ public class MissionResultsUI : MonoBehaviour
 
     private void RefreshLocalization()
     {
-        var loc = LocalizationManager.Instance;
-        var lang = loc != null ? loc.currentLanguage : LocalizationManager.Language.Polish;
+        var lang = GetCurrentLanguage();
         var ev = EventManager.Instance;
         bool failed = ev != null && ev.missionFailed;
+        bool isEng = lang == LocalizationManager.Language.English;
+
+        if (leftHeaderText != null)
+            leftHeaderText.text = GetLocalized("result_telemetry", isEng ? "FINAL TELEMETRY" : "TELEMETRIA KOŃCOWA");
 
         if (scoreLabelText != null)
-            scoreLabelText.text = GetLocalized("result_score", "WYNIK MISJI");
+            scoreLabelText.text = GetLocalized("result_score", isEng ? "MISSION SCORE" : "WYNIK MISJI");
 
         if (growthLabelText != null)
-            growthLabelText.text = GetLocalized("result_growth", "WZROST ROŚLIN");
+            growthLabelText.text = GetLocalized("result_growth", isEng ? "PLANT GROWTH" : "WZROST ROŚLIN");
 
         if (scienceLabelText != null)
-            scienceLabelText.text = GetLocalized("result_science", "DANE NAUKOWE");
-
-        if (failureReasonText != null)
-        {
-            string reasonKey = ev != null && !string.IsNullOrEmpty(ev.missionEndReasonKey)
-                ? ev.missionEndReasonKey
-                : (failed ? "result_reason_unknown" : "result_reason_success");
-
-            failureReasonText.text = GetLocalized(reasonKey, GetReasonFallback(reasonKey));
-        }
+            scienceLabelText.text = GetLocalized("result_science", isEng ? "SCIENCE DATA" : "DANE NAUKOWE");
 
         if (statusBannerImage != null)
         {
             Sprite banner = failed
-                ? (lang == LocalizationManager.Language.English ? failureBannerENG : failureBannerPL)
-                : (lang == LocalizationManager.Language.English ? successBannerENG : successBannerPL);
+                ? (isEng ? failureBannerENG : failureBannerPL)
+                : (isEng ? successBannerENG : successBannerPL);
 
             if (banner != null)
                 statusBannerImage.sprite = banner;
+
+            LayoutElement bannerLe = statusBannerImage.GetComponent<LayoutElement>();
+            if (bannerLe != null)
+                bannerLe.preferredHeight = failed ? 96f : 240f;
         }
 
         foreach (var pair in localizedSprites)
-        {
             pair?.Apply(lang);
-        }
     }
 
-    private string GetReasonFallback(string reasonKey)
+    private LocalizationManager.Language GetCurrentLanguage()
     {
-        switch (reasonKey)
-        {
-            case "result_reason_success": return "Misja zakończona sukcesem (14/14 dni).";
-            case "result_reason_power": return "Porażka: wyczerpano energię (0 W).";
-            case "result_reason_growth": return "Porażka: obumarcie uprawy (0% wzrostu).";
-            default: return "Misja zakończona.";
-        }
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.currentLanguage
+            : fallbackLanguage;
     }
 
     private string GetLocalized(string key, string fallback)
@@ -477,18 +566,13 @@ public class MissionResultsUI : MonoBehaviour
         return string.IsNullOrEmpty(result) || result.StartsWith("[") ? fallback : result;
     }
 
-    private void OnSelectPolish()
+    private void SetLanguage(LocalizationManager.Language lang)
     {
+        fallbackLanguage = lang;
         if (LocalizationManager.Instance != null)
-            LocalizationManager.Instance.SetLanguage(LocalizationManager.Language.Polish);
-        RefreshAll();
-    }
-
-    private void OnSelectEnglish()
-    {
-        if (LocalizationManager.Instance != null)
-            LocalizationManager.Instance.SetLanguage(LocalizationManager.Language.English);
-        RefreshAll();
+            LocalizationManager.Instance.SetLanguage(lang);
+        else
+            RefreshAll();
     }
 
     public void OnNewMissionClicked()
