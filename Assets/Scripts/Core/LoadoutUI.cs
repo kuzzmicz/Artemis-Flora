@@ -8,80 +8,115 @@ public class LoadoutUI : MonoBehaviour
     public TextMeshProUGUI selectedListText;
     public TextMeshProUGUI infoGrowingSystemText;
 
+    private MissionManager missionManager;
+    private LocalizationManager localization;
+
     private void OnEnable()
     {
-        if (MissionManager.Instance != null)
-            MissionManager.Instance.OnLoadoutChanged += UpdateDisplay;
-
-        UpdateDisplay();
-        UpdateInfoText();
-    }
-
-    private void OnDisable()
-    {
-        if (MissionManager.Instance != null)
-            MissionManager.Instance.OnLoadoutChanged -= UpdateDisplay;
+        Subscribe();
+        RefreshAll();
     }
 
     private void Start()
     {
-   
-        if (MissionManager.Instance != null)
+        Subscribe();
+        RefreshAll();
+    }
+
+    private void Subscribe()
+    {
+        if (missionManager != MissionManager.Instance)
         {
-            MissionManager.Instance.OnLoadoutChanged -= UpdateDisplay;
-            MissionManager.Instance.OnLoadoutChanged += UpdateDisplay;
+            if (missionManager != null)
+                missionManager.OnLoadoutChanged -= UpdateDisplay;
+
+            missionManager = MissionManager.Instance;
+
+            if (missionManager != null)
+                missionManager.OnLoadoutChanged += UpdateDisplay;
         }
 
+        if (localization != LocalizationManager.Instance)
+        {
+            if (localization != null)
+                localization.OnLanguageChanged -= RefreshAll;
+
+            localization = LocalizationManager.Instance;
+
+            if (localization != null)
+                localization.OnLanguageChanged += RefreshAll;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (missionManager != null)
+            missionManager.OnLoadoutChanged -= UpdateDisplay;
+
+        if (localization != null)
+            localization.OnLanguageChanged -= RefreshAll;
+
+        missionManager = null;
+        localization = null;
+    }
+
+    private void RefreshAll()
+    {
         UpdateDisplay();
         UpdateInfoText();
     }
 
     public void UpdateDisplay()
     {
-        if (MissionManager.Instance == null ||
-            LocalizationManager.Instance == null)
-            return;
-
-        if (selectedListText == null)
-            return;
-
-        var loadout = MissionManager.Instance.currentLoadout;
+        var manager = MissionManager.Instance;
         var loc = LocalizationManager.Instance;
 
-        if (loadout == null)
+        if (manager == null ||
+            loc == null ||
+            selectedListText == null ||
+            manager.currentLoadout == null)
             return;
+
+        var loadout = manager.currentLoadout;
 
         if (loadout.selectedComponents.Count == 0)
         {
-            selectedListText.text =
-                loc.Get("selected") + ":\n(" +
-                loc.Get("no_components") + ")";
-
+            selectedListText.text = loc.Get("no_components");
             return;
         }
 
-        string list = loc.Get("selected") + ":\n";
+        string list = "";
 
         foreach (var comp in loadout.selectedComponents)
         {
             if (comp == null)
                 continue;
 
-            list += $"• {comp.displayName}\n";
+          
+            string key = "comp_" +
+                comp.componentType.ToString().ToLowerInvariant();
+
+            string name = loc.Get(key);
+
+           
+            if (name == "[" + key + "]")
+                name = comp.displayName;
+
+            list += "• " + name + "\n";
         }
 
-        selectedListText.text = list;
+        selectedListText.text = list.TrimEnd();
     }
 
     private void UpdateInfoText()
     {
-        if (infoGrowingSystemText != null &&
-            LocalizationManager.Instance != null)
-        {
-            infoGrowingSystemText.text =
-                LocalizationManager.Instance.Get(
-                    "info_growing_system"
-                );
-        }
+        if (infoGrowingSystemText == null ||
+            LocalizationManager.Instance == null)
+            return;
+
+        infoGrowingSystemText.text =
+            LocalizationManager.Instance.Get(
+                "info_growing_system"
+            );
     }
 }

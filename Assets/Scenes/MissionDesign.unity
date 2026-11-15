@@ -2066,6 +2066,7 @@ GameObject:
   - component: {fileID: 542672158}
   - component: {fileID: 542672160}
   - component: {fileID: 542672159}
+  - component: {fileID: 542672161}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -2192,6 +2193,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542672157}
   m_CullTransparentMesh: 1
+--- !u!114 &542672161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542672157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: component_selection
 --- !u!1 &544363112
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,8 +2452,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -61, y: -228}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -73.376945, y: -227.9852}
+  m_SizeDelta: {x: 224.754, y: 50.0296}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &585921613
 MonoBehaviour:
@@ -2527,7 +2541,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -59.817474, z: -142.50891, w: 0}
+  m_margin: {x: 0, y: -59.817474, z: -165.49524, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5693,7 +5707,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 190, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1575475139
 MonoBehaviour:
@@ -6079,6 +6093,7 @@ GameObject:
   - component: {fileID: 1640362186}
   - component: {fileID: 1640362188}
   - component: {fileID: 1640362187}
+  - component: {fileID: 1640362189}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6205,6 +6220,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640362185}
   m_CullTransparentMesh: 1
+--- !u!114 &1640362189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640362185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: start_mission
 --- !u!1 &1649922069
 GameObject:
   m_ObjectHideFlags: 0
@@ -7390,6 +7418,7 @@ GameObject:
   - component: {fileID: 2098798204}
   - component: {fileID: 2098798206}
   - component: {fileID: 2098798205}
+  - component: {fileID: 2098798207}
   m_Layer: 5
   m_Name: SelectedTitle
   m_TagString: Untagged
@@ -7516,6 +7545,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2098798203}
   m_CullTransparentMesh: 1
+--- !u!114 &2098798207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098798203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a30a49247c29fd4fb6b4ad750a4fe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  localizationKey: selected
 --- !u!1 &2122070615
 GameObject:
   m_ObjectHideFlags: 0

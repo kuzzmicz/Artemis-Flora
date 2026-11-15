@@ -112,19 +112,36 @@ public class ComponentButton : MonoBehaviour
                 $"{component.power:+0.#;-0.#;0}";
         }
 
+
         if (addButtonText != null)
         {
             if (isSelected)
-                addButtonText.text = GetText("selected_short", "USUŃ");
+            {
+                addButtonText.text =
+                    GetText("remove", "USUŃ");
+            }
             else if (overMass && overCost)
-                addButtonText.text = GetText("no_mass_and_budget", "BRAK LIMITU");
+            {
+                addButtonText.text =
+                    GetText("no_mass_and_budget", "BRAK LIMITU");
+            }
             else if (overMass)
-                addButtonText.text = GetText("no_mass", "BRAK MASY");
+            {
+                addButtonText.text =
+                    GetText("no_mass", "BRAK MASY");
+            }
             else if (overCost)
-                addButtonText.text = GetText("no_budget", "BRAK BUDŻETU");
+            {
+                addButtonText.text =
+                    GetText("no_budget", "BRAK BUDŻETU");
+            }
             else
-                addButtonText.text = "+ DODAJ";
+            {
+                addButtonText.text =
+                    GetText("add", "+ DODAJ");
+            }
         }
+
 
         if (addButton != null)
             addButton.interactable = isSelected || canAfford;

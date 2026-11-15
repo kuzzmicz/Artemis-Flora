@@ -94,7 +94,12 @@ public class LocalizationManager : MonoBehaviour
             texts["no_components"] = "Brak wybranych komponentów";
             texts["info_growing_system"] = "Aby wystartować, wybierz system uprawy, lądownik oraz zapewnij dodatnią moc.";
             texts["negative_power"] = "Ujemna moc: stacja nie będzie samowystarczalna.";
-
+            texts["component_selection"] = "ARTEMIS FLORA // WYBÓR KOMPONENTÓW";
+            texts["add"] = "+ DODAJ";
+            texts["remove"] = "- USUŃ";
+            texts["no_mass"] = "BRAK MASY";
+            texts["no_budget"] = "BRAK BUDŻETU";
+            texts["no_mass_and_budget"] = "BRAK MASY I BUDŻETU";
             // Kategorie
             texts["cat_growingsystem"] = "Uprawa";
             texts["cat_power"] = "Energia";
@@ -209,9 +214,15 @@ public class LocalizationManager : MonoBehaviour
             texts["science"] = "Science Data";
             texts["growth"] = "Plant Growth";
             texts["no_components"] = "No components selected";
-            texts["info_growing_system"] = "To start, select a growing system, a lander, and ensure positive power.";
+            texts["info_growing_system"] = "To launch, select a growing system and a lander and ensure a positive power balance.";
+            texts["info_growing_system"] = "To launch, select a growing system and a lander and ensure a positive power balance.";
             texts["negative_power"] = "Negative power: the station will not be self-sustainable.";
-
+            texts["component_selection"] = "ARTEMIS FLORA // COMPONENT SELECTION";
+            texts["add"] = "+ ADD";
+            texts["remove"] = "- REMOVE";
+            texts["no_mass"] = "MASS LIMIT";
+            texts["no_budget"] = "BUDGET LIMIT";
+            texts["no_mass_and_budget"] = "MASS & BUDGET LIMIT";
             // Categories
             texts["cat_growingsystem"] = "Growing";
             texts["cat_power"] = "Power";
