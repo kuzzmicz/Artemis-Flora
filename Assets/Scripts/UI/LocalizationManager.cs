@@ -196,7 +196,8 @@ public class LocalizationManager : MonoBehaviour
             texts["fb_duststorm_1"] = "Ograniczono zużycie energii, kompensując spadek wydajności paneli.";
             texts["fb_duststorm_2"] = "Kontynuowano obserwację paneli. Warstwa pyłu nadal ogranicza ich wydajność.";
             texts["fb_default"] = "Podjęto decyzję operacyjną.";
-
+            texts["fb_pump_success"] = "Sukces! Pompa została naprawiona.";
+            texts["fb_pump_fail"] = "Naprawa nieudana. Rośliny ucierpiały.";
             LoadPolishEvents();
         }
         else
@@ -318,7 +319,8 @@ public class LocalizationManager : MonoBehaviour
             texts["fb_duststorm_1"] = "Power consumption reduced to compensate for lower panel output.";
             texts["fb_duststorm_2"] = "Solar panels kept under observation. Dust continued to reduce efficiency.";
             texts["fb_default"] = "Operational decision made.";
-
+            texts["fb_pump_success"] = "Repair successful! The pump is working.";
+            texts["fb_pump_fail"] = "Repair failed. Plants suffered.";
             LoadEnglishEvents();
         }
     }
