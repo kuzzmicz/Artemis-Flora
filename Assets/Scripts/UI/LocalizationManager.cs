@@ -32,6 +32,7 @@ public class LocalizationManager : MonoBehaviour
     {
         currentLanguage = lang;
         LoadLanguage();
+
         OnLanguageChanged?.Invoke();
     }
 
@@ -93,7 +94,12 @@ public class LocalizationManager : MonoBehaviour
             texts["no_components"] = "Brak wybranych komponentów";
             texts["info_growing_system"] = "Aby wystartować, wybierz system uprawy, lądownik oraz zapewnij dodatnią moc.";
             texts["negative_power"] = "Ujemna moc: stacja nie będzie samowystarczalna.";
-
+            texts["component_selection"] = "ARTEMIS FLORA // WYBÓR KOMPONENTÓW";
+            texts["add"] = "+ DODAJ";
+            texts["remove"] = "- USUŃ";
+            texts["no_mass"] = "BRAK MASY";
+            texts["no_budget"] = "BRAK BUDŻETU";
+            texts["no_mass_and_budget"] = "BRAK MASY I BUDŻETU";
             // Kategorie
             texts["cat_growingsystem"] = "Uprawa";
             texts["cat_power"] = "Energia";
@@ -122,6 +128,10 @@ public class LocalizationManager : MonoBehaviour
             texts["comp_camera_hd"] = "Kamera HD";
             texts["comp_sensors_environment"] = "Czujniki Środowiskowe";
             texts["comp_samplesystem"] = "System Pobierania Próbek";
+
+            texts["telemetry"] = "TELEMETRIA";
+            texts["science_value"] = "Wartość naukowa";
+            texts["growth_bonus"] = "Bonus wzrostu";
 
             // Ciekawostki
             texts["fact_rocket_equation"] = "Ponad 85% masy startowej rakiety to samo paliwo! Dodanie zaledwie 1 kg ładunku naukowego wymaga wykładniczego zwiększenia ilości paliwa, aby uciec ze studni grawitacyjnej Ziemi.";
@@ -186,6 +196,8 @@ public class LocalizationManager : MonoBehaviour
             texts["fb_duststorm_1"] = "Ograniczono zużycie energii, kompensując spadek wydajności paneli.";
             texts["fb_duststorm_2"] = "Kontynuowano obserwację paneli. Warstwa pyłu nadal ogranicza ich wydajność.";
             texts["fb_default"] = "Podjęto decyzję operacyjną.";
+            texts["fb_pump_success"] = "Sukces! Pompa została naprawiona.";
+            texts["fb_pump_fail"] = "Naprawa nieudana. Rośliny ucierpiały.";
 
             // Mission Results
             texts["result_reason_success"] = "Misja zakończona sukcesem (14/14 dni).";
@@ -215,9 +227,15 @@ public class LocalizationManager : MonoBehaviour
             texts["science"] = "Science Data";
             texts["growth"] = "Plant Growth";
             texts["no_components"] = "No components selected";
-            texts["info_growing_system"] = "To start, select a growing system, a lander, and ensure positive power.";
+            texts["info_growing_system"] = "To launch, select a growing system and a lander and ensure a positive power balance.";
+            texts["info_growing_system"] = "To launch, select a growing system and a lander and ensure a positive power balance.";
             texts["negative_power"] = "Negative power: the station will not be self-sustainable.";
-
+            texts["component_selection"] = "ARTEMIS FLORA // COMPONENT SELECTION";
+            texts["add"] = "+ ADD";
+            texts["remove"] = "- REMOVE";
+            texts["no_mass"] = "MASS LIMIT";
+            texts["no_budget"] = "BUDGET LIMIT";
+            texts["no_mass_and_budget"] = "MASS & BUDGET LIMIT";
             // Categories
             texts["cat_growingsystem"] = "Growing";
             texts["cat_power"] = "Power";
@@ -247,6 +265,9 @@ public class LocalizationManager : MonoBehaviour
             texts["comp_sensors_environment"] = "Environmental Sensors";
             texts["comp_samplesystem"] = "Sample Collection System";
 
+            texts["telemetry"] = "TELEMETRY";
+            texts["science_value"] = "Science Value";
+            texts["growth_bonus"] = "Growth Bonus";
             // Fun facts
             texts["fact_rocket_equation"] = "Over 85% of a rocket's launch mass is propellant! Adding just 1 kg of scientific payload requires an exponential amount of extra fuel to escape Earth's gravity well.";
             texts["fact_light_speed_delay"] = "Radio waves travel at light speed, but signals to Mars take 4 to 24 minutes one-way. Because real-time piloting is impossible, deep space probes must be engineered for autonomous fault protection.";
@@ -310,6 +331,8 @@ public class LocalizationManager : MonoBehaviour
             texts["fb_duststorm_1"] = "Power consumption reduced to compensate for lower panel output.";
             texts["fb_duststorm_2"] = "Solar panels kept under observation. Dust continued to reduce efficiency.";
             texts["fb_default"] = "Operational decision made.";
+            texts["fb_pump_success"] = "Repair successful! The pump is working.";
+            texts["fb_pump_fail"] = "Repair failed. Plants suffered.";
 
             // Mission Results
             texts["result_reason_success"] = "Mission completed successfully (14/14 days).";
