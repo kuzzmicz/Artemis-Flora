@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ public class LocalizationManager : MonoBehaviour
     [Header("Settings")]
     public Language currentLanguage = Language.Polish;
 
-    private Dictionary<string, string> texts = new Dictionary<string, string>();
+    public event Action OnLanguageChanged;
+
+    private readonly Dictionary<string, string> texts = new Dictionary<string, string>();
 
     private void Awake()
     {
@@ -29,22 +32,27 @@ public class LocalizationManager : MonoBehaviour
     {
         currentLanguage = lang;
         LoadLanguage();
+        OnLanguageChanged?.Invoke();
     }
 
     public void ToggleLanguage()
     {
-        if (currentLanguage == Language.Polish)
-            SetLanguage(Language.English);
-        else
-            SetLanguage(Language.Polish);
+        SetLanguage(currentLanguage == Language.Polish
+            ? Language.English
+            : Language.Polish);
     }
 
     public string Get(string key)
     {
-        if (texts.ContainsKey(key))
-            return texts[key];
+        return texts.TryGetValue(key, out string value)
+            ? value
+            : $"[{key}]";
+    }
 
-        return $"[{key}]";
+    public string GetEventText(EventType type, string field, string fallback = "")
+    {
+        string key = "event_" + type.ToString().ToLowerInvariant() + "_" + field;
+        return texts.TryGetValue(key, out string value) ? value : fallback;
     }
 
     private void AddEventTexts(
@@ -56,29 +64,13 @@ public class LocalizationManager : MonoBehaviour
         string choiceC)
     {
         string key = "event_" + type.ToString().ToLowerInvariant();
-
         texts[key + "_name"] = name;
         texts[key + "_description"] = description;
+        texts[key + "_desc"] = description;
         texts[key + "_a"] = choiceA;
         texts[key + "_b"] = choiceB;
         texts[key + "_c"] = choiceC;
     }
-
-    public string GetEventText(
-        EventType type,
-        string field,
-        string fallback = "")
-    {
-        string key = "event_" +
-            type.ToString().ToLowerInvariant() +
-            "_" + field;
-
-        return texts.TryGetValue(key, out string value)
-            ? value
-            : fallback;
-    }
-
-
 
     private void LoadLanguage()
     {
@@ -86,6 +78,7 @@ public class LocalizationManager : MonoBehaviour
 
         if (currentLanguage == Language.Polish)
         {
+            // Główne UI
             texts["start_mission"] = "URUCHOM MISJĘ";
             texts["clear_all"] = "Wyczyść wszystko";
             texts["select_components"] = "Wybierz komponenty";
@@ -101,7 +94,7 @@ public class LocalizationManager : MonoBehaviour
             texts["info_growing_system"] = "Aby wystartować, wybierz system uprawy i lądownik.";
             texts["negative_power"] = "Ujemna moc: stacja nie będzie samowystarczalna.";
 
-            // Categories
+            // Kategorie
             texts["cat_growingsystem"] = "Uprawa";
             texts["cat_power"] = "Energia";
             texts["cat_structure"] = "Struktura";
@@ -109,7 +102,7 @@ public class LocalizationManager : MonoBehaviour
             texts["cat_science"] = "Nauka";
             texts["cat_all"] = "Wszystkie";
 
-            // Components
+            // Komponenty
             texts["comp_lander_basic"] = "Lądownik Podstawowy";
             texts["comp_hydroponics_basic"] = "Hydroponika Podstawowa";
             texts["comp_hydroponics_advanced"] = "Hydroponika Zaawansowana";
@@ -130,7 +123,7 @@ public class LocalizationManager : MonoBehaviour
             texts["comp_sensors_environment"] = "Czujniki Środowiskowe";
             texts["comp_samplesystem"] = "System Pobierania Próbek";
 
-            // Fun facts
+            // Ciekawostki
             texts["fact_rocket_equation"] = "Ponad 85% masy startowej rakiety to samo paliwo! Dodanie zaledwie 1 kg ładunku naukowego wymaga wykładniczego zwiększenia ilości paliwa, aby uciec ze studni grawitacyjnej Ziemi.";
             texts["fact_light_speed_delay"] = "Fale radiowe pędzą z prędkością światła, lecz sygnał na Marsa leci od 4 do 24 minut w jedną stronę. Niemożliwe jest sterowanie w czasie rzeczywistym, dlatego sondy muszą podejmować decyzje autonomicznie.";
             texts["fact_gravity_assist"] = "Sonda może drastycznie zwiększyć prędkość bez zużywania cennego paliwa, przelatując blisko planety i przejmując znikomą część jej pędu orbitalnego wokół Słońca.";
@@ -140,49 +133,65 @@ public class LocalizationManager : MonoBehaviour
             texts["fact_radiation_hardening"] = "Promieniowanie kosmiczne wywołuje przekłamania bitów. Komputery pokładowe wykorzystują wzmocnione radiacyjnie układy o taktowaniu poniżej 200 MHz, przedkładając niezawodność nad czystą wydajność obliczeniową.";
             texts["fact_seven_minutes_of_terror"] = "Wejście w atmosferę z prędkością ponad 20 000 km/h generuje tarcie o temperaturze ponad 2000°C. Przez opóźnienia i blokadę łączności radiowej proces wejścia, opadania i lądowania (EDL) musi być całkowicie zautomatyzowany.";
 
-            // Feedbacks
-            texts["fb_powershortage_0"] = "Ograniczono oświetlenie. Rośliny rosną wolniej, ale system przetrwa.";
-            texts["fb_powershortage_1"] = "Wyłączono instrumenty naukowe. Utracono część danych.";
-            texts["fb_powershortage_2"] = "Zużyto rezerwę energii. Ryzyko całkowitego blackoutu wzrosło.";
-            texts["fb_radiationspike_0"] = "Aktywowano maksymalną ochronę. Rośliny są bezpieczniejsze.";
-            texts["fb_radiationspike_1"] = "Zbierano dane o promieniowaniu. Rośliny ucierpiały.";
-            texts["fb_radiationspike_2"] = "Przeniesiono rośliny w bardziej chronioną strefę.";
-            texts["fb_plantdisease_0"] = "Odizolowano chore rośliny. Zdrowe osobniki są bezpieczne.";
-            texts["fb_plantdisease_1"] = "Zastosowano środki ochronne na całą uprawę.";
-            texts["fb_plantdisease_2"] = "Zebrano dane o chorobie. Rośliny ucierpiały.";
-            texts["fb_fire_0"] = "Aktywowano system gaśniczy. Zużyto dużo mocy.";
-            texts["fb_fire_1"] = "Odłączono zasilanie zagrożonej sekcji.";
-            texts["fb_fire_2"] = "Ewakuowano priorytetowe systemy. Wzrost roślin osłabł.";
-            texts["fb_pumpfailure_0"] = "Przełączono na pompę zapasową. Zużyto dodatkową moc.";
-            texts["fb_pumpfailure_1"] = "Uruchomiono tryb awaryjny. Podlewanie zostało ograniczone.";
-            texts["fb_pumpfailure_2"] = "Próbujesz samodzielnie naprawić pompę.";
-            texts["fb_waterproblem_0"] = "Uruchomiono system zapasowy. Zużyto dodatkową moc.";
-            texts["fb_waterproblem_1"] = "Ograniczono podlewanie. Rośliny odczuwają stres.";
-            texts["fb_waterproblem_2"] = "Kontynuowano bez interwencji. Ryzyko awarii wzrosło.";
-            texts["fb_thermalstress_0"] = "Stabilizowano temperaturę kosztem energii.";
-            texts["fb_thermalstress_1"] = "Zaakceptowano wahania. Zebrano dodatkowe dane naukowe.";
-            texts["fb_thermalstress_2"] = "Ograniczono aktywność systemów uprawy.";
-            texts["fb_goodgrowth_0"] = "Skupiono się na maksymalizacji plonu.";
-            texts["fb_goodgrowth_1"] = "Priorytetem stały się dodatkowe pomiary naukowe.";
-            texts["fb_goodgrowth_2"] = "Utrzymano stabilne, bezpieczne warunki.";
-            texts["fb_communicationglitch_0"] = "Przełączono na tryb autonomiczny.";
-            texts["fb_communicationglitch_1"] = "Wzmocniono sygnał kosztem energii.";
-            texts["fb_communicationglitch_2"] = "Wstrzymano część eksperymentów.";
-            texts["fb_filterclog_0"] = "Uruchomiono czyszczenie awaryjne. Zużyto dodatkową moc.";
-            texts["fb_filterclog_1"] = "Ograniczono podlewanie. Rośliny odczuwają stres.";
-            texts["fb_filterclog_2"] = "Kontynuowano bez interwencji. Ryzyko awarii wzrosło.";
-            texts["fb_dataoverflow_0"] = "Priorytetem stały się dane o roślinach.";
-            texts["fb_dataoverflow_1"] = "Wyłączono część instrumentów naukowych.";
-            texts["fb_dataoverflow_2"] = "Zwiększono zużycie mocy na przetwarzanie danych.";
-            texts["fb_microorganismwater_0"] = "Zignorowano skażenie. Mikroorganizm zainfekował system uprawy!";
-            texts["fb_microorganismwater_1"] = "Odłączono dopływ wody. Uprawa uniknęła skażenia, lecz rośliny ucierpiały z braku nawadniania.";
-            texts["fb_microorganismwater_2"] = "Rozpoczęto ręczną rekonfigurację rurociągu.";
-            texts["fb_microorganismwater_success"] = "Sukces! Obieg wody został prawidłowo poprowadzony z ominięciem mikroorganizmu.";
-            texts["fb_microorganismwater_fail"] = "Porażka! Mikroorganizm przedostał się do uprawy lub obieg został rozszczelniony.";
+            // Feedback
+            texts["fb_powershortage_0"] = "Ograniczono oświetlenie roślin. Pobór energii spadł, ale uprawy rosną wolniej.";
+            texts["fb_powershortage_1"] = "Wyłączono część aparatury naukowej. Energia jest dostępna dla systemów krytycznych, lecz utracono dane.";
+            texts["fb_powershortage_2"] = "Włączono zasilanie z akumulatorów. Rezerwa energii i margines bezpieczeństwa zmalały.";
+            texts["fb_radiationspike_0"] = "Uruchomiono tryb ochronny. Ograniczono zagrożenie kosztem części badań.";
+            texts["fb_radiationspike_1"] = "Kontynuowano badania promieniowania. Uzyskano dane, ale uprawy i urządzenia ucierpiały.";
+            texts["fb_radiationspike_2"] = "Przeniesiono rośliny do lepiej osłoniętej sekcji.";
+            texts["fb_plantdisease_0"] = "Odizolowano chore rośliny. Ograniczono ryzyko rozprzestrzenienia się infekcji.";
+            texts["fb_plantdisease_1"] = "Zastosowano kontrolowane leczenie zagrożonej sekcji.";
+            texts["fb_plantdisease_2"] = "Pobrano próbki do badań. Choroba spowodowała dalsze straty upraw.";
+            texts["fb_fire_0"] = "Rozpoczęto ręczne gaszenie pożaru.";
+            texts["fb_fire_1"] = "Odcięto zasilanie zagrożonej sekcji, ograniczając działanie szklarni.";
+            texts["fb_fire_2"] = "Odizolowano zagrożony moduł, aby chronić pozostałą część instalacji.";
+            texts["fb_fire_success"] = "Sukces! Pożar został ugaszony, a uszkodzenia ograniczone.";
+            texts["fb_fire_fail"] = "Nie udało się ugasić pożaru. Ogień uszkodził część systemów.";
+            texts["fb_pumpfailure_0"] = "Przełączono na pompę zapasową, wykorzystując rezerwę systemu.";
+            texts["fb_pumpfailure_1"] = "Uruchomiono ograniczone nawadnianie awaryjne. Rośliny otrzymują mniej wody.";
+            texts["fb_pumpfailure_2"] = "Rozpoczęto ręczną naprawę pompy.";
+            texts["fb_pump_success"] = "Sukces! Pompa została naprawiona i obieg wody działa ponownie.";
+            texts["fb_pump_fail"] = "Naprawa nieudana. Przerwa w nawadnianiu spowodowała straty.";
+            texts["fb_waterproblem_0"] = "Przełączono na rezerwowy obieg wody. Przywrócono większość przepływu.";
+            texts["fb_waterproblem_1"] = "Rozdzielono ograniczony dopływ wody pomiędzy sekcje. Rośliny rosną wolniej.";
+            texts["fb_waterproblem_2"] = "Pozostawiono obieg pod obserwacją. Niedobór wody pogłębił się.";
+            texts["fb_thermalstress_0"] = "Zwiększono chłodzenie. Temperatura spadła kosztem dodatkowej energii.";
+            texts["fb_thermalstress_1"] = "Zebrano dane o stresie cieplnym, ale rośliny ucierpiały.";
+            texts["fb_thermalstress_2"] = "Ograniczono pracę LED. Temperatura i pobór energii spadły.";
+            texts["fb_goodgrowth_0"] = "Zwiększono intensywność uprawy i uzyskano większy przyrost roślin.";
+            texts["fb_goodgrowth_1"] = "Wykonano dodatkowe pomiary i zebrano dane naukowe.";
+            texts["fb_goodgrowth_2"] = "Utrzymano stabilne warunki, ograniczając ryzyko dla upraw.";
+            texts["fb_communicationglitch_0"] = "Przełączono stację na tryb autonomiczny.";
+            texts["fb_communicationglitch_1"] = "Zwiększono moc nadajnika kosztem energii.";
+            texts["fb_communicationglitch_2"] = "Wstrzymano część eksperymentów do czasu poprawy łączności.";
+            texts["fb_filterclog_0"] = "Uruchomiono czyszczenie filtra, zużywając dodatkową energię.";
+            texts["fb_filterclog_1"] = "Ograniczono przepływ wody. Rośliny odczuwają stres.";
+            texts["fb_filterclog_2"] = "Kontynuowano pracę mimo zatkanego filtra. Ryzyko awarii wzrosło.";
+            texts["fb_dataoverflow_0"] = "Nadano priorytet danym dotyczącym roślin.";
+            texts["fb_dataoverflow_1"] = "Wyłączono część instrumentów naukowych, ograniczając napływ danych.";
+            texts["fb_dataoverflow_2"] = "Zwiększono moc obliczeniową kosztem energii.";
+            texts["fb_microorganismwater_0"] = "Zignorowano skażenie. Mikroorganizmy rozprzestrzeniły się w układzie uprawy.";
+            texts["fb_microorganismwater_1"] = "Odizolowano skażony obieg. Rośliny ucierpiały z powodu ograniczonego nawadniania.";
+            texts["fb_microorganismwater_2"] = "Rozpoczęto ręczne przekierowanie obiegu wody.";
+            texts["fb_microorganismwater_success"] = "Sukces! Ominięto skażoną sekcję i przywrócono bezpieczny przepływ.";
+            texts["fb_microorganismwater_fail"] = "Porażka! Skażenie objęło kolejną sekcję lub obieg został rozszczelniony.";
+            texts["fb_mutation_0"] = "Pozostawiono zmienione rośliny do obserwacji. Zebrano cenne dane.";
+            texts["fb_mutation_1"] = "Usunięto zmienione rośliny i zabezpieczono próbki.";
+            texts["fb_mutation_2"] = "Przeniesiono rośliny do osłoniętej sekcji, ograniczając dalszą ekspozycję.";
+            texts["fb_sensorfailure_0"] = "Włączono bezpieczny tryb awaryjny. Wzrost roślin nieco spowolnił.";
+            texts["fb_sensorfailure_1"] = "Przeprowadzono diagnostykę i kalibrację czujników.";
+            texts["fb_sensorfailure_2"] = "Kontynuowano pracę na starych odczytach. Ryzyko błędnego sterowania wzrosło.";
+            texts["fb_duststorm_0"] = "Uruchomiono czyszczenie paneli z osadzonego pyłu księżycowego.";
+            texts["fb_duststorm_1"] = "Ograniczono zużycie energii, kompensując spadek wydajności paneli.";
+            texts["fb_duststorm_2"] = "Kontynuowano obserwację paneli. Warstwa pyłu nadal ogranicza ich wydajność.";
             texts["fb_default"] = "Podjęto decyzję operacyjną.";
+
+            LoadPolishEvents();
         }
         else
         {
+            // Main UI
             texts["start_mission"] = "START MISSION";
             texts["clear_all"] = "Clear All";
             texts["select_components"] = "Select Components";
@@ -237,50 +246,278 @@ public class LocalizationManager : MonoBehaviour
             texts["fact_radiation_hardening"] = "Galactic cosmic rays frequently cause bit flips. Space mission computers favor heavily shielded, radiation-hardened processors (often running below 200 MHz) rather than modern high-speed chips that risk sudden reboots.";
             texts["fact_seven_minutes_of_terror"] = "Entering a planetary atmosphere at over 20,000 km/h produces scorching friction over 2,000°C. With long radio communication blackouts and delays, the entire Entry, Descent, and Landing (EDL) process must be 100% automated.";
 
-            // Feedbacks
-            texts["fb_powershortage_0"] = "Lighting reduced. Plants grow slower, but the system will survive.";
-            texts["fb_powershortage_1"] = "Science instruments disabled. Some data was lost.";
-            texts["fb_powershortage_2"] = "Energy reserves used. Risk of total blackout increased.";
-            texts["fb_radiationspike_0"] = "Maximum protection activated. Plants are safer.";
-            texts["fb_radiationspike_1"] = "Radiation data collected. Plants suffered damage.";
-            texts["fb_radiationspike_2"] = "Plants moved to a more protected area.";
-            texts["fb_plantdisease_0"] = "Diseased plants isolated. Healthy ones are safe.";
-            texts["fb_plantdisease_1"] = "Protective measures applied to the entire crop.";
-            texts["fb_plantdisease_2"] = "Disease data collected. Plants suffered.";
-            texts["fb_fire_0"] = "Fire suppression system activated. High power usage.";
-            texts["fb_fire_1"] = "Power cut to the affected section.";
-            texts["fb_fire_2"] = "Priority systems evacuated. Plant growth weakened.";
-            texts["fb_fire_success"] = "The fire was quickly extinguished.";
-            texts["fb_fire_fail"] = "Failed to fully extinguish the fire.";
-            texts["fb_pump_success"] = "Repair successful. The pump is working.";
-            texts["fb_pump_fail"] = "Repair failed. Plants suffered.";
-            texts["fb_pumpfailure_0"] = "Switched to backup pump. Additional power used.";
-            texts["fb_pumpfailure_1"] = "Emergency mode activated. Watering reduced.";
-            texts["fb_pumpfailure_2"] = "Attempting manual pump repair.";
-            texts["fb_waterproblem_0"] = "Backup system activated. Additional power used.";
-            texts["fb_waterproblem_1"] = "Watering reduced. Plants are under stress.";
-            texts["fb_waterproblem_2"] = "No intervention. Risk of failure increased.";
-            texts["fb_thermalstress_0"] = "Temperature stabilized at the cost of energy.";
-            texts["fb_thermalstress_1"] = "Fluctuations accepted. Additional science data collected.";
-            texts["fb_thermalstress_2"] = "Growing system activity reduced.";
-            texts["fb_goodgrowth_0"] = "Focused on maximizing yield.";
-            texts["fb_goodgrowth_1"] = "Priority given to additional scientific measurements.";
-            texts["fb_goodgrowth_2"] = "Stable and safe conditions maintained.";
-            texts["fb_communicationglitch_0"] = "Switched to autonomous mode.";
-            texts["fb_communicationglitch_1"] = "Signal boosted at the cost of energy.";
-            texts["fb_communicationglitch_2"] = "Some experiments paused.";
-            texts["fb_filterclog_0"] = "Emergency cleaning activated. Additional power used.";
-            texts["fb_filterclog_1"] = "Watering reduced. Plants are under stress.";
-            texts["fb_filterclog_2"] = "No intervention. Risk of failure increased.";
-            texts["fb_dataoverflow_0"] = "Plant data prioritized.";
-            texts["fb_dataoverflow_1"] = "Some science instruments disabled.";
-            texts["fb_dataoverflow_2"] = "Increased power usage for data processing.";
-            texts["fb_microorganismwater_0"] = "Contamination ignored. The microorganism infected the hydroponic system!";
-            texts["fb_microorganismwater_1"] = "Water supply disconnected. Crop protected from infection, but plant growth suffered due to lack of water.";
-            texts["fb_microorganismwater_2"] = "Manual reconfiguration of the water pipeline initiated.";
-            texts["fb_microorganismwater_success"] = "Success! The water circuit was safely routed, bypassing the microorganism.";
-            texts["fb_microorganismwater_fail"] = "Failure! The microorganism contaminated the crop or the circuit leaked.";
+            // Event choice feedback
+            texts["fb_powershortage_0"] = "Plant lighting reduced. Power demand dropped, but crop growth slowed.";
+            texts["fb_powershortage_1"] = "Some scientific instruments were shut down. Essential systems retained power, but data was lost.";
+            texts["fb_powershortage_2"] = "Backup batteries activated. Energy reserves and safety margins decreased.";
+            texts["fb_radiationspike_0"] = "Protective mode activated. Radiation risk decreased at the cost of some research.";
+            texts["fb_radiationspike_1"] = "Radiation studies continued. Valuable data was collected, but crops and equipment suffered.";
+            texts["fb_radiationspike_2"] = "Plants moved to a better-shielded section.";
+            texts["fb_plantdisease_0"] = "Infected plants isolated. The risk of spreading the disease was reduced.";
+            texts["fb_plantdisease_1"] = "Targeted treatment applied to the affected section.";
+            texts["fb_plantdisease_2"] = "Samples collected for research. The disease caused additional crop losses.";
+            texts["fb_fire_0"] = "Manual fire suppression initiated.";
+            texts["fb_fire_1"] = "Power cut to the affected section, restricting greenhouse operations.";
+            texts["fb_fire_2"] = "The affected module was isolated to protect the rest of the station.";
+            texts["fb_fire_success"] = "Success! The fire was extinguished and damage was limited.";
+            texts["fb_fire_fail"] = "Failed to extinguish the fire. Some systems were damaged.";
+            texts["fb_pumpfailure_0"] = "Switched to the backup pump, using the system's redundancy reserve.";
+            texts["fb_pumpfailure_1"] = "Limited emergency irrigation activated. Plants are receiving less water.";
+            texts["fb_pumpfailure_2"] = "Manual pump repair initiated.";
+            texts["fb_pump_success"] = "Success! The pump has been repaired and water flow restored.";
+            texts["fb_pump_fail"] = "Repair failed. The irrigation outage damaged the crops.";
+            texts["fb_waterproblem_0"] = "Switched to the backup water circuit, restoring most of the flow.";
+            texts["fb_waterproblem_1"] = "Limited water supply redistributed between sections. Plant growth slowed.";
+            texts["fb_waterproblem_2"] = "The circuit was kept under observation. The water shortage worsened.";
+            texts["fb_thermalstress_0"] = "Cooling increased. Temperature dropped at the cost of additional power.";
+            texts["fb_thermalstress_1"] = "Heat stress data was collected, but the plants suffered.";
+            texts["fb_thermalstress_2"] = "LED activity reduced, lowering temperature and power demand.";
+            texts["fb_goodgrowth_0"] = "Cultivation intensity increased, boosting plant growth.";
+            texts["fb_goodgrowth_1"] = "Additional measurements completed and scientific data collected.";
+            texts["fb_goodgrowth_2"] = "Stable growing conditions maintained, reducing crop risks.";
+            texts["fb_communicationglitch_0"] = "The station switched to autonomous mode.";
+            texts["fb_communicationglitch_1"] = "Transmitter output increased at the cost of power.";
+            texts["fb_communicationglitch_2"] = "Some experiments paused until communication improves.";
+            texts["fb_filterclog_0"] = "Filter cleaning activated, consuming additional power.";
+            texts["fb_filterclog_1"] = "Water flow reduced. Plants are under stress.";
+            texts["fb_filterclog_2"] = "Operation continued with a clogged filter. Failure risk increased.";
+            texts["fb_dataoverflow_0"] = "Plant research data prioritized.";
+            texts["fb_dataoverflow_1"] = "Some scientific instruments shut down to reduce incoming data.";
+            texts["fb_dataoverflow_2"] = "Processing power increased at the cost of energy.";
+            texts["fb_microorganismwater_0"] = "Contamination ignored. Microorganisms spread through the growing system.";
+            texts["fb_microorganismwater_1"] = "The contaminated circuit was isolated. Reduced irrigation damaged the crops.";
+            texts["fb_microorganismwater_2"] = "Manual rerouting of the water circuit initiated.";
+            texts["fb_microorganismwater_success"] = "Success! The contaminated section was bypassed and safe flow restored.";
+            texts["fb_microorganismwater_fail"] = "Failure! Contamination spread to another section or the circuit developed a leak.";
+            texts["fb_mutation_0"] = "Affected plants kept under observation. Valuable data was collected.";
+            texts["fb_mutation_1"] = "Affected plants removed and samples preserved.";
+            texts["fb_mutation_2"] = "Plants moved to a shielded section to reduce further exposure.";
+            texts["fb_sensorfailure_0"] = "Safe emergency mode activated. Plant growth slowed slightly.";
+            texts["fb_sensorfailure_1"] = "Sensor diagnostics and calibration completed.";
+            texts["fb_sensorfailure_2"] = "Operation continued using old readings. Control errors became more likely.";
+            texts["fb_duststorm_0"] = "Lunar dust cleaning initiated on the solar panels.";
+            texts["fb_duststorm_1"] = "Power consumption reduced to compensate for lower panel output.";
+            texts["fb_duststorm_2"] = "Solar panels kept under observation. Dust continued to reduce efficiency.";
             texts["fb_default"] = "Operational decision made.";
+
+            LoadEnglishEvents();
         }
+    }
+
+  
+    private void LoadPolishEvents()
+    {
+        AddEventTexts(EventType.PowerShortage,
+            "Krytyczny spadek mocy",
+            "System energetyczny wykrył przeciążenie głównej magistrali zasilania. Jednoczesna praca oświetlenia LED, pomp i aparatury naukowej przekroczyła dostępny limit mocy.",
+            "Ogranicz oświetlenie roślin",
+            "Wyłącz aparaturę naukową",
+            "Uruchom rezerwę akumulatorów");
+
+        AddEventTexts(EventType.PumpFailure,
+            "Awaria pompy hydroponicznej",
+            "Główna pompa hydroponiczna przestała działać. Korzenie roślin nie otrzymują odpowiedniej ilości wody i składników mineralnych. Konieczna jest szybka reakcja.",
+            "Przełącz na pompę zapasową",
+            "Uruchom ograniczone nawadnianie awaryjne",
+            "Spróbuj naprawić pompę ręcznie");
+
+        AddEventTexts(EventType.Fire,
+            "Pożar w module",
+            "Czujniki wykryły pożar w module szklarniowym. Ogień zagraża instalacjom elektrycznym, wentylacji i uprawom. Musisz natychmiast zareagować.",
+            "Ugaś pożar ręcznie",
+            "Odetnij zasilanie zagrożonej sekcji",
+            "Odizoluj zagrożony moduł");
+
+        AddEventTexts(EventType.PlantDisease,
+            "Choroba roślin",
+            "W części upraw wykryto przebarwienia liści, zahamowanie wzrostu i oznaki infekcji grzybiczej. Choroba może rozprzestrzenić się na pozostałe rośliny.",
+            "Odizoluj chore rośliny",
+            "Zastosuj kontrolowane leczenie",
+            "Obserwuj i pobieraj próbki");
+
+        AddEventTexts(EventType.RadiationSpike,
+            "Alarm radiacyjny",
+            "Czujniki wykryły gwałtowny wzrost poziomu promieniowania związany z aktywnością słoneczną. Zagrożone są rośliny oraz wrażliwa elektronika.",
+            "Uruchom tryb ochronny",
+            "Kontynuuj badania promieniowania",
+            "Przenieś rośliny do osłoniętej sekcji");
+
+        AddEventTexts(EventType.WaterProblem,
+            "Spadek ciśnienia w systemie nawadniania",
+            "W jednym z przewodów hydroponicznych wykryto spadek ciśnienia. Pompa nadal działa, ale część roślin otrzymuje zbyt mało roztworu odżywczego.",
+            "Przełącz na rezerwowy obieg wody",
+            "Ogranicz i rozdziel nawadnianie",
+            "Kontynuuj pracę i monitoruj ciśnienie");
+
+        AddEventTexts(EventType.ThermalStress,
+            "Stres termiczny",
+            "Temperatura wewnątrz szklarni wzrosła do niebezpiecznego poziomu. Oświetlenie LED i obciążenie układu chłodzenia powodują przegrzewanie upraw.",
+            "Zwiększ moc systemu chłodzenia",
+            "Obserwuj reakcję roślin na stres cieplny",
+            "Ogranicz pracę oświetlenia LED");
+
+        AddEventTexts(EventType.DustStorm,
+            "Osadzanie się pyłu księżycowego",
+            "Pył księżycowy wzniecony podczas wcześniejszych operacji powierzchniowych osiadł na panelach słonecznych i elementach instalacji. Wydajność zasilania może spaść.",
+            "Uruchom procedurę czyszczenia paneli",
+            "Ogranicz zużycie energii",
+            "Monitoruj wydajność paneli");
+
+        AddEventTexts(EventType.Mutation,
+            "Nietypowe zmiany roślin",
+            "Część roślin wykazuje nietypowe zmiany w budowie liści i tempie wzrostu. Przyczyną może być stres środowiskowy lub uszkodzenia komórkowe związane z promieniowaniem.",
+            "Pozostaw rośliny do badań",
+            "Usuń zmienione rośliny i zabezpiecz próbki",
+            "Przenieś rośliny do osłoniętej sekcji");
+
+        AddEventTexts(EventType.GoodGrowth,
+            "Niespodziewanie dobry wzrost",
+            "Rośliny rozwijają się szybciej, niż przewidywały prognozy. Korzystne warunki możesz wykorzystać do zwiększenia plonów albo zebrania dodatkowych danych naukowych.",
+            "Zwiększ intensywność uprawy",
+            "Przeprowadź dodatkowe pomiary",
+            "Utrzymaj stabilne warunki");
+
+        AddEventTexts(EventType.SensorFailure,
+            "Awaria czujników środowiskowych",
+            "System utracił sygnał z części czujników temperatury, wilgotności i stężenia CO₂. Automatyczne sterowanie szklarnią nie może dokładnie określić warunków uprawy.",
+            "Przejdź na bezpieczny tryb awaryjny",
+            "Uruchom diagnostykę i kalibrację",
+            "Kontynuuj na podstawie ostatnich odczytów");
+
+        AddEventTexts(EventType.CommunicationGlitch,
+            "Zakłócenia komunikacji",
+            "Stacja utraciła stabilną łączność z centrum kontroli misji. Pakiety danych docierają z opóźnieniem, a część poleceń może nie zostać odebrana.",
+            "Przełącz na tryb autonomiczny",
+            "Zwiększ moc nadajnika",
+            "Wstrzymaj część eksperymentów");
+
+        AddEventTexts(EventType.FilterClog,
+            "Zatkany filtr obiegu wody",
+            "System wykrył wzrost oporu przepływu w filtrze hydroponicznym. Zanieczyszczenia ograniczają dopływ roztworu odżywczego do roślin.",
+            "Uruchom automatyczne czyszczenie filtra",
+            "Ogranicz przepływ wody",
+            "Kontynuuj pracę i monitoruj filtr");
+
+        AddEventTexts(EventType.DataOverflow,
+            "Przepełnienie pamięci danych",
+            "System badawczy gromadzi dane szybciej, niż może je przetwarzać i przesyłać. Pamięć pokładowa zbliża się do limitu, a część wyników może zostać utracona.",
+            "Nadaj priorytet danym o roślinach",
+            "Wyłącz część instrumentów naukowych",
+            "Zwiększ moc przetwarzania danych");
+
+        AddEventTexts(EventType.MicroorganismWater,
+            "Skażenie mikrobiologiczne wody",
+            "W obiegu hydroponicznym wykryto niepożądane mikroorganizmy. Istnieje ryzyko powstawania biofilmu, zatykania filtrów i pogorszenia kondycji korzeni.",
+            "Zignoruj ostrzeżenie",
+            "Odizoluj skażony obieg",
+            "Ręcznie przekieruj obieg wody");
+    }
+
+    private void LoadEnglishEvents()
+    {
+        AddEventTexts(EventType.PowerShortage,
+            "Critical Power Shortage",
+            "The power management system has detected an overload in the main power bus. LED lighting, pumps, and scientific equipment are drawing more power than the system can safely supply.",
+            "Reduce plant lighting",
+            "Shut down scientific instruments",
+            "Activate backup batteries");
+
+        AddEventTexts(EventType.PumpFailure,
+            "Hydroponic Pump Failure",
+            "The main hydroponic pump has stopped working. Plant roots are no longer receiving sufficient water and nutrients. Immediate action is required.",
+            "Switch to the backup pump",
+            "Activate limited emergency irrigation",
+            "Attempt manual pump repair");
+
+        AddEventTexts(EventType.Fire,
+            "Fire in the Module",
+            "Sensors have detected a fire inside the greenhouse module. Electrical systems, ventilation, and crops are at risk. Immediate action is required.",
+            "Extinguish the fire manually",
+            "Cut power to the affected section",
+            "Isolate the affected module");
+
+        AddEventTexts(EventType.PlantDisease,
+            "Plant Disease",
+            "Some plants show leaf discoloration, reduced growth, and signs of fungal infection. The disease may spread to the remaining crops.",
+            "Isolate infected plants",
+            "Apply targeted treatment",
+            "Observe and collect samples");
+
+        AddEventTexts(EventType.RadiationSpike,
+            "Radiation Alert",
+            "Sensors have detected a sudden increase in radiation associated with solar activity. Crops and sensitive electronics may be at risk.",
+            "Activate protective mode",
+            "Continue radiation research",
+            "Move plants to a shielded compartment");
+
+        AddEventTexts(EventType.WaterProblem,
+            "Irrigation Pressure Drop",
+            "Pressure has dropped in one of the hydroponic pipelines. The pump is still running, but some plants are receiving insufficient nutrient solution.",
+            "Switch to the backup water circuit",
+            "Reduce and redistribute irrigation",
+            "Continue operating and monitor pressure");
+
+        AddEventTexts(EventType.ThermalStress,
+            "Thermal Stress",
+            "The greenhouse temperature has reached dangerous levels. LED lighting and an overloaded cooling system are causing the growing chamber to overheat.",
+            "Increase cooling system output",
+            "Observe plant responses to heat stress",
+            "Reduce LED lighting activity");
+
+        AddEventTexts(EventType.DustStorm,
+            "Lunar Dust Accumulation",
+            "Lunar dust disturbed during earlier surface operations has settled on solar panels and exposed equipment. Power generation efficiency may decrease.",
+            "Activate the panel cleaning procedure",
+            "Reduce power consumption",
+            "Monitor solar panel performance");
+
+        AddEventTexts(EventType.Mutation,
+            "Unusual Plant Changes",
+            "Some plants show unusual leaf structures and growth patterns. Possible causes include environmental stress or radiation-related cellular damage.",
+            "Keep the plants for research",
+            "Remove affected plants and preserve samples",
+            "Move plants to a shielded compartment");
+
+        AddEventTexts(EventType.GoodGrowth,
+            "Unexpectedly Strong Growth",
+            "The plants are growing faster than predicted. These favorable conditions could be used to increase crop yield or collect additional scientific data.",
+            "Increase cultivation intensity",
+            "Perform additional measurements",
+            "Maintain stable conditions");
+
+        AddEventTexts(EventType.SensorFailure,
+            "Environmental Sensor Failure",
+            "The system has lost signals from several temperature, humidity, and CO₂ sensors. Automated greenhouse control can no longer accurately assess growing conditions.",
+            "Switch to safe emergency mode",
+            "Run diagnostics and calibration",
+            "Continue using the last recorded readings");
+
+        AddEventTexts(EventType.CommunicationGlitch,
+            "Communication Disruption",
+            "The station has lost stable communication with mission control. Data packets are delayed, and some commands may not reach the station.",
+            "Switch to autonomous mode",
+            "Increase transmitter power",
+            "Pause some experiments");
+
+        AddEventTexts(EventType.FilterClog,
+            "Clogged Water Filter",
+            "The hydroponic system has detected increased flow resistance in a filter. Contaminants are restricting the delivery of nutrient solution to the plants.",
+            "Activate automatic filter cleaning",
+            "Reduce water flow",
+            "Continue operating and monitor the filter");
+
+        AddEventTexts(EventType.DataOverflow,
+            "Data Storage Overflow",
+            "Scientific instruments are generating data faster than the system can process or transmit it. Onboard storage is approaching its limit.",
+            "Prioritize plant research data",
+            "Disable some scientific instruments",
+            "Increase data processing power");
+
+        AddEventTexts(EventType.MicroorganismWater,
+            "Microbial Water Contamination",
+            "Unwanted microorganisms have been detected in the hydroponic water circuit. Biofilm formation, filter clogging, and damage to plant roots are possible.",
+            "Ignore the warning",
+            "Isolate the contaminated water circuit",
+            "Manually reroute the water circuit");
     }
 }
